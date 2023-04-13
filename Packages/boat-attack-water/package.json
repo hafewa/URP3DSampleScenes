@@ -1,0 +1,19 @@
+{
+  "name": "com.unity.urp-water-system",
+  "description": "A water system for URP.",
+  "version": "2.0.0-preview.1",
+  "unity": "2020.3",
+  "displayName": "Boat Attack Water System",
+  "dependencies": {
+    "com.unity.mathematics": "1.1.0",
+    "com.unity.burst": "1.2.3",
+    "com.unity.render-pipelines.universal": "10.5.0"
+  },
+  "samples": [
+    {
+      "displayName": "Water Effect Buffers",
+      "description": "Collection of scenes showcasing different features of the Universal Render Pipeline.",
+      "path": "Samples~/URPPackageSamples"
+    }
+  ]
+}
