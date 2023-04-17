@@ -27,7 +27,7 @@ public class SceneTransitionManager : MonoBehaviour
     [SerializeField] private LayerMask hubLayer;
     
     private bool InHub = true;
-    private ScreenController m_Screen;
+    //private ScreenController m_Screen;
 
     private SceneLoader m_Loader;
 
@@ -371,9 +371,7 @@ public class SceneTransitionManager : MonoBehaviour
         Debug.Log("Enabling this scene: " + sceneMetaData.Scene.name);
 
         instance.m_Loader = sceneLoader;
-        instance.m_Screen = sceneLoader.screen;
         instance.m_InitialSceneLoad = false;
-        //instance.m_ScreenCamera.GetComponent<ScreenCamera>().UpdateTarget();
 
         LightProbes.TetrahedralizeAsync();
 
@@ -391,9 +389,9 @@ public class SceneTransitionManager : MonoBehaviour
                 sceneMetaData.SpawnTransform.position - instance.m_Loader.ReferencePoint.position);
         }
 
-        if (instance.m_Screen != null)
+        if (sceneLoader.screen != null)
         {
-            instance.m_Screen.TurnScreenOn();
+            sceneLoader.screen.TurnScreenOn();
         }
 
         instance.screenScene = sceneMetaData;
@@ -413,9 +411,9 @@ public class SceneTransitionManager : MonoBehaviour
 
         LightProbes.TetrahedralizeAsync();
 
-        if (instance.m_Screen != null)
+        if (sceneLoader.screen != null)
         {
-            instance.m_Screen.TurnScreenOff(() => { sceneMetaData.Root.SetActive(false); });
+            sceneLoader.screen.TurnScreenOff(() => { sceneMetaData.Root.SetActive(false); });
         }
     }
 
