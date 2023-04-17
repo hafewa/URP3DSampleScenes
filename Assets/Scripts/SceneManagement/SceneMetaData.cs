@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -14,6 +15,7 @@ public class SceneMetaData : MonoBehaviour
     public GameObject mainLight = null;
     public Material skybox = null;
     public Cubemap reflection = null;
+    [Tooltip("This is used if the scene loaded needs the player to be locked in place")]
     public Transform CameraLockTransform = null;
     public Transform SpawnTransform;
     public PlayableDirector Director;
@@ -22,6 +24,7 @@ public class SceneMetaData : MonoBehaviour
     public Scene Scene;
     public GameObject HubLoader;
     public bool FogEnabled;
+    public bool PostProcessingEnabled;
     public bool StartActive;
     
     void Start()

@@ -15096,7 +15096,8 @@ MonoBehaviour:
   Scene:
     m_Handle: 0
   HubLoader: {fileID: 0}
-  FogEnabled: 0
+  FogEnabled: 1
+  PostProcessingEnabled: 1
   StartActive: 1
 --- !u!4 &1317243099
 Transform:
@@ -17046,8 +17047,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f491b7d0e609d488f7a7bf05596657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OverrideTransition: 0
-  ManualTransition: 0
+  m_OverrideTransition: 0
+  m_ManualTransition: 0
   m_TransitionTime: 3
   locationLayer:
     serializedVersion: 2

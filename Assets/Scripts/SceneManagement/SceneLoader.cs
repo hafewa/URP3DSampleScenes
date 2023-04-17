@@ -19,7 +19,6 @@ public class SceneLoader : MonoBehaviour
 
     [SerializeField]
     private Volume m_DestinationVolume;
-    //Which screen to display on
 
     //Used for cinemachine transition
     [SerializeField] private bool m_SkipLoading;

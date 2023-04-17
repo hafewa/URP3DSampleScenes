@@ -11,10 +11,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransitionManager : MonoBehaviour
 {
-    public bool OverrideTransition;
-    [Range(0, 1)] public float ManualTransition;
-
-    public float m_TransitionTime;
+    [SerializeField] private bool m_OverrideTransition;
+    [SerializeField][Range(0, 1)] private float m_ManualTransition;
+    
+    [Tooltip("The amount of time it takes to transition between two scenes")]
+    [SerializeField] private float m_TransitionTime;
 
     private Camera m_MainCamera;
     private Camera m_ScreenCamera;
@@ -25,8 +26,11 @@ public class SceneTransitionManager : MonoBehaviour
 
     private static SceneTransitionManager instance;
 
+    [Tooltip("Layers to render when in a location")]
     [SerializeField] private LayerMask locationLayer;
+    [Tooltip("Layers to render when in the terminal")] //TODO: Rename all hub to terminal
     [SerializeField] private LayerMask hubLayer;
+    
     private bool InHub = true;
     private ScreenController m_Screen;
 
@@ -96,7 +100,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     void Update()
     {
-        float t = OverrideTransition ? ManualTransition : ElapsedTimeInTransition / m_TransitionTime;
+        float t = m_OverrideTransition ? m_ManualTransition : ElapsedTimeInTransition / m_TransitionTime;
 
         if (InTransition)
         {
@@ -152,6 +156,12 @@ public class SceneTransitionManager : MonoBehaviour
     void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera)
     {
         bool isMainCamera = camera.CompareTag("MainCamera");
+
+        if (!isMainCamera && screenScene == null)
+        {
+            //If no screen scene is loaded, no setup needs to be done for it
+            return;
+        }
         
         //Toggle main light
         ToggleMainLight(currentScene, isMainCamera);
@@ -207,37 +217,62 @@ public class SceneTransitionManager : MonoBehaviour
         if (!instance.currentScene || !instance.screenScene)
         {
             Debug.LogError("Can't teleport without two scenes enabled");
+            return;
         }
         
         instance.InHub = !instance.InHub;
-        
         instance.UpdateCullingMasks();
 
         //Swap Camera positions
-        Vector3 cameraPlayerOffset = instance.m_MainCamera.transform.position - instance.m_Player.transform.position;
-
-        OverlayPosition oc = instance.m_ScreenCamera.GetComponent<OverlayPosition>();
-
         Transform playerTransform = instance.m_Player.transform;
 
+        //Disable character controller while manipulating positions
         StarterAssets.FirstPersonController controller = playerTransform.GetComponent<StarterAssets.FirstPersonController>();
         controller.enabled = false;
 
-        if (instance.screenScene.CameraLockTransform == null) //TODO: Handle this for cockpit
+        bool newPositionLocked = instance.screenScene.CameraLockTransform != null;
+        bool comingFromLockedPosition = instance.currentScene.CameraLockTransform != null;
+
+        if (newPositionLocked)
         {
-            playerTransform.position = instance.m_ScreenCamera.transform.position - cameraPlayerOffset;
+            //Cache transform player before moving
+            instance.m_PositionAtLock = playerTransform.position;
+            instance.m_ParentAtLock = playerTransform.parent;
+            
+            //Set position, parent and rotation to new locked location
+            Transform cameraLockTransform = instance.screenScene.CameraLockTransform;
+            playerTransform.parent = cameraLockTransform;
+            playerTransform.position = cameraLockTransform.position;
+            playerTransform.rotation = cameraLockTransform.rotation;
+            
+            //Disable the player to prevent them from moving
+            instance.m_Player.enabled = false;
+            
+            instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = false; //TODO: this is hardcoded for the cockpit. Should probably be in the metadata
+        }
+        else
+        {
+            //Find the offset between the player camera and feet positions
+            Vector3 playerCameraOffset = instance.m_MainCamera.transform.position - instance.m_Player.transform.position;
+
+            //Position the player at the screen camera position
+            playerTransform.position = instance.m_ScreenCamera.transform.position - playerCameraOffset;
+            
+            //Toggle the offset of the screen camera to put it where the player used to be
+            OverlayPosition oc = instance.m_ScreenCamera.GetComponent<OverlayPosition>();
             oc.ToggleOffset();
             
-            if (instance.currentScene.CameraLockTransform != null)
+            //Reset transform if teleporting from a locked position
+            if (comingFromLockedPosition)
             {
                 playerTransform.position = instance.m_PositionAtLock;
                 playerTransform.parent = instance.m_ParentAtLock;
                 playerTransform.localRotation = Quaternion.identity;
                 playerTransform.GetChild(0).localRotation = Quaternion.identity;
+                instance.m_Player.enabled = true;
             }
             
-            instance.m_Player.enabled = true;
-
+            //Set the correct director to make the cinematic flythrough run on the new scene
             if (instance.screenScene.Director != null)
             {
                 instance.m_CameraManager.FlythroughDirector = instance.screenScene.Director;
@@ -245,37 +280,24 @@ public class SceneTransitionManager : MonoBehaviour
             
             instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true; //see same line in the locked transform case
         }
-        else
-        {
-            instance.m_PositionAtLock = playerTransform.position;
-            instance.m_ParentAtLock = playerTransform.parent;
-            
-            Transform cameraLockTransform = instance.screenScene.CameraLockTransform;
-            playerTransform.parent = cameraLockTransform;
-            playerTransform.position = cameraLockTransform.position;
-            playerTransform.rotation = cameraLockTransform.rotation;
+        
+        //Enable or disable post based on what the new scene needs
+        instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = instance.screenScene.PostProcessingEnabled;
 
-            instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = false; //TODO: this is hardcoded for the cockpit. Should probably be in the metadata
-
-            instance.m_Player.enabled = false;
-        }
-
+        //Reenable controller after teleporting
         controller.enabled = true;
-
+        
         SceneManager.SetActiveScene(instance.screenScene.Scene);
+        
+        //This is weird
         RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
 
+        //Swap references to screen and current scene
         (instance.screenScene, instance.currentScene) = (instance.currentScene, instance.screenScene);
 
-        if (instance.screenScene != null)
-        {
-            instance.SetHubLoaderAndDirector(instance.screenScene, false);
-        }
-
-        if (instance.currentScene != null)
-        {
-            instance.SetHubLoaderAndDirector(instance.currentScene, true);
-        }
+        //Setup hub loader so player can get back and reset the timeline director
+        instance.SetHubLoaderAndDirector(instance.screenScene, false);
+        instance.SetHubLoaderAndDirector(instance.currentScene, true);
     }
 
     private void UpdateCullingMasks()
@@ -325,8 +347,6 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //SceneManager.sceneLoaded += OnLocationFinishedLoading;
-        //SceneManager.sceneUnloaded += OnLocationFinishedUnloading;
         RenderPipelineManager.beginCameraRendering += OnBeginCameraRendering;
     }
 
