@@ -105,12 +105,13 @@ public class SceneTransitionManager : MonoBehaviour
             if (ElapsedTimeInTransition > m_TransitionTime)
             {
                 InTransition = false;
+                
                 if (m_Loader != null)
                 {
                     m_Loader.SetCurrentVolumeWeight(1);
                 }
 
-                if (m_MediaSceneLoader)
+                if (m_MediaSceneLoader) //check this some other way
                 {
                     CinemachineTeleport();
                 }
@@ -122,13 +123,13 @@ public class SceneTransitionManager : MonoBehaviour
                 m_Loader = null;
                 CoolingOff = true;
             }
-
-
+            
             ElapsedTimeInTransition = Mathf.Min(m_TransitionTime, ElapsedTimeInTransition);
         }
         else
         {
             ElapsedTimeInTransition -= Time.deltaTime * 3;
+            
             if (ElapsedTimeInTransition < 0 && CoolingOff)
             {
                 CoolingOff = false;
@@ -150,38 +151,23 @@ public class SceneTransitionManager : MonoBehaviour
     //TODO: Refactor this into calls to a function: SetupRenderSettings(SceneMetaData scene);
     void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera)
     {
-        if (camera.CompareTag("MainCamera"))
+        bool isMainCamera = camera.CompareTag("MainCamera");
+        
+        //Toggle main light
+        ToggleMainLight(currentScene, isMainCamera);
+        ToggleMainLight(screenScene, !isMainCamera);
+        
+        //Setup render settings
+        SceneMetaData sceneToRender = isMainCamera ? currentScene : screenScene;
+        RenderSettings.fog = sceneToRender.FogEnabled;
+        RenderSettings.skybox = sceneToRender.skybox;
+        if (sceneToRender.reflection != null)
         {
-            ToggleMainLight(currentScene, true);
-            ToggleMainLight(screenScene, false);
-
-            if (currentScene != null)
-            {
-                RenderSettings.skybox = currentScene.skybox;
-                if (currentScene.reflection != null)
-                {
-                    RenderSettings.customReflectionTexture = currentScene.reflection;
-                }
-            }
-
-            RenderSettings.fog = currentScene.FogEnabled;
+            RenderSettings.customReflectionTexture = sceneToRender.reflection;
         }
-        else if (camera.CompareTag("ScreenCamera"))
+
+        if (!isMainCamera)
         {
-            ToggleMainLight(currentScene, false);
-            ToggleMainLight(screenScene, true);
-
-            if (screenScene != null)
-            {
-                RenderSettings.skybox = screenScene.skybox;
-                if (screenScene.reflection != null)
-                {
-                    RenderSettings.customReflectionTexture = screenScene.reflection;
-                }
-                
-                RenderSettings.fog = screenScene.FogEnabled;
-            }
-
             camera.GetComponent<OverlayPosition>().UpdateWithOffset();
         }
     }
