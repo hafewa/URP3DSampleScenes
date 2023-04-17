@@ -27,7 +27,6 @@ public class SceneTransitionManager : MonoBehaviour
     [SerializeField] private LayerMask hubLayer;
     
     private bool InHub = true;
-    //private ScreenController m_Screen;
 
     private SceneLoader m_Loader;
 
@@ -52,17 +51,27 @@ public class SceneTransitionManager : MonoBehaviour
 
     void Awake()
     {
-        //Kill if already exists
+        SetupSingleton();
+        
+        SetupReferences();
+
+        SetupInitialState();
+    }
+
+    #region Awake
+    public void SetupSingleton()
+    {
         if (instance != null)
         {
             Destroy(gameObject);
             return;
         }
-
-        //Declare singleton
         instance = this;
         DontDestroyOnLoad(gameObject);
-        
+    }
+
+    public void SetupReferences()
+    {
         m_Player = GameObject.Find("PlayerCapsule")?.GetComponent<CharacterController>(); //TODO: Don't hardcode string
         if (m_Player == null)
         {
@@ -83,8 +92,10 @@ public class SceneTransitionManager : MonoBehaviour
         {
             Debug.Log("Couldn't find Screen Camera");
         }
+    }
 
-        //Setup initial state
+    public void SetupInitialState()
+    {
         InHub = true;
         m_InitialSceneLoad = true;
 
@@ -92,6 +103,7 @@ public class SceneTransitionManager : MonoBehaviour
         
         RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
     }
+    #endregion
 
     void Update()
     {
