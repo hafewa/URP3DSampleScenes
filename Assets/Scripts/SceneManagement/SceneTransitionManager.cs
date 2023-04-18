@@ -426,7 +426,7 @@ public class SceneTransitionManager : MonoBehaviour
         //Set the offset of the screen camera 
         if (sceneMetaData.SpawnTransform != null)
         {
-            instance.m_ScreenCamera.GetComponent<OverlayPosition>().SetOffst(
+            instance.m_ScreenCamera.GetComponent<OverlayPosition>().SetOffset(
                 sceneMetaData.SpawnTransform.position - instance.m_Loader.ReferencePoint.position);
         }
 

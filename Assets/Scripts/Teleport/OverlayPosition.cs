@@ -6,49 +6,39 @@ using UnityEngine;
 
 public class OverlayPosition : MonoBehaviour
 {
-    public Camera[] baseCam;
-    private Vector3 offset;
+    [Tooltip("The camera which this camera will follow with an offset")]
+    [SerializeField] private Camera m_MainCamera;
     
-    void LateUpdate()
+    private Vector3 m_Offset;
+    private Camera m_Camera;
+
+    private void Start()
     {
-        
+        m_Camera = GetComponent<Camera>();
     }
-    
-    
 
     public void ToggleOffset()
     {
-        offset = -offset;
-        
+        m_Offset = -m_Offset;
     }
 
-    public void SetOffst(Vector3 offset)
+    public void SetOffset(Vector3 offset)
     {
-        this.offset = offset;
+        m_Offset = offset;
     }
 
     public Vector3 GetOffset()
     {
-        return offset;
+        return m_Offset;
     }
 
     public void UpdateWithOffset()
     {
-        Camera activeCamera = GetActiveCamera();
-
-        transform.rotation = activeCamera.transform.rotation;
-        transform.position = activeCamera.transform.position + offset;
-        GetComponent<Camera>().fieldOfView = activeCamera.fieldOfView;
-    }
-
-    private Camera GetActiveCamera()
-    {
-        //TODO: THIS SHOULDNT BE A LIST! Base it on tags
-        for (int i = 0; i < baseCam.Length; i++)
-        {
-            if (baseCam[i].gameObject.activeInHierarchy) return baseCam[i];
-        }
-
-        throw new Exception("No base cam is currently active");
+        Transform thisTransform = transform;
+        Transform mainCamTransform = m_MainCamera.transform;
+        
+        thisTransform.rotation = mainCamTransform.rotation;
+        thisTransform.position = mainCamTransform.position + m_Offset;
+        m_Camera.fieldOfView = m_MainCamera.fieldOfView;
     }
 }
