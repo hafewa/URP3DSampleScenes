@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-public class OverlayPosition : MonoBehaviour
+public class OffsetCamera : MonoBehaviour
 {
     [Tooltip("The camera which this camera will follow with an offset")]
     [SerializeField] private Camera m_MainCamera;

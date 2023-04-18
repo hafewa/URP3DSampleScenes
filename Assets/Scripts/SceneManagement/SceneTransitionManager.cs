@@ -199,7 +199,7 @@ public class SceneTransitionManager : MonoBehaviour
 
         if (!isMainCamera)
         {
-            camera.GetComponent<OverlayPosition>().UpdateWithOffset();
+            camera.GetComponent<OffsetCamera>().UpdateWithOffset();
         }
     }
 
@@ -220,7 +220,7 @@ public class SceneTransitionManager : MonoBehaviour
 
         if (!instance.InHub)
         {
-            flythroughRoot.position = instance.m_ScreenCamera.GetComponent<OverlayPosition>().GetOffset();
+            flythroughRoot.position = instance.m_ScreenCamera.GetComponent<OffsetCamera>().GetOffset();
             instance.m_MediaSceneLoader.GetHubSceneLoader().SetCurrentVolume(instance.m_Loader.GetDestinationVolume());
             instance.screenScene.HubLoader.SetActive(true);
         }
@@ -280,7 +280,7 @@ public class SceneTransitionManager : MonoBehaviour
             playerTransform.position = instance.m_ScreenCamera.transform.position - playerCameraOffset;
             
             //Toggle the offset of the screen camera to put it where the player used to be
-            OverlayPosition oc = instance.m_ScreenCamera.GetComponent<OverlayPosition>();
+            OffsetCamera oc = instance.m_ScreenCamera.GetComponent<OffsetCamera>();
             oc.ToggleOffset();
             
             //Reset transform if teleporting from a locked position
@@ -426,7 +426,7 @@ public class SceneTransitionManager : MonoBehaviour
         //Set the offset of the screen camera 
         if (sceneMetaData.SpawnTransform != null)
         {
-            instance.m_ScreenCamera.GetComponent<OverlayPosition>().SetOffset(
+            instance.m_ScreenCamera.GetComponent<OffsetCamera>().SetOffset(
                 sceneMetaData.SpawnTransform.position - instance.m_Loader.ReferencePoint.position);
         }
 
