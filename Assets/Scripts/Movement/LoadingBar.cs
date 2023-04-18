@@ -1,26 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible for checking if the player is looking at the control panel hologram and triggering a transition if so
+/// </summary>
 public class LoadingBar : MonoBehaviour
 {
-    private GameObject BaseCam;
-    private Animator ControlPanelAnimator;
-
     [SerializeField] private bool m_Armed;
-    public Transform LookAtTransform;
-    public float ActivationDistance = 3;
-    public float LookSize;
-    
+    [SerializeField] private Transform m_LookAtTransform;
+    [SerializeField] private float m_ActivationDistance = 3;
+    [SerializeField] private float m_LookSize;
 
-    private bool Loading;
-    // Start is called before the first frame update
+    private bool m_Loading;
+    private GameObject m_BaseCam;
+    private Animator m_ControlPanelAnimator;
+    
+    
     void Start()
     {
         if(SceneTransitionManager.IsAvailable())
         {
-            BaseCam = SceneTransitionManager.GetMainCamera();
-            ControlPanelAnimator = GetComponent<Animator>();
+            m_BaseCam = SceneTransitionManager.GetMainCamera();
+            m_ControlPanelAnimator = GetComponent<Animator>();
         }
         else
         {
@@ -28,80 +28,87 @@ public class LoadingBar : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector3 cameraLookDirection = BaseCam.transform.forward;
-        Vector3 cameraPosition = BaseCam.transform.position;
+        Vector3 cameraLookDirection = m_BaseCam.transform.forward;
+        Vector3 cameraPosition = m_BaseCam.transform.position;
         
-        if(LookAtTransform != null)
+        UpdateRotation(cameraPosition);
+
+        if (m_Armed && PointOfViewWithinArea(cameraPosition, cameraLookDirection))
         {
-            var targetRotation = Quaternion.LookRotation(cameraPosition - LookAtTransform.position);
-
-            LookAtTransform.rotation = Quaternion.Slerp(LookAtTransform.rotation, targetRotation, 1 * Time.deltaTime);
-        }
-
-
-        float distance = Vector3.Distance(LookAtTransform.position, cameraPosition);
-        
-
-        if (distance < ActivationDistance && m_Armed)
-        {
-            float activationAngle = Mathf.Atan(LookSize * 0.5f / distance) * 57.2957f;
-
-            Vector3 directionToLoader = (LookAtTransform.position - BaseCam.transform.position).normalized;
-            if (Vector3.Angle(directionToLoader, cameraLookDirection) < activationAngle)
-            {
-                if (!Loading)
-                {
-                    Loading = true;
-                    StartLoading();
-                }
-            }
-            else if(Loading)
-            {
-                StopLoading();
-                Loading = false;
-            }
-        } else if(Loading)
+            StartLoading();
+        } else if (m_Loading)
         {
             StopLoading();
-            Loading = false;
         }
+    }
+
+    private void UpdateRotation(Vector3 cameraPosition)
+    {
+        if(m_LookAtTransform != null)
+        {
+            var targetRotation = Quaternion.LookRotation(cameraPosition - m_LookAtTransform.position);
+
+            m_LookAtTransform.rotation = Quaternion.Slerp(m_LookAtTransform.rotation, targetRotation, 1 * Time.deltaTime);
+        }
+    }
+
+    private bool PointOfViewWithinArea(Vector3 cameraPosition, Vector3 cameraLookDirection)
+    {
+        float distance = Vector3.Distance(m_LookAtTransform.position, cameraPosition);
+
+        if (distance > m_ActivationDistance) return false;
+        
+        float activationAngle = Mathf.Atan(m_LookSize * 0.5f / distance) * 57.2957f;
+        Vector3 directionToLoader = (m_LookAtTransform.position - m_BaseCam.transform.position).normalized;
+        
+        if (Vector3.Angle(directionToLoader, cameraLookDirection) < activationAngle)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void StartLoading()
     {
-        if (ControlPanelAnimator != null)
+        if (m_Loading) return;
+        
+        if (m_ControlPanelAnimator != null)
         {
-            ControlPanelAnimator.SetBool("Loading", true);
+            m_ControlPanelAnimator.SetBool("Loading", true);
         }
+        
+        m_Loading = true;
         
         SceneTransitionManager.StartTransition();
     }
 
     public void StopLoading()
     {
-        if (ControlPanelAnimator != null)
+        if (!m_Loading) return;
+        
+        if (m_ControlPanelAnimator != null)
         {
-            ControlPanelAnimator.SetBool("Loading", false);
+            m_ControlPanelAnimator.SetBool("Loading", false);
         }
         SceneTransitionManager.StopTransition();
     }
 
     public void TurnOn()
     {
-        if (ControlPanelAnimator != null)
+        if (m_ControlPanelAnimator != null)
         {
-            ControlPanelAnimator.SetBool("On", true);
+            m_ControlPanelAnimator.SetBool("On", true);
         }
     }
 
     public void TurnOff()
     {
-        if (ControlPanelAnimator != null)
+        if (m_ControlPanelAnimator != null)
         {
-            ControlPanelAnimator.SetBool("On", false);
+            m_ControlPanelAnimator.SetBool("On", false);
         }
     }
 }
