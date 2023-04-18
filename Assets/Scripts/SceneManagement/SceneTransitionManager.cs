@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransitionManager : MonoBehaviour
 {
+    [Tooltip("Enable to debug the transition effect")] //TODO: do we want to remove this? 
     [SerializeField] private bool m_OverrideTransition;
     [SerializeField][Range(0, 1)] private float m_ManualTransition;
     
@@ -48,6 +50,8 @@ public class SceneTransitionManager : MonoBehaviour
     
     //Used for cinemachine transition
     private MediaSceneLoader m_MediaSceneLoader;
+
+    private int m_TransitionAmountShaderProperty;
 
     void Awake()
     {
@@ -92,6 +96,8 @@ public class SceneTransitionManager : MonoBehaviour
         {
             Debug.Log("Couldn't find Screen Camera");
         }
+
+        m_TransitionAmountShaderProperty = Shader.PropertyToID("_TransitionAmount");
     }
 
     public void SetupInitialState()
@@ -115,24 +121,7 @@ public class SceneTransitionManager : MonoBehaviour
 
             if (ElapsedTimeInTransition > m_TransitionTime)
             {
-                InTransition = false;
-                
-                if (m_Loader != null)
-                {
-                    m_Loader.SetCurrentVolumeWeight(1);
-                }
-
-                if (m_MediaSceneLoader) //check this some other way
-                {
-                    CinemachineTeleport();
-                }
-                else
-                {
-                    Teleport();
-                }
-                
-                m_Loader = null;
-                CoolingOff = true;
+                TriggerTeleport();
             }
             
             ElapsedTimeInTransition = Mathf.Min(m_TransitionTime, ElapsedTimeInTransition);
@@ -149,17 +138,42 @@ public class SceneTransitionManager : MonoBehaviour
             ElapsedTimeInTransition = Mathf.Max(0, ElapsedTimeInTransition);
         }
 
+        //Update weights of post processing volumes
         if (m_Loader != null && !CoolingOff)
         {
             float tSquared = t * t;
-            m_Loader.SetCurrentVolumeWeight(1 - tSquared);
+            m_Loader.SetVolumeWeights(1 - tSquared);
         }
 
-        Shader.SetGlobalFloat("_TransitionAmount", t);
+        Shader.SetGlobalFloat(m_TransitionAmountShaderProperty, t);
     }
 
+    private void TriggerTeleport()
+    {
+        InTransition = false;
+                
+        if (m_Loader != null)
+        {
+            m_Loader.SetVolumeWeights(1);
+        }
+
+        if (m_MediaSceneLoader) //check this some other way
+        {
+            CinemachineTeleport();
+        }
+        else
+        {
+            Teleport();
+        }
+                
+        m_Loader = null;
+        CoolingOff = true;
+    }
     
-    //TODO: Refactor this into calls to a function: SetupRenderSettings(SceneMetaData scene);
+    /// <summary>
+    /// This function is called per camera by the render pipeline.
+    /// We use it to set up light and render settings (skybox etc) for the different scenes as they are displayed
+    /// </summary>
     void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera)
     {
         bool isMainCamera = camera.CompareTag("MainCamera");
@@ -366,6 +380,9 @@ public class SceneTransitionManager : MonoBehaviour
 
     #region Scene Loading
 
+    /// <summary>
+    /// This function is called by the metadata script to notify of its existence
+    /// </summary>
     public static void RegisterScene(string name, SceneMetaData metaData)
     {
         instance.registeredScenes.Add(name, metaData);
@@ -376,37 +393,50 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This function is called by the scene loader when the player enters its trigger
+    /// </summary>
     public static void EnableScene(SceneLoader sceneLoader)
     {
         SceneMetaData sceneMetaData = instance.registeredScenes[sceneLoader.SceneName];
+
+        if (sceneMetaData == null)
+        {
+            throw new Exception("Trying to enable unregistered scene");
+        }
 
         Debug.Log("Enabling this scene: " + sceneMetaData.Scene.name);
 
         instance.m_Loader = sceneLoader;
         instance.m_InitialSceneLoad = false;
+        instance.screenScene = sceneMetaData;
 
         LightProbes.TetrahedralizeAsync();
 
+        //Enable game objects
         sceneMetaData.Root.SetActive(true);
 
+        //Reset any director that needs to play
         if (sceneMetaData.Director != null)
         {
             sceneMetaData.Director.time = sceneMetaData.DirectorStartTime;
             sceneMetaData.Director.Play();
         }
 
+        //Set the offset of the screen camera 
         if (sceneMetaData.SpawnTransform != null)
         {
             instance.m_ScreenCamera.GetComponent<OverlayPosition>().SetOffst(
                 sceneMetaData.SpawnTransform.position - instance.m_Loader.ReferencePoint.position);
         }
 
+        //Switch on the screens
         if (sceneLoader.screen != null)
         {
             sceneLoader.screen.TurnScreenOn();
         }
 
-        instance.screenScene = sceneMetaData;
+        
     }
 
 
@@ -423,6 +453,7 @@ public class SceneTransitionManager : MonoBehaviour
 
         LightProbes.TetrahedralizeAsync();
 
+        //Turn off the screen and disable the root object in the scene once screen is completely shut off
         if (sceneLoader.screen != null)
         {
             sceneLoader.screen.TurnScreenOff(() => { sceneMetaData.Root.SetActive(false); });

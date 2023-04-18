@@ -75,7 +75,7 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public void SetCurrentVolumeWeight(float weight)
+    public void SetVolumeWeights(float weight)
     {
         if (m_CurrentVolume != null)
         {
