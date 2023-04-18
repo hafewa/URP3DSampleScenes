@@ -17,7 +17,7 @@ public class SceneTransitionManager : MonoBehaviour
     private Camera m_MainCamera;
     private Camera m_ScreenCamera;
     private CharacterController m_Player;
-    private PersistentPlayer m_CameraManager;
+    private PlayerManager m_CameraManager;
 
     private bool m_InitialSceneLoad;
 
@@ -82,7 +82,7 @@ public class SceneTransitionManager : MonoBehaviour
             Debug.Log("Couldn't find character controller");
         }
 
-        m_CameraManager = m_Player.transform.parent.GetComponent<PersistentPlayer>();
+        m_CameraManager = m_Player.transform.parent.GetComponent<PlayerManager>();
             
         m_MainCamera = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<Camera>();
 

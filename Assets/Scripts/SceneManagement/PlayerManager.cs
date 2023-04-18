@@ -1,23 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-public class PersistentPlayer : MonoBehaviour
+/// <summary>
+/// This class will enable the touch input canvas on handheld devices and will trigger the camera flythrough if the player is idle
+/// </summary>
+public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private bool m_FlythroughWhenIdle;
     [SerializeField] private float m_IdleTransitionTime;
-    public PlayableDirector FlythroughDirector;
     [SerializeField] private GameObject m_CrosshairCanvas;
     [SerializeField] private GameObject m_TouchInputCanvas;
+    
+    public PlayableDirector FlythroughDirector;
     
     private bool m_InFlythrough;
     private float m_TimeIdle;
     
-    // Start is called before the first frame update
     void Start()
     {
         m_InFlythrough = false;
@@ -28,7 +28,6 @@ public class PersistentPlayer : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -64,20 +63,6 @@ public class PersistentPlayer : MonoBehaviour
         m_CrosshairCanvas.SetActive(true);
         FlythroughDirector.gameObject.SetActive(false);
         m_InFlythrough = false;
-    }
-
-    public void ToggleController()
-    {
-        if (m_InFlythrough)
-        {
-            EnableFirstPersonController();
-        }
-        else
-        {
-            EnableFlythrough();
-        }
-        
-        
     }
 
     public void NotifyPlayerMoved()

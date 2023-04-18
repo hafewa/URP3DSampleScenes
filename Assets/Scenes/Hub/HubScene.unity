@@ -16185,8 +16185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f43f8f36f48f284dbd4ee65ea93bd08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GardenSceneLoader: {fileID: 1424884228}
-  CockpitSceneLoader: {fileID: 90308321}
+  m_GardenSceneLoader: {fileID: 1424884228}
+  m_CockpitSceneLoader: {fileID: 90308321}
 --- !u!114 &1391890563
 MonoBehaviour:
   m_ObjectHideFlags: 0
