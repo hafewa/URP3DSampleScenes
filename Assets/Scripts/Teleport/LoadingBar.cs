@@ -54,6 +54,7 @@ public class LoadingBar : MonoBehaviour
         }
     }
 
+    //This function determines if the player is close enough and looking at the hologram
     private bool PointOfViewWithinArea(Vector3 cameraPosition, Vector3 cameraLookDirection)
     {
         float distance = Vector3.Distance(m_LookAtTransform.position, cameraPosition);
@@ -93,6 +94,9 @@ public class LoadingBar : MonoBehaviour
         {
             m_ControlPanelAnimator.SetBool("Loading", false);
         }
+
+        m_Loading = false;
+        
         SceneTransitionManager.StopTransition();
     }
 

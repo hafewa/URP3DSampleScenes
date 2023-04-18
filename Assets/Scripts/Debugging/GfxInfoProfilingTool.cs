@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 using System;
 using Unity.Profiling;
 
+//TODO: This is a internally maintained debugging script and should not be shipped with the sample
+
 #if UNITY_EDITOR
 using UnityEditorInternal;
 using UnityEditor;
