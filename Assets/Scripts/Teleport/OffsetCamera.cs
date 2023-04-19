@@ -30,11 +30,10 @@ public class OffsetCamera : MonoBehaviour
 
     public void UpdateWithOffset()
     {
-        Transform thisTransform = transform;
         Transform mainCamTransform = m_MainCamera.transform;
+
+        transform.SetPositionAndRotation(mainCamTransform.position + m_Offset, mainCamTransform.rotation);
         
-        thisTransform.rotation = mainCamTransform.rotation;
-        thisTransform.position = mainCamTransform.position + m_Offset;
         m_Camera.fieldOfView = m_MainCamera.fieldOfView;
     }
 }
