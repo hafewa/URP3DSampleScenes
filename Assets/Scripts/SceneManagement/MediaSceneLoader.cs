@@ -1,44 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class relegates signals dispatched from the camera flythrough timeline
+/// </summary>
 public class MediaSceneLoader : MonoBehaviour
 {
-    public SceneLoader GardenSceneLoader;
-    public SceneLoader CockpitSceneLoader;
-    private SceneLoader HubSceneLoader;
+    [SerializeField] private SceneLoader m_GardenSceneLoader;
+    [SerializeField] private SceneLoader m_CockpitSceneLoader;
     
-    private
+    private SceneLoader HubSceneLoader;
 
-    // Start is called before the first frame update
     void Start()
     {
         HubSceneLoader = GetComponent<SceneLoader>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void EnableGarden()
     {
-        GardenSceneLoader.EnableScene();
+        m_GardenSceneLoader.EnableScene();
     }
 
     public void DisableGarden()
     {
-        GardenSceneLoader.DisableScene();
+        m_GardenSceneLoader.DisableScene();
     }
 
     public void EnableCockpit()
     {
-        CockpitSceneLoader.EnableScene();
+        m_CockpitSceneLoader.EnableScene();
     }
 
     public void DisableCockpit()
     {
-        CockpitSceneLoader.DisableScene();
+        m_CockpitSceneLoader.DisableScene();
     }
 
     public void EnableHub()
@@ -56,4 +49,5 @@ public class MediaSceneLoader : MonoBehaviour
     {
         return HubSceneLoader;
     }
+    
 }

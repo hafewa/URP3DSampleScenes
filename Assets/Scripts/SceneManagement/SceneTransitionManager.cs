@@ -1,34 +1,34 @@
 using System;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public class SceneTransitionManager : MonoBehaviour
 {
-    public bool OverrideTransition;
-    [Range(0, 1)] public float ManualTransition;
-
-    public float m_TransitionTime;
+    [Tooltip("Enable to debug the transition effect")] //TODO: do we want to remove this? 
+    [SerializeField] private bool m_OverrideTransition;
+    [SerializeField][Range(0, 1)] private float m_ManualTransition;
+    
+    [Tooltip("The amount of time it takes to transition between two scenes")]
+    [SerializeField] private float m_TransitionTime;
 
     private Camera m_MainCamera;
     private Camera m_ScreenCamera;
     private CharacterController m_Player;
-    private PersistentPlayer m_CameraManager;
+    private PlayerManager m_CameraManager;
 
     private bool m_InitialSceneLoad;
 
     private static SceneTransitionManager instance;
 
+    [Tooltip("Layers to render when in a location")]
     [SerializeField] private LayerMask locationLayer;
+    [Tooltip("Layers to render when in the terminal")] //TODO: Rename all hub to terminal
     [SerializeField] private LayerMask hubLayer;
+    
     private bool InHub = true;
-    private ScreenController m_Screen;
 
     private SceneLoader m_Loader;
 
@@ -51,26 +51,38 @@ public class SceneTransitionManager : MonoBehaviour
     //Used for cinemachine transition
     private MediaSceneLoader m_MediaSceneLoader;
 
+    private int m_TransitionAmountShaderProperty;
+
     void Awake()
     {
-        //Kill if already exists
+        SetupSingleton();
+        
+        SetupReferences();
+
+        SetupInitialState();
+    }
+
+    #region Awake
+    public void SetupSingleton()
+    {
         if (instance != null)
         {
             Destroy(gameObject);
             return;
         }
-
-        //Declare singleton
         instance = this;
         DontDestroyOnLoad(gameObject);
-        
+    }
+
+    public void SetupReferences()
+    {
         m_Player = GameObject.Find("PlayerCapsule")?.GetComponent<CharacterController>(); //TODO: Don't hardcode string
         if (m_Player == null)
         {
             Debug.Log("Couldn't find character controller");
         }
 
-        m_CameraManager = m_Player.transform.parent.GetComponent<PersistentPlayer>();
+        m_CameraManager = m_Player.transform.parent.GetComponent<PlayerManager>();
             
         m_MainCamera = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<Camera>();
 
@@ -85,7 +97,11 @@ public class SceneTransitionManager : MonoBehaviour
             Debug.Log("Couldn't find Screen Camera");
         }
 
-        //Setup initial state
+        m_TransitionAmountShaderProperty = Shader.PropertyToID("_TransitionAmount");
+    }
+
+    public void SetupInitialState()
+    {
         InHub = true;
         m_InitialSceneLoad = true;
 
@@ -93,10 +109,11 @@ public class SceneTransitionManager : MonoBehaviour
         
         RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
     }
+    #endregion
 
     void Update()
     {
-        float t = OverrideTransition ? ManualTransition : ElapsedTimeInTransition / m_TransitionTime;
+        float t = m_OverrideTransition ? m_ManualTransition : ElapsedTimeInTransition / m_TransitionTime;
 
         if (InTransition)
         {
@@ -104,31 +121,15 @@ public class SceneTransitionManager : MonoBehaviour
 
             if (ElapsedTimeInTransition > m_TransitionTime)
             {
-                InTransition = false;
-                if (m_Loader != null)
-                {
-                    m_Loader.SetCurrentVolumeWeight(1);
-                }
-
-                if (m_MediaSceneLoader)
-                {
-                    CinemachineTeleport();
-                }
-                else
-                {
-                    Teleport();
-                }
-                
-                m_Loader = null;
-                CoolingOff = true;
+                TriggerTeleport();
             }
-
-
+            
             ElapsedTimeInTransition = Mathf.Min(m_TransitionTime, ElapsedTimeInTransition);
         }
         else
         {
             ElapsedTimeInTransition -= Time.deltaTime * 3;
+            
             if (ElapsedTimeInTransition < 0 && CoolingOff)
             {
                 CoolingOff = false;
@@ -137,52 +138,68 @@ public class SceneTransitionManager : MonoBehaviour
             ElapsedTimeInTransition = Mathf.Max(0, ElapsedTimeInTransition);
         }
 
+        //Update weights of post processing volumes
         if (m_Loader != null && !CoolingOff)
         {
             float tSquared = t * t;
-            m_Loader.SetCurrentVolumeWeight(1 - tSquared);
+            m_Loader.SetVolumeWeights(1 - tSquared);
         }
 
-        Shader.SetGlobalFloat("_TransitionAmount", t);
+        Shader.SetGlobalFloat(m_TransitionAmountShaderProperty, t);
     }
 
+    private void TriggerTeleport()
+    {
+        InTransition = false;
+                
+        if (m_Loader != null)
+        {
+            m_Loader.SetVolumeWeights(1);
+        }
+
+        if (m_MediaSceneLoader) //check this some other way
+        {
+            CinemachineTeleport();
+        }
+        else
+        {
+            Teleport();
+        }
+                
+        m_Loader = null;
+        CoolingOff = true;
+    }
     
-    //TODO: Refactor this into calls to a function: SetupRenderSettings(SceneMetaData scene);
+    /// <summary>
+    /// This function is called per camera by the render pipeline.
+    /// We use it to set up light and render settings (skybox etc) for the different scenes as they are displayed
+    /// </summary>
     void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera)
     {
-        if (camera.CompareTag("MainCamera"))
+        bool isMainCamera = camera.CompareTag("MainCamera");
+
+        if (!isMainCamera && screenScene == null)
         {
-            ToggleMainLight(currentScene, true);
-            ToggleMainLight(screenScene, false);
-
-            if (currentScene != null)
-            {
-                RenderSettings.skybox = currentScene.skybox;
-                if (currentScene.reflection != null)
-                {
-                    RenderSettings.customReflectionTexture = currentScene.reflection;
-                }
-            }
-
-            RenderSettings.fog = currentScene.FogEnabled;
+            //If no screen scene is loaded, no setup needs to be done for it
+            return;
         }
-        else if (camera.CompareTag("ScreenCamera"))
+        
+        //Toggle main light
+        ToggleMainLight(currentScene, isMainCamera);
+        ToggleMainLight(screenScene, !isMainCamera);
+        
+        //Setup render settings
+        SceneMetaData sceneToRender = isMainCamera ? currentScene : screenScene;
+        RenderSettings.fog = sceneToRender.FogEnabled;
+        RenderSettings.skybox = sceneToRender.skybox;
+        if (sceneToRender.reflection != null)
         {
-            ToggleMainLight(currentScene, false);
-            ToggleMainLight(screenScene, true);
+            RenderSettings.customReflectionTexture = sceneToRender.reflection;
+        }
 
-            if (screenScene != null)
-            {
-                RenderSettings.skybox = screenScene.skybox;
-                if (screenScene.reflection != null)
-                {
-                    RenderSettings.customReflectionTexture = screenScene.reflection;
-                }
-                
-                RenderSettings.fog = screenScene.FogEnabled;
-            }
-
-            camera.GetComponent<OverlayPosition>().UpdateWithOffset();
+        if (!isMainCamera)
+        {
+            camera.GetComponent<OffsetCamera>().UpdateWithOffset();
         }
     }
 
@@ -203,7 +220,7 @@ public class SceneTransitionManager : MonoBehaviour
 
         if (!instance.InHub)
         {
-            flythroughRoot.position = instance.m_ScreenCamera.GetComponent<OverlayPosition>().GetOffset();
+            flythroughRoot.position = instance.m_ScreenCamera.GetComponent<OffsetCamera>().GetOffset();
             instance.m_MediaSceneLoader.GetHubSceneLoader().SetCurrentVolume(instance.m_Loader.GetDestinationVolume());
             instance.screenScene.HubLoader.SetActive(true);
         }
@@ -221,37 +238,62 @@ public class SceneTransitionManager : MonoBehaviour
         if (!instance.currentScene || !instance.screenScene)
         {
             Debug.LogError("Can't teleport without two scenes enabled");
+            return;
         }
         
         instance.InHub = !instance.InHub;
-        
         instance.UpdateCullingMasks();
 
         //Swap Camera positions
-        Vector3 cameraPlayerOffset = instance.m_MainCamera.transform.position - instance.m_Player.transform.position;
-
-        OverlayPosition oc = instance.m_ScreenCamera.GetComponent<OverlayPosition>();
-
         Transform playerTransform = instance.m_Player.transform;
 
+        //Disable character controller while manipulating positions
         StarterAssets.FirstPersonController controller = playerTransform.GetComponent<StarterAssets.FirstPersonController>();
         controller.enabled = false;
 
-        if (instance.screenScene.CameraLockTransform == null) //TODO: Handle this for cockpit
+        bool newPositionLocked = instance.screenScene.CameraLockTransform != null;
+        bool comingFromLockedPosition = instance.currentScene.CameraLockTransform != null;
+
+        if (newPositionLocked)
         {
-            playerTransform.position = instance.m_ScreenCamera.transform.position - cameraPlayerOffset;
+            //Cache transform player before moving
+            instance.m_PositionAtLock = playerTransform.position;
+            instance.m_ParentAtLock = playerTransform.parent;
+            
+            //Set position, parent and rotation to new locked location
+            Transform cameraLockTransform = instance.screenScene.CameraLockTransform;
+            playerTransform.parent = cameraLockTransform;
+            playerTransform.position = cameraLockTransform.position;
+            playerTransform.rotation = cameraLockTransform.rotation;
+            
+            //Disable the player to prevent them from moving
+            instance.m_Player.enabled = false;
+            
+            instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = false; //TODO: this is hardcoded for the cockpit. Should probably be in the metadata
+        }
+        else
+        {
+            //Find the offset between the player camera and feet positions
+            Vector3 playerCameraOffset = instance.m_MainCamera.transform.position - instance.m_Player.transform.position;
+
+            //Position the player at the screen camera position
+            playerTransform.position = instance.m_ScreenCamera.transform.position - playerCameraOffset;
+            
+            //Toggle the offset of the screen camera to put it where the player used to be
+            OffsetCamera oc = instance.m_ScreenCamera.GetComponent<OffsetCamera>();
             oc.ToggleOffset();
             
-            if (instance.currentScene.CameraLockTransform != null)
+            //Reset transform if teleporting from a locked position
+            if (comingFromLockedPosition)
             {
                 playerTransform.position = instance.m_PositionAtLock;
                 playerTransform.parent = instance.m_ParentAtLock;
                 playerTransform.localRotation = Quaternion.identity;
                 playerTransform.GetChild(0).localRotation = Quaternion.identity;
+                instance.m_Player.enabled = true;
             }
             
-            instance.m_Player.enabled = true;
-
+            //Set the correct director to make the cinematic flythrough run on the new scene
             if (instance.screenScene.Director != null)
             {
                 instance.m_CameraManager.FlythroughDirector = instance.screenScene.Director;
@@ -259,37 +301,24 @@ public class SceneTransitionManager : MonoBehaviour
             
             instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true; //see same line in the locked transform case
         }
-        else
-        {
-            instance.m_PositionAtLock = playerTransform.position;
-            instance.m_ParentAtLock = playerTransform.parent;
-            
-            Transform cameraLockTransform = instance.screenScene.CameraLockTransform;
-            playerTransform.parent = cameraLockTransform;
-            playerTransform.position = cameraLockTransform.position;
-            playerTransform.rotation = cameraLockTransform.rotation;
+        
+        //Enable or disable post based on what the new scene needs
+        instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = instance.screenScene.PostProcessingEnabled;
 
-            instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = false; //TODO: this is hardcoded for the cockpit. Should probably be in the metadata
-
-            instance.m_Player.enabled = false;
-        }
-
+        //Reenable controller after teleporting
         controller.enabled = true;
-
+        
         SceneManager.SetActiveScene(instance.screenScene.Scene);
+        
+        //This is weird
         RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
 
+        //Swap references to screen and current scene
         (instance.screenScene, instance.currentScene) = (instance.currentScene, instance.screenScene);
 
-        if (instance.screenScene != null)
-        {
-            instance.SetHubLoaderAndDirector(instance.screenScene, false);
-        }
-
-        if (instance.currentScene != null)
-        {
-            instance.SetHubLoaderAndDirector(instance.currentScene, true);
-        }
+        //Setup hub loader so player can get back and reset the timeline director
+        instance.SetHubLoaderAndDirector(instance.screenScene, false);
+        instance.SetHubLoaderAndDirector(instance.currentScene, true);
     }
 
     private void UpdateCullingMasks()
@@ -339,8 +368,6 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //SceneManager.sceneLoaded += OnLocationFinishedLoading;
-        //SceneManager.sceneUnloaded += OnLocationFinishedUnloading;
         RenderPipelineManager.beginCameraRendering += OnBeginCameraRendering;
     }
 
@@ -353,6 +380,9 @@ public class SceneTransitionManager : MonoBehaviour
 
     #region Scene Loading
 
+    /// <summary>
+    /// This function is called by the metadata script to notify of its existence
+    /// </summary>
     public static void RegisterScene(string name, SceneMetaData metaData)
     {
         instance.registeredScenes.Add(name, metaData);
@@ -363,39 +393,50 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This function is called by the scene loader when the player enters its trigger
+    /// </summary>
     public static void EnableScene(SceneLoader sceneLoader)
     {
         SceneMetaData sceneMetaData = instance.registeredScenes[sceneLoader.SceneName];
 
+        if (sceneMetaData == null)
+        {
+            throw new Exception("Trying to enable unregistered scene");
+        }
+
         Debug.Log("Enabling this scene: " + sceneMetaData.Scene.name);
 
         instance.m_Loader = sceneLoader;
-        instance.m_Screen = sceneLoader.screen;
         instance.m_InitialSceneLoad = false;
-        //instance.m_ScreenCamera.GetComponent<ScreenCamera>().UpdateTarget();
+        instance.screenScene = sceneMetaData;
 
         LightProbes.TetrahedralizeAsync();
 
+        //Enable game objects
         sceneMetaData.Root.SetActive(true);
 
+        //Reset any director that needs to play
         if (sceneMetaData.Director != null)
         {
             sceneMetaData.Director.time = sceneMetaData.DirectorStartTime;
             sceneMetaData.Director.Play();
         }
 
+        //Set the offset of the screen camera 
         if (sceneMetaData.SpawnTransform != null)
         {
-            instance.m_ScreenCamera.GetComponent<OverlayPosition>().SetOffst(
+            instance.m_ScreenCamera.GetComponent<OffsetCamera>().SetOffset(
                 sceneMetaData.SpawnTransform.position - instance.m_Loader.ReferencePoint.position);
         }
 
-        if (instance.m_Screen != null)
+        //Switch on the screens
+        if (sceneLoader.screen != null)
         {
-            instance.m_Screen.TurnScreenOn();
+            sceneLoader.screen.TurnScreenOn();
         }
 
-        instance.screenScene = sceneMetaData;
+        
     }
 
 
@@ -412,9 +453,10 @@ public class SceneTransitionManager : MonoBehaviour
 
         LightProbes.TetrahedralizeAsync();
 
-        if (instance.m_Screen != null)
+        //Turn off the screen and disable the root object in the scene once screen is completely shut off
+        if (sceneLoader.screen != null)
         {
-            instance.m_Screen.TurnScreenOff(() => { sceneMetaData.Root.SetActive(false); });
+            sceneLoader.screen.TurnScreenOff(() => { sceneMetaData.Root.SetActive(false); });
         }
     }
 

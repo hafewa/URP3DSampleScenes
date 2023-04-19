@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// This script sets the scene up correctly if it is loaded from the hub
+/// This script has metadata needed for multi scene rendering and teleporting
+/// It also registers the scene in the scene transition manager
 /// </summary>
 public class SceneMetaData : MonoBehaviour
 {
+    //TODO: Rewrite to use properties with correct getters and setters? Not sure if this is possible while exposing them in the editor. Maybe we need a custom editor.
     public GameObject mainLight = null;
     public Material skybox = null;
     public Cubemap reflection = null;
+    [Tooltip("This is used if the scene loaded needs the player to be locked in place")]
     public Transform CameraLockTransform = null;
     public Transform SpawnTransform;
     public PlayableDirector Director;
@@ -20,9 +24,9 @@ public class SceneMetaData : MonoBehaviour
     public Scene Scene;
     public GameObject HubLoader;
     public bool FogEnabled;
+    public bool PostProcessingEnabled;
     public bool StartActive;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         if(SceneTransitionManager.IsAvailable())
@@ -33,9 +37,10 @@ public class SceneMetaData : MonoBehaviour
 
     private void SetUp()
     {
-        Scene scene = gameObject.scene;
+        Scene = gameObject.scene;
 
-        foreach (var go in scene.GetRootGameObjects())
+        //Disable objects that shouldn't be used in a multi scene setup
+        foreach (var go in Scene.GetRootGameObjects())
         {
             if (go != gameObject && !(go == Root && StartActive))
             {
@@ -43,7 +48,7 @@ public class SceneMetaData : MonoBehaviour
             }
         }
         
-        SceneTransitionManager.RegisterScene(scene.name, this);
-        Scene = scene;
+        //Register scene
+        SceneTransitionManager.RegisterScene(Scene.name, this);
     }
 }

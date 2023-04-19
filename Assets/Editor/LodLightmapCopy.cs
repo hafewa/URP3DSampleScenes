@@ -52,7 +52,6 @@ class LodLightmapCopy : IProcessSceneWithReport
     {
         if(!m_enabled) return;
         if(Debug.isDebugBuild)
-            //Debug.Log("Baking LOD Lightmap values");
         
         //TODO: See if GameObject.FindObjectsOfType<LODGroup>(); works
 

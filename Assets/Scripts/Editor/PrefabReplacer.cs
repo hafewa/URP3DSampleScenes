@@ -4,6 +4,11 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// This class was used to replace speed tree assets with prefabs.
+/// It probably has no more use and should be removed before releasing
+/// TODO: Remove
+/// </summary>
 [ExecuteInEditMode]
 public class PrefabReplacer : MonoBehaviour
 {

@@ -426,9 +426,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Armed: 0
-  LookAtTransform: {fileID: 566520998}
-  ActivationDistance: 3
-  LookSize: 0.3
+  m_LookAtTransform: {fileID: 566520998}
+  m_ActivationDistance: 3
+  m_LookSize: 0.3
 --- !u!1 &1707259550875150853
 GameObject:
   m_ObjectHideFlags: 0

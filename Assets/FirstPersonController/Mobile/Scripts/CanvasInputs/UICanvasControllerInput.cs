@@ -8,7 +8,7 @@ namespace StarterAssets
         [Header("Output")]
         public StarterAssetsInputs starterAssetsInputs;
 
-        public PersistentPlayer CameraManager;
+        public PlayerManager CameraManager;
 
         public void VirtualMoveInput(Vector2 virtualMoveDirection)
         {

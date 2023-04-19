@@ -15096,7 +15096,8 @@ MonoBehaviour:
   Scene:
     m_Handle: 0
   HubLoader: {fileID: 0}
-  FogEnabled: 0
+  FogEnabled: 1
+  PostProcessingEnabled: 1
   StartActive: 1
 --- !u!4 &1317243099
 Transform:
@@ -16184,8 +16185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f43f8f36f48f284dbd4ee65ea93bd08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GardenSceneLoader: {fileID: 1424884228}
-  CockpitSceneLoader: {fileID: 90308321}
+  m_GardenSceneLoader: {fileID: 1424884228}
+  m_CockpitSceneLoader: {fileID: 90308321}
 --- !u!114 &1391890563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17046,8 +17047,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f491b7d0e609d488f7a7bf05596657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OverrideTransition: 0
-  ManualTransition: 0
+  m_OverrideTransition: 0
+  m_ManualTransition: 0
   m_TransitionTime: 3
   locationLayer:
     serializedVersion: 2
@@ -17259,6 +17260,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!20 &1528411196 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7019485897165914677, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
+  m_PrefabInstance: {fileID: 2760477044720773439}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1531143789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26461,6 +26467,10 @@ PrefabInstance:
       propertyPath: m_RendererIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2760477045267651028, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
+      propertyPath: m_MainCamera
+      value: 
+      objectReference: {fileID: 1528411196}
     - target: {fileID: 2760477045267651029, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_RenderTextureScale
       value: 0.7
@@ -27795,6 +27805,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2023108639}
     m_Modifications:
+    - target: {fileID: 397474990948355157, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 603079565285895860, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 605755617409656619, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1564844724050862371, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -27839,9 +27861,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1568937481013096685, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2232836883644316569, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
       propertyPath: m_Name
       value: UnityMaterialBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2232836883644316569, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290714594347227714, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3872547190043008069, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753206978877264486, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5503986677662863552, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6472894851789489186, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6821677627522911576, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7787128271584869103, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8138567745281780935, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014133036303356832, guid: be6723dee4d12b847a6319622d6e740a, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

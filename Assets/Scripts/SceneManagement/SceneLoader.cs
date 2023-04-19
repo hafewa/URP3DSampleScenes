@@ -1,7 +1,3 @@
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -19,7 +15,6 @@ public class SceneLoader : MonoBehaviour
 
     [SerializeField]
     private Volume m_DestinationVolume;
-    //Which screen to display on
 
     //Used for cinemachine transition
     [SerializeField] private bool m_SkipLoading;
@@ -76,7 +71,7 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public void SetCurrentVolumeWeight(float weight)
+    public void SetVolumeWeights(float weight)
     {
         if (m_CurrentVolume != null)
         {
