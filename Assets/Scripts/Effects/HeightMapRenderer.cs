@@ -74,8 +74,6 @@ public class HeightMapRenderer : MonoBehaviour
         WriteRenderTextureToPNG(rt, m_Path);
 
         SetImportSettings(m_Path);
-
-        SetShaderProperties();
     }
 
     void WriteRenderTextureToPNG(RenderTexture rt, string path)
@@ -94,14 +92,6 @@ public class HeightMapRenderer : MonoBehaviour
 
         File.WriteAllBytes(absolutePath, bytes);
         AssetDatabase.Refresh();
-    }
-
-    void SetShaderProperties()
-    {
-        string assetsPath = "Assets/" + m_Path;
-        
-        Texture2D textureAsset = AssetDatabase.LoadAssetAtPath<Texture2D>(assetsPath);
-        Shader.SetGlobalTexture("_Heightmap", textureAsset);
     }
 
     void SetImportSettings(string path)
