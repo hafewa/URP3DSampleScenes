@@ -1,58 +1,56 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Remoting.Contexts;
-using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using Object = System.Object;
 
 [ExecuteInEditMode]
 public class HeightMapRenderer : MonoBehaviour
 {
     public string m_Path;
     public float m_Size;
-    public Vector2 m_HeightBounds;
     public int m_Resolution;
-
     public LayerMask m_CullingMask;
 
-    private RenderTexture temporaryTexture;
+    private RenderTexture m_TemporaryTexture;
     private Camera m_HeightmapCamera;
 
     public void RenderHeightMap()
     {
-        if (temporaryTexture != null)
+        if (m_TemporaryTexture != null)
         {
-            DestroyImmediate(temporaryTexture);
-            temporaryTexture = null;
+            DestroyImmediate(m_TemporaryTexture);
+            m_TemporaryTexture = null;
         }
-        temporaryTexture = new RenderTexture(m_Resolution, m_Resolution, GraphicsFormat.B10G11R11_UFloatPack32,
+        m_TemporaryTexture = new RenderTexture(m_Resolution, m_Resolution, GraphicsFormat.B10G11R11_UFloatPack32,
             GraphicsFormat.D24_UNorm_S8_UInt);
 
         if (m_HeightmapCamera == null)
         {
-            GameObject cameraGO = new GameObject("[Heightmap Camera]");
-            cameraGO.transform.parent = transform;
-            cameraGO.hideFlags = HideFlags.HideAndDontSave;
-
-            cameraGO.transform.localPosition = new Vector3(0, 100, 0);
-            cameraGO.transform.SetLocalPositionAndRotation(new Vector3(0, 100, 0), Quaternion.Euler(90, 0, 0));
-            m_HeightmapCamera = cameraGO.AddComponent<Camera>();
-            m_HeightmapCamera.AddComponent<UniversalAdditionalCameraData>().SetRenderer(2);
-            m_HeightmapCamera.enabled = false;
+            CreateHeightmapCamera();
         }
+        
         m_HeightmapCamera.orthographic = true;
         m_HeightmapCamera.orthographicSize = m_Size * 0.5f;
         m_HeightmapCamera.cullingMask = m_CullingMask;
 
-        m_HeightmapCamera.targetTexture = temporaryTexture;
+        m_HeightmapCamera.targetTexture = m_TemporaryTexture;
         m_HeightmapCamera.Render();
+    }
+
+    private void CreateHeightmapCamera()
+    {
+        GameObject cameraGO = new GameObject("[Heightmap Camera]");
+        cameraGO.transform.parent = transform;
+        cameraGO.hideFlags = HideFlags.HideAndDontSave;
+
+        cameraGO.transform.localPosition = new Vector3(0, 100, 0);
+        cameraGO.transform.SetLocalPositionAndRotation(new Vector3(0, 100, 0), Quaternion.Euler(90, 0, 0));
+        m_HeightmapCamera = cameraGO.AddComponent<Camera>();
+        m_HeightmapCamera.AddComponent<UniversalAdditionalCameraData>().SetRenderer(2); //TODO: Can we avoid this somehow?
+        m_HeightmapCamera.enabled = false;
     }
 
     private void OnEnable()
@@ -108,11 +106,6 @@ public class HeightMapRenderer : MonoBehaviour
 [CustomEditor(typeof(HeightMapRenderer))]
 public class HeightMapRendererEditor : Editor
 {
-    
-    void OnEnable()
-    {
-    }
-
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
@@ -123,6 +116,4 @@ public class HeightMapRendererEditor : Editor
             renderer.RenderHeightMap();
         }
     }
-    
-    
 }
