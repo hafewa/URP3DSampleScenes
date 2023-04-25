@@ -39,7 +39,7 @@ public class HeightMapRenderer : MonoBehaviour
         {
             GameObject cameraGO = new GameObject("[Heightmap Camera]");
             cameraGO.transform.parent = transform;
-            cameraGO.hideFlags = HideFlags.NotEditable;
+            cameraGO.hideFlags = HideFlags.HideAndDontSave;
 
             cameraGO.transform.localPosition = new Vector3(0, 100, 0);
             cameraGO.transform.SetLocalPositionAndRotation(new Vector3(0, 100, 0), Quaternion.Euler(90, 0, 0));
