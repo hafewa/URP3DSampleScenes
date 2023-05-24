@@ -53,6 +53,8 @@ public class SceneTransitionManager : MonoBehaviour
 
     private int m_TransitionAmountShaderProperty;
 
+    private bool m_ScreenOff;
+
     void Awake()
     {
         SetupSingleton();
@@ -97,6 +99,8 @@ public class SceneTransitionManager : MonoBehaviour
             Debug.Log("Couldn't find Screen Camera");
         }
 
+        m_ScreenCamera.GetComponent<Camera>().enabled = false;
+
         m_TransitionAmountShaderProperty = Shader.PropertyToID("_TransitionAmount");
     }
 
@@ -106,6 +110,8 @@ public class SceneTransitionManager : MonoBehaviour
         m_InitialSceneLoad = true;
 
         registeredScenes = new Dictionary<string, SceneMetaData>();
+
+        m_ScreenOff = true;
         
         RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
     }
@@ -435,8 +441,9 @@ public class SceneTransitionManager : MonoBehaviour
         {
             sceneLoader.screen.TurnScreenOn();
         }
-
         
+        instance.m_ScreenCamera.GetComponent<Camera>().enabled = true;
+        instance.m_ScreenOff = false;
     }
 
 
@@ -456,8 +463,18 @@ public class SceneTransitionManager : MonoBehaviour
         //Turn off the screen and disable the root object in the scene once screen is completely shut off
         if (sceneLoader.screen != null)
         {
-            sceneLoader.screen.TurnScreenOff(() => { sceneMetaData.Root.SetActive(false); });
+            sceneLoader.screen.TurnScreenOff(() =>
+            {
+                if (instance.m_ScreenOff)
+                {
+                    sceneMetaData.Root.SetActive(false);
+                    instance.m_ScreenCamera.GetComponent<Camera>().enabled = false;
+                    
+                }
+            });
         }
+
+        instance.m_ScreenOff = true;
     }
 
     public static void StartTransition()
