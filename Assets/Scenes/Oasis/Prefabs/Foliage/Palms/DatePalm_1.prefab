@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4493489561980387476
 Transform:
@@ -84,9 +84,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3571466993599392469, guid: d4df0dfb9a78203488311ef26256fb68, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -2012018071155267615, guid: d4df0dfb9a78203488311ef26256fb68, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d4df0dfb9a78203488311ef26256fb68, type: 3}
       propertyPath: m_Name
       value: Palm_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d4df0dfb9a78203488311ef26256fb68, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1218912716677395249, guid: d4df0dfb9a78203488311ef26256fb68, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400086564404443856, guid: d4df0dfb9a78203488311ef26256fb68, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316400201341329422, guid: d4df0dfb9a78203488311ef26256fb68, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 8606388674836341142, guid: d4df0dfb9a78203488311ef26256fb68, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
