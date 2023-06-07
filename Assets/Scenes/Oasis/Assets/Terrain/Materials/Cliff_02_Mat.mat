@@ -24,14 +24,26 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 38ea7e84e7e9e406187feb183f0d4596, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: c0b9c9a222b65d44b84eaf333e63b552, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Cliff_Ramp:
+        m_Texture: {fileID: 1187203838617299282, guid: 9a097085cf6484015b77e85b92e60e66, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap_1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap_2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -45,6 +57,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Horizontal_Mask:
+        m_Texture: {fileID: 2800000, guid: 4db5467afd43549ffbf06f367610d277, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Layer1_Base_AO:
@@ -107,6 +123,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_c7593c1a881e44e08b4736669345477e_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 3b0beb173852d4a8faba952fc74409b7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SandAlbedoMap:
         m_Texture: {fileID: 2800000, guid: 07a6d0e57a3ecf045a4c126e11857e16, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -121,6 +145,34 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _TerrainData:
         m_Texture: {fileID: 2800000, guid: b46df378ac9472c43b17837161714d76, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_085da5488af9463ab8f2eceab129b0f0_Out_0_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_140bf161e7dd451eb29eb55bfe77e402_Out_0_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_324616ad53ef46fd88619df60b30ef0a_Out_0_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_81d5bd50fe614d05b03a87ab3fd4bf0b_Out_0_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_c7021ec410f64195a1702e7677a3c40c_Out_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 4db5467afd43549ffbf06f367610d277, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_fafa3c80871c4765998ce6f086bef75f_Out_0_Texture2D:
+        m_Texture: {fileID: 1187203838617299282, guid: 9a097085cf6484015b77e85b92e60e66, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Vertical_Mask:
+        m_Texture: {fileID: 2800000, guid: 3b0beb173852d4a8faba952fc74409b7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -165,6 +217,9 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SandTiling: 6
+    - _ScaleHorz: 0.543
+    - _ScaleLarge: 0.1286
+    - _ScaleVertical: 17.5
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -179,11 +234,12 @@ Material:
     - _Color: {r: 0.7075471, g: 0.5559949, b: 0.43721074, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Layer1_Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _Layer1_Tiling: {r: 5, g: 5, b: 0, a: 0}
+    - _Layer1_Tiling: {r: 0.23, g: 0.24, b: 0, a: 0}
     - _Layer2_Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _Layer2_Tiling: {r: 5, g: 5, b: 0, a: 0}
+    - _Layer2_Tiling: {r: 0.2, g: 5, b: 0, a: 0}
     - _Layer3_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Layer3_Tiling: {r: 5, g: 5, b: 0, a: 0}
+    - _OffsetLarge: {r: -10.39, g: -8.09, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2753142551904303423
