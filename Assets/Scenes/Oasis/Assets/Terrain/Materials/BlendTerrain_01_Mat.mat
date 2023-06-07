@@ -67,6 +67,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: cbd5a96a74c165f4aa290902e146a818, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Layer1_Packed:
+        m_Texture: {fileID: 2800000, guid: d4e1a77baa8a285428b02b86ec3a0d73, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Layer2_Base_S:
         m_Texture: {fileID: 2800000, guid: e579f6143d82a954685e9599b0a40a7e, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -79,6 +83,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 463f7aa714633584bb9ab867b8667061, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Layer2_Packed:
+        m_Texture: {fileID: 2800000, guid: 4e7fb1563e02b9646b96b961dc96aea0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Layer3_Base_S:
         m_Texture: {fileID: 2800000, guid: 07a6d0e57a3ecf045a4c126e11857e16, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -89,6 +97,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Layer3_Normal:
         m_Texture: {fileID: 2800000, guid: 114613880df28a04cb2987db9ae3b717, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Layer3_Packed:
+        m_Texture: {fileID: 2800000, guid: d9d7a72b9e2030144b6d4dad39723121, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LayerMask:
@@ -163,6 +175,9 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Layer1_Normal_Intensity: 1
+    - _Layer2_Normal_Intensity: 1
+    - _Layer3_Normal_Intensity: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -182,10 +197,16 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Layer1_Dark_Color: {r: 0.48799998, g: 0.26360062, b: 0.07027195, a: 0.78431374}
+    - _Layer1_Highlight_Color: {r: 1, g: 0.8024324, b: 0.57, a: 0.7411765}
     - _Layer1_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Layer1_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Layer2_Dark_Color: {r: 0.4862745, g: 0.2627451, b: 0.07058824, a: 0.78431374}
+    - _Layer2_Highlight_Color: {r: 1, g: 0.8039216, b: 0.5686275, a: 0.7411765}
     - _Layer2_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Layer2_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Layer3_Dark_Color: {r: 0.92, g: 0.70714545, b: 0.45172, a: 0.95686275}
+    - _Layer3_Highlight_Color: {r: 0.737, g: 0.657887, b: 0.553791, a: 0.7490196}
     - _Layer3_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Layer3_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
