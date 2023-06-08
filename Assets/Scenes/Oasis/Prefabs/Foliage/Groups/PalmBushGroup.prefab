@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5496138200332322781}
   - component: {fileID: 607029058885934442}
   m_Layer: 0
-  m_Name: BushGroup_NoGrass
+  m_Name: PalmBushGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

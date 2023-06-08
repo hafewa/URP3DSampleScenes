@@ -19,11 +19,7 @@ public class FoliageGroupEditor : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        
-        //serializedObject.Update();
-        
-        //list.DoLayoutList();
-        //serializedObject.ApplyModifiedProperties();
+
         FoliageGroup foliageGroup = (FoliageGroup) target;
         
         if (GUILayout.Button("Shuffle"))
@@ -31,19 +27,12 @@ public class FoliageGroupEditor : Editor
             
             foliageGroup.Shuffle();
         }
-
-        if (GUILayout.Button("Reproject"))
-        {
-            foliageGroup.Reproject();
-        }
     }
     
     [DrawGizmo(GizmoType.Selected)]
     static void DrawGizmo(FoliageGroup foliageGroup, GizmoType gizmoType)
     {
         Gizmos.color = Color.green;
-
-        //Gizmos.DrawSphere(foliageGroup.transform.position, 3);
 
         int res = 32;
         Vector3[] pointArray = new Vector3[res];
@@ -54,11 +43,6 @@ public class FoliageGroupEditor : Editor
         foreach (Transform child in foliageGroup.transform)
         {
             Gizmos.DrawSphere(child.transform.position, 0.1f);
-        }
-
-        for (int i = 0; i < foliageGroup.m_Count; i++)
-        {
-            //Gizmos.DrawSphere(foliageGroup.GetSpawnPoint(i), 0.1f);
         }
     }
 }
