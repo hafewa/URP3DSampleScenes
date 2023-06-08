@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 4714586158493003709}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5109098879741036630
 PrefabInstance:
@@ -195,6 +195,14 @@ PrefabInstance:
     - target: {fileID: 3361634513375469152, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
+      propertyPath: m_LODs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.07753028
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
       propertyPath: m_LODs.Array.data[3].renderers.Array.data[0].renderer
