@@ -40,7 +40,7 @@ Transform:
   - {fileID: 7269675645879807798}
   - {fileID: 6941468107745783680}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4963300795805967926
 MonoBehaviour:
@@ -61,11 +61,11 @@ MonoBehaviour:
     angleVariance: 0
   - prefab: {fileID: 6183833653318256, guid: 954bacc0cef80b642bba013b4312c220, type: 3}
     weight: 0.2
-    minMaxScale: {x: 0.8, y: 1.2}
+    minMaxScale: {x: 1, y: 1.3}
     angleVariance: 20
   - prefab: {fileID: 4606582285959553429, guid: 11814dcd19497ae47a7f7b7c4661b685, type: 3}
     weight: 0.2
-    minMaxScale: {x: 0.8, y: 1.2}
+    minMaxScale: {x: 1, y: 1.3}
     angleVariance: 20
   m_Radius: 2
   m_Count: 10

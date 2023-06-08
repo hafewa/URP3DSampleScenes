@@ -99,7 +99,10 @@ public class FoliageGroup : MonoBehaviour
 
     private void PutOnTerrain(Transform elementTransform)
     {
-        if(Physics.Raycast(elementTransform.position, Vector3.down, out RaycastHit hit))
+        LayerMask mask = 1 << LayerMask.NameToLayer("Cockpit");
+        
+        
+        if(Physics.Raycast(elementTransform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, mask))
         {
             elementTransform.position = hit.point;
             elementTransform.up = Vector3.Normalize(Vector3.up + hit.normal);

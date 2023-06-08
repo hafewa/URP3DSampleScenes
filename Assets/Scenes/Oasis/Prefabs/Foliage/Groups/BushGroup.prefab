@@ -38,7 +38,7 @@ Transform:
   - {fileID: 4614134435665360989}
   - {fileID: 8220986427260299519}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4793477016795717576
 MonoBehaviour:
@@ -86,7 +86,7 @@ MonoBehaviour:
     minMaxScale: {x: 0.8, y: 1.1}
     angleVariance: 10
   - prefab: {fileID: 8728024177507307945, guid: e708f46d3ba12c441add83532d27282c, type: 3}
-    weight: 1
+    weight: 0.5
     minMaxScale: {x: 0.8, y: 1.1}
     angleVariance: 10
   m_Radius: 3
