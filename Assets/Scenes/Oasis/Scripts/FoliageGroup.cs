@@ -14,6 +14,7 @@ public struct FoliageElement
     public float weight;
     public Vector2 minMaxScale;
     public float angleVariance;
+    public float maxYOffset;
 }
 
 public class FoliageGroup : MonoBehaviour
@@ -32,7 +33,7 @@ public class FoliageGroup : MonoBehaviour
         {
             child.position = new Vector3(child.position.x, transform.position.y, child.position.z);
             
-            PutOnTerrain(child);
+            //PutOnTerrain(child);
             
             child.Rotate(transform.up, Random.value * 360);
             //child.Rotate(transform.right, (Random.value * AngleVariance)-0.5f*AngleVariance);
@@ -63,7 +64,7 @@ public class FoliageGroup : MonoBehaviour
             instance.transform.parent = transform;
             instance.transform.position = new Vector3(pointInCirkle.x, 0, pointInCirkle.y) + transform.position;
             
-            PutOnTerrain(instance.transform);
+            PutOnTerrain(instance.transform, foliageElement);
             instance.transform.Rotate(transform.up, Random.value * 360);
             instance.transform.Rotate(transform.right, (Random.value * foliageElement.angleVariance)-0.5f*foliageElement.angleVariance);
             
@@ -97,14 +98,14 @@ public class FoliageGroup : MonoBehaviour
         throw new Exception("Could not find random element");
     }
 
-    private void PutOnTerrain(Transform elementTransform)
+    private void PutOnTerrain(Transform elementTransform, FoliageElement foliageElement)
     {
         LayerMask mask = 1 << LayerMask.NameToLayer("Cockpit");
         
         
         if(Physics.Raycast(elementTransform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, mask))
         {
-            elementTransform.position = hit.point;
+            elementTransform.position = hit.point - hit.normal * foliageElement.maxYOffset * Random.value;
             elementTransform.up = Vector3.Normalize(Vector3.up + hit.normal);
         }
     }
