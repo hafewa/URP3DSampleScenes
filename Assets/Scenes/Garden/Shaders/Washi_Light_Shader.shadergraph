@@ -45,6 +45,9 @@
     "m_CategoryData": [
         {
             "m_Id": "5d709c3c86004fa7b913f257679f9906"
+        },
+        {
+            "m_Id": "f2aabd934e26420fb9ae851d9887ffd2"
         }
     ],
     "m_Nodes": [
@@ -2219,7 +2222,7 @@
     "m_RefNameGeneratedByDisplayName": "World U",
     "m_DefaultReferenceName": "_World_U",
     "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": false,
+    "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
     "m_DismissedVersion": 0,
@@ -3239,7 +3242,7 @@
     "m_RefNameGeneratedByDisplayName": "World V",
     "m_DefaultReferenceName": "_World_V",
     "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": false,
+    "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
     "m_DismissedVersion": 0,
@@ -3839,21 +3842,6 @@
         },
         {
             "m_Id": "8b5984c881464c8cabe9988f27d76ecc"
-        },
-        {
-            "m_Id": "8bcb0ece579a4f129bbf3f0681da90a1"
-        },
-        {
-            "m_Id": "c9f9dd8f89bd4e05aa8cfa8c62ec2a1e"
-        },
-        {
-            "m_Id": "2631a094062f4547bec219237f4093a4"
-        },
-        {
-            "m_Id": "461ba82bb5d74b2fa2f673da18a0280b"
-        },
-        {
-            "m_Id": "a6fca382ab1a44dd96c7e9fb78ba370a"
         }
     ]
 }
@@ -5071,7 +5059,7 @@
     "m_RefNameGeneratedByDisplayName": "Texture",
     "m_DefaultReferenceName": "_Texture",
     "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": false,
+    "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
     "m_DismissedVersion": 0,
@@ -5664,7 +5652,7 @@
     "m_RefNameGeneratedByDisplayName": "TilingOffset",
     "m_DefaultReferenceName": "_TilingOffset",
     "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": false,
+    "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
     "m_DismissedVersion": 0,
@@ -6710,7 +6698,7 @@
     "m_RefNameGeneratedByDisplayName": "Texture Channel",
     "m_DefaultReferenceName": "_Texture_Channel",
     "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": false,
+    "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
     "m_DismissedVersion": 0,
@@ -7739,6 +7727,30 @@
     "m_DefaultValue": 0.0,
     "m_Labels": [
         "Y"
+    ]
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "f2aabd934e26420fb9ae851d9887ffd2",
+    "m_Name": "Projected Texture (edited by script)",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "8bcb0ece579a4f129bbf3f0681da90a1"
+        },
+        {
+            "m_Id": "c9f9dd8f89bd4e05aa8cfa8c62ec2a1e"
+        },
+        {
+            "m_Id": "2631a094062f4547bec219237f4093a4"
+        },
+        {
+            "m_Id": "461ba82bb5d74b2fa2f673da18a0280b"
+        },
+        {
+            "m_Id": "a6fca382ab1a44dd96c7e9fb78ba370a"
+        }
     ]
 }
 

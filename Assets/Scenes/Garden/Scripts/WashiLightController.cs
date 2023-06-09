@@ -74,12 +74,13 @@ public class WashiLightController : MonoBehaviour
     private void Update()
     {
         var intensity = Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise(Time.time / randomDuration, intensitySeed));
-        var isHere = Mathf.PerlinNoise(Time.time / presenceRandomDuration, presenceSeed) < presenceAmount;
+        var isHere = (presenceAmount >= 1)? true : Mathf.PerlinNoise(Time.time / presenceRandomDuration, presenceSeed) < presenceAmount;
+
+        instancedMaterial.SetFloat("_Intensity", intensity);
 
         foreach (var r in renderers)
         {
             r.enabled = isHere;
-            instancedMaterial.SetFloat("_Intensity", intensity);
         }
     }
 
