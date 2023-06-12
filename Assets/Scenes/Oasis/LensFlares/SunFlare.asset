@@ -21,12 +21,12 @@ MonoBehaviour:
     m_LocalIntensity: 4.8
     lensFlareTexture: {fileID: 0}
     uniformScale: 3.71
-    sizeXY: {x: 1, y: 1}
+    sizeXY: {x: 2, y: 2}
     allowMultipleElement: 0
     m_Count: 5
     preserveAspectRatio: 0
     rotation: 0
-    tint: {r: 1, g: 0.8321153, b: 0.3726415, a: 0.5}
+    tint: {r: 1, g: 0.48497626, b: 0.17610055, a: 0.5}
     blendMode: 0
     autoRotate: 0
     flareType: 1
@@ -110,6 +110,7 @@ MonoBehaviour:
       atime6: 0
       atime7: 0
       m_Mode: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     m_IntensityVariation: 0.75
@@ -143,7 +144,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     distortionRelativeToCenter: 0
-    m_FallOff: 0.502
+    m_FallOff: 0.342
     m_EdgeOffset: 1
     m_SideCount: 6
     m_SdfRoundness: 0
@@ -186,7 +187,7 @@ MonoBehaviour:
     m_Count: 5
     preserveAspectRatio: 0
     rotation: 0
-    tint: {r: 1, g: 0.90175456, b: 0.5330188, a: 0.5}
+    tint: {r: 1, g: 0.40197596, b: 0.15723264, a: 0.5}
     blendMode: 0
     autoRotate: 0
     flareType: 2
@@ -270,6 +271,7 @@ MonoBehaviour:
       atime6: 0
       atime7: 0
       m_Mode: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 3
       m_NumAlphaKeys: 2
     m_IntensityVariation: 0.3
