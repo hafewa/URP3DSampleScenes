@@ -43,15 +43,20 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alpha: 1
-    - _AlphaNoise: 1.98
-    - _NoiseOffset: 0.32
-    - _Offset: 0.699
+    - _AlphaClip: 0.03
+    - _AlphaNoise: 1.56
+    - _NoiseAlpha: 0.2
+    - _NoiseOffset: -0.66
+    - _Offset: 0.95
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SineFreq: 1.83
+    - _SineFreq: 4.59
+    - _SineOffset: 0.5
     - _SineSpeed: 1
+    - _TopFadePower: 2.27
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
+    - _NoiseSpeed: {r: 0.1, g: 0.2, b: 0, a: 0}
     - _OffsetSpeed: {r: 0.1, g: -0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5192961198402564917
