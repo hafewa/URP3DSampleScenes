@@ -159,6 +159,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Gravels_Height_Offset: 0.158
     - _Layer2_Normal_Intensity: 1
     - _Layer3_Normal_Intensity: 1
     - _Metallic: 0
@@ -167,7 +168,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _SmoothFade: 0.261
+    - _SmoothFade: 0.5
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -182,6 +183,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Gravels_Height_Remap: {r: -0.2, g: 1, b: 0, a: 0}
     - _Layer2_Dark_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Layer2_Highlight_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Layer2_Offset: {r: 0, g: 0, b: 0, a: 0}
@@ -190,7 +192,7 @@ Material:
     - _Layer3_Highlight_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Layer3_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Layer3_Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Sand_Dark_Color: {r: 0.48627448, g: 0.26274508, b: 0.07058821, a: 0.7843137}
-    - _Sand_Highlight_Color: {r: 1, g: 0.8039216, b: 0.5686274, a: 0.6862745}
+    - _Sand_Dark_Color: {r: 0.4862745, g: 0.30349493, b: 0.14636862, a: 0.7843137}
+    - _Sand_Highlight_Color: {r: 0.936, g: 0.7524706, b: 0.5322353, a: 0.6862745}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
