@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Oasis/Assets/Terrain/Textures/SandFootsteps_01_T_Packed.png.meta
+guid: 73758c224665dea42ad658acafdddfc5
+========
 guid: e506f5bfbcf557342bae9d1f66f3ff65
+>>>>>>>> origin/main:Assets/Scenes/Cockpit/Models/Supernova/T_Supernova_Spaceship_Albedo.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +11,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    sRGBTexture: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0

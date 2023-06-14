@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Oasis/Assets/Terrain/Textures/SandHarsh_01_T_Packed.png.meta
+guid: 4e7fb1563e02b9646b96b961dc96aea0
+========
 guid: e1ae49895c6f65240b1c33ac9b3dab0c
+>>>>>>>> origin/main:Assets/Scenes/Cockpit/Models/Supernova/T_Invader_Spacehip_Albedo.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +11,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    sRGBTexture: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
