@@ -203,7 +203,7 @@ public class SceneTransitionManager : MonoBehaviour
             RenderSettings.customReflectionTexture = sceneToRender.reflection;
         }
 
-        if (!isMainCamera)
+        if (!isMainCamera && camera.cameraType == CameraType.Game)
         {
             camera.GetComponent<OffsetCamera>().UpdateWithOffset();
         }
@@ -325,6 +325,8 @@ public class SceneTransitionManager : MonoBehaviour
         //Setup hub loader so player can get back and reset the timeline director
         instance.SetHubLoaderAndDirector(instance.screenScene, false);
         instance.SetHubLoaderAndDirector(instance.currentScene, true);
+        
+        
     }
 
     private void UpdateCullingMasks()
