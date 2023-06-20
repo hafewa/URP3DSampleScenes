@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 1990030918560453614}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2023448767070106629
 PrefabInstance:
@@ -95,6 +95,10 @@ PrefabInstance:
     - target: {fileID: -6282531648893309501, guid: 0df7be439723ea14a86a379239d54107, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2761535891469624643, guid: 0df7be439723ea14a86a379239d54107, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -1265655304047431526, guid: 0df7be439723ea14a86a379239d54107, type: 3}
       propertyPath: m_StaticEditorFlags
