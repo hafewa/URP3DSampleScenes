@@ -498,6 +498,11 @@ public class SceneTransitionManager : MonoBehaviour
     {
         instance.InTransition = false;
     }
+    
+    public static bool DissolveNeeded()
+    {
+        return instance.ElapsedTimeInTransition > 0.001f;
+    }
 
     #endregion
 
