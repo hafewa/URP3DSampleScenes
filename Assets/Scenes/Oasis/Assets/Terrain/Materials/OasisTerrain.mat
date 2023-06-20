@@ -175,9 +175,9 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Wet_Gravels_Darkening: 0.5
+    - _Wet_Gravels_Darkening: 0.367
     - _Wet_Gravels_Normal_Intensity: 1
-    - _Wet_Gravels_Smoothness: 0.3
+    - _Wet_Gravels_Smoothness: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
