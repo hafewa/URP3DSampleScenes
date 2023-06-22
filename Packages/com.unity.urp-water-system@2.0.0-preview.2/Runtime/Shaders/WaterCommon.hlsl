@@ -209,8 +209,8 @@ float4 DetailUVs(float3 positionWS, half noise)
 	float2x2 rotA = float2x2(c.x, -s.x, s.x, c.x);
 	
     float4 output = positionWS.xzxz * scale.xxyy;
-    output.xy += WATER_TIME * 0.2h + noise; // small detail
-    output.zw += WATER_TIME * 0.1h + noise; // medium detail
+    output.xy += WATER_TIME * 0.06h + noise; // small detail
+    output.zw += WATER_TIME * -0.05h + noise; // medium detail
 	output.xy /= dist.x;
 	output.zw /= dist.y;
 	//output.xy = mul(output.xy, rotA);
