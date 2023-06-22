@@ -20,6 +20,7 @@ public class HDRFogOverride : MonoBehaviour
     private void OnDisable()
     {
         RenderPipelineManager.beginFrameRendering -= BeginFrame;
+        RenderPipelineManager.endFrameRendering -= EndFrame;
     }
 
     private void BeginFrame(ScriptableRenderContext arg1, Camera[] arg2)
