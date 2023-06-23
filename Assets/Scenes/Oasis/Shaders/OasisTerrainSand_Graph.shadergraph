@@ -6857,10 +6857,10 @@
         "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4626.0,
-            "y": 3698.666259765625,
-            "width": 76.0,
-            "height": 78.6669921875
+            "x": 4569.33251953125,
+            "y": 3627.999755859375,
+            "width": 76.00048828125,
+            "height": 78.66650390625
         }
     },
     "m_Slots": [
@@ -6963,8 +6963,8 @@
         "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4382.0,
-            "y": 3777.3330078125,
+            "x": 4325.3330078125,
+            "y": 3706.666259765625,
             "width": 153.3330078125,
             "height": 96.0
         }
@@ -7510,7 +7510,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "3665a99ba6864bfea8dc5c25e03c6134",
     "m_Id": 0,
-    "m_DisplayName": "Noise Map",
+    "m_DisplayName": "Glitter Noise Map",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -8577,10 +8577,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4176.66650390625,
-            "y": 3807.333251953125,
-            "width": 150.66650390625,
-            "height": 35.999755859375
+            "x": 4120.0,
+            "y": 3736.666259765625,
+            "width": 150.666015625,
+            "height": 36.000244140625
         }
     },
     "m_Slots": [
@@ -10485,6 +10485,9 @@
     "m_Name": "Glitter",
     "m_ChildObjectList": [
         {
+            "m_Id": "a5b6ffbcea264d1da2b9c1db08515854"
+        },
+        {
             "m_Id": "87a79452c57349b6ac9ba4d374ba0c59"
         },
         {
@@ -10498,6 +10501,9 @@
         },
         {
             "m_Id": "634edf65770a4ddbb9e7e47aa6a2d4d4"
+        },
+        {
+            "m_Id": "ff1e4464a1e44c05bfd0ab02559fcbf9"
         },
         {
             "m_Id": "1b3b161fdb9b49b69f7571730e50f38b"
@@ -13217,10 +13223,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2665.33349609375,
-            "y": 2965.33349609375,
+            "x": 2672.666748046875,
+            "y": 2991.999755859375,
             "width": 140.666748046875,
-            "height": 36.0
+            "height": 36.000244140625
         }
     },
     "m_Slots": [
@@ -14621,8 +14627,8 @@
     "m_ObjectId": "a4006666d0e64e80ba497c94f6c18cb2",
     "m_Title": "Fresnel",
     "m_Position": {
-        "x": 4146.0,
-        "y": 3616.000244140625
+        "x": 4094.66650390625,
+        "y": 3569.333251953125
     }
 }
 
@@ -14667,7 +14673,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "a517d0484af34d0c89e47a8bcdebd66e",
     "m_Id": 0,
-    "m_DisplayName": "Noise Map",
+    "m_DisplayName": "Glitter Noise Map",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -16653,10 +16659,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4746.00048828125,
-            "y": 3753.33349609375,
-            "width": 127.3330078125,
-            "height": 120.0
+            "x": 4689.33251953125,
+            "y": 3682.66650390625,
+            "width": 127.33349609375,
+            "height": 119.999755859375
         }
     },
     "m_Slots": [
@@ -17193,14 +17199,7 @@
     "m_Type": "UnityEditor.ShaderGraph.CategoryData",
     "m_ObjectId": "c827394b27e0491c844eee9446f255f5",
     "m_Name": "",
-    "m_ChildObjectList": [
-        {
-            "m_Id": "a5b6ffbcea264d1da2b9c1db08515854"
-        },
-        {
-            "m_Id": "ff1e4464a1e44c05bfd0ab02559fcbf9"
-        }
-    ]
+    "m_ChildObjectList": []
 }
 
 {
@@ -17677,8 +17676,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4572.6669921875,
-            "y": 3777.33349609375,
+            "x": 4516.0,
+            "y": 3706.666259765625,
             "width": 129.3330078125,
             "height": 96.0
         }
@@ -19523,10 +19522,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4904.00048828125,
-            "y": 3749.33349609375,
-            "width": 131.3330078125,
-            "height": 120.000244140625
+            "x": 4847.3330078125,
+            "y": 3678.666259765625,
+            "width": 131.33349609375,
+            "height": 120.0
         }
     },
     "m_Slots": [
@@ -19689,7 +19688,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "f0dcb171b87f43b4a80d45b02e724899",
     "m_Id": 0,
-    "m_DisplayName": "Noise Map",
+    "m_DisplayName": "Glitter Noise Map",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -20593,10 +20592,10 @@
     "m_Guid": {
         "m_GuidSerialized": "f25c07a2-2404-4358-83dc-4b7359ca9937"
     },
-    "m_Name": "Noise Map",
+    "m_Name": "Glitter Noise Map",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Noise Map",
-    "m_DefaultReferenceName": "_Noise_Map",
+    "m_RefNameGeneratedByDisplayName": "Glitter Noise Map",
+    "m_DefaultReferenceName": "_Glitter_Noise_Map",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
