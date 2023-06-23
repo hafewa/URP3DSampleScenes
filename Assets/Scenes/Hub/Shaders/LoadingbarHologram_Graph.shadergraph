@@ -251,6 +251,20 @@
                 "m_Node": {
                     "m_Id": "dc5485175e33443ab808b90542c8a242"
                 },
+                "m_SlotId": -1729182879
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "6113b1a3581d4323a9d38a84eb7a8dec"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "dc5485175e33443ab808b90542c8a242"
+                },
                 "m_SlotId": -1243975349
             }
         },
@@ -1887,6 +1901,29 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "8842c5d33b9741a29ec36122f5a9e95b",
+    "m_Id": -1729182879,
+    "m_DisplayName": "Vector3",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Vector3",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "897ddd8e09ca49599c0d1a58b98ca9fc",
     "m_Id": 3,
@@ -2742,10 +2779,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -941.0,
-            "y": 243.99998474121095,
-            "width": 208.0,
-            "height": 301.99993896484377
+            "x": -988.0,
+            "y": 261.0,
+            "width": 210.5,
+            "height": 326.0
         }
     },
     "m_Slots": [
@@ -2754,6 +2791,12 @@
         },
         {
             "m_Id": "141d73224a47440dac5732d1800ec7b2"
+        },
+        {
+            "m_Id": "8842c5d33b9741a29ec36122f5a9e95b"
+        },
+        {
+            "m_Id": "fd702be9c9bc4c53bdc7715bd4b10a77"
         },
         {
             "m_Id": "95a999a0738a418ba845d9a207529a1a"
@@ -2770,11 +2813,15 @@
     "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"a655bd17cce37464fafef6219d76a765\",\n        \"type\": 3\n    }\n}",
     "m_PropertyGuids": [
         "2dcb6571-6807-473c-b242-5f838f3e725c",
-        "e8917ed9-6eac-42f5-8391-c2c9450495e5"
+        "e8917ed9-6eac-42f5-8391-c2c9450495e5",
+        "6a153311-9065-4eb9-b5dc-9ce7a0bcde5b",
+        "6b8b9862-db66-4a72-b268-2a97e65cc515"
     ],
     "m_PropertyIds": [
         -1243975349,
-        -2043443789
+        -2043443789,
+        -1729182879,
+        -1558808752
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
@@ -2968,5 +3015,20 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.BaseColor"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "fd702be9c9bc4c53bdc7715bd4b10a77",
+    "m_Id": -1558808752,
+    "m_DisplayName": "Frequency",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Frequency",
+    "m_StageCapability": 3,
+    "m_Value": 60.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
