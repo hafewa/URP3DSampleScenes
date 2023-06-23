@@ -196,15 +196,15 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _Dust_Wave: 1
-    - _Dust_Wave_Speed: 0.1
-    - _Dust_Wave_Strength: 0.36
+    - _Dust_Wave_Speed: 0
+    - _Dust_Wave_Strength: 1.42
     - _EnvironmentReflections: 1
     - _Fade_Distance: 100
     - _Float: 0.15
     - _Fresnel_Power: 1.45
-    - _Glitter_On: 1
-    - _Glitter_Strength: 0.18
-    - _Glitter_Strength_in_Shadow: 0.068
+    - _Glitter_On: 0
+    - _Glitter_Strength: 0.9
+    - _Glitter_Strength_in_Shadow: 0.153
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -215,7 +215,7 @@ Material:
     - _Mask_Range: 1.09
     - _Metallic: 0
     - _Moving_Dust: 1
-    - _Moving_Dust_Strength: 1.74
+    - _Moving_Dust_Strength: 2.4
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -251,7 +251,7 @@ Material:
     - _Layer3_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Layer3_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _Moving_Dust_Offset_Sped: {r: 1.32, g: 0.78, b: 0, a: 0}
-    - _Moving_Dust_Offset_Speed: {r: 0.65, g: -0.5, b: 0, a: 0}
+    - _Moving_Dust_Offset_Speed: {r: 0, g: 0, b: 0, a: 0}
     - _Sand_Dark_Color: {r: 0.4862745, g: 0.30349493, b: 0.14636862, a: 0.7843137}
     - _Sand_Highlight_Color: {r: 0.936, g: 0.7524706, b: 0.5322353, a: 0.6862745}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
