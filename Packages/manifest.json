@@ -17,6 +17,7 @@
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.4",
     "com.unity.ugui": "1.0.0",
+    "com.unity.urp-water-system": "2.0.0-preview.2",
     "com.unity.visualscripting": "1.8.0",
     "com.unity.xr.management": "4.3.3",
     "com.unity.xr.mock-hmd": "1.3.0-preview.1",
@@ -52,5 +53,14 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "OpenUPM",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.unity.urp-water-system"
+      ]
+    }
+  ]
 }
