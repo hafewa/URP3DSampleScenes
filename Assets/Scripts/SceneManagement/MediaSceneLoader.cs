@@ -7,6 +7,7 @@ public class MediaSceneLoader : MonoBehaviour
 {
     [SerializeField] private SceneLoader m_GardenSceneLoader;
     [SerializeField] private SceneLoader m_CockpitSceneLoader;
+    [SerializeField] private SceneLoader m_OasisSceneLoader;
     
     private SceneLoader HubSceneLoader;
 
@@ -39,6 +40,15 @@ public class MediaSceneLoader : MonoBehaviour
         HubSceneLoader.EnableScene();
     }
 
+    public void EnableOasis()
+    {
+        m_OasisSceneLoader.EnableScene();
+    }
+    
+    public void DisableOasis()
+    {
+        m_OasisSceneLoader.DisableScene();
+    }
 
     public void Transition()
     {

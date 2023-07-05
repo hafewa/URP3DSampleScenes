@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8143907935703683292
 Transform:
@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 6563091806900014291}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6673895138327014200
 PrefabInstance:
@@ -84,9 +84,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5982232493824994109, guid: dffceb789cac50c4984285451cddc2c2, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -3186253091654178797, guid: dffceb789cac50c4984285451cddc2c2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 187998476145024126, guid: dffceb789cac50c4984285451cddc2c2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dffceb789cac50c4984285451cddc2c2, type: 3}
       propertyPath: m_Name
       value: Grass_Fountain_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dffceb789cac50c4984285451cddc2c2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1218912716677395249, guid: dffceb789cac50c4984285451cddc2c2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285203567092049448, guid: dffceb789cac50c4984285451cddc2c2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
