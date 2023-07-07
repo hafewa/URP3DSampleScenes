@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LogoHologram
-  m_Shader: {fileID: -6465566751694194690, guid: 6df5e214b1ea9af47ad136832f65664c, type: 3}
+  m_Name: HexagonHologram
+  m_Shader: {fileID: -6465566751694194690, guid: 2c7b14bac93dcac45995ffdabb5f6f54, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -137,17 +137,17 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _TransitionAmount: 1
     - _Width: 6
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _t: 0.9
     - _tile: 0.9
-    - _time: 0.176
-    - _times: 0.837
+    - _time: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.4975259, g: 4.095021, b: 7.769058, a: 1}
+    - _Color: {r: 0, g: 2.1311455, b: 3.2111173, a: 1}
+    - _ColorB: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorC: {r: 0.023436565, g: 0.032491468, b: 0.047169805, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SheetResolution: {r: 6, g: 6, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
