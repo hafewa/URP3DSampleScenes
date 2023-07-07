@@ -57,7 +57,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Detail_Grain_Dust_Wave_Normal:
-        m_Texture: {fileID: 2800000, guid: ee37cb42f8fcc9745be15eb164794e21, type: 3}
+        m_Texture: {fileID: 2800000, guid: 789fbaf63b7ed024ab83275e00ef0460, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Detail_Grain_Normal:
@@ -197,10 +197,10 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Detail_Distance: 2
+    - _Detail_Distance: 1.8
     - _Detail_Grain: 1
     - _Detail_Grain_On: 1
-    - _Detail_Grain_Strength: 0.42
+    - _Detail_Grain_Strength: 0.3
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _Dust_Wave: 1
@@ -244,8 +244,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Detail_Grain_Dust_Wave_Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Detail_Grain_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Detail_Grain_Dust_Wave_Tiling: {r: 4, g: 4, b: 0, a: 0}
+    - _Detail_Grain_Tiling: {r: 8, g: 8, b: 0, a: 0}
     - _Dust_Normal_Tiling: {r: 1.26, g: 1.32, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Giltter_Tiling: {r: 1.5, g: 1.5, b: 0, a: 0}
