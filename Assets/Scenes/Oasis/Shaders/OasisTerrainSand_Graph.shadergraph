@@ -107,6 +107,9 @@
         },
         {
             "m_Id": "0d8c5bfb58e343879adc87e1d4ae2d62"
+        },
+        {
+            "m_Id": "9065e6b7a58c4e319f334664068480ee"
         }
     ],
     "m_Keywords": [],
@@ -605,6 +608,12 @@
         },
         {
             "m_Id": "8903a00390464ef18a670ad66add59db"
+        },
+        {
+            "m_Id": "3959580842c64a54877e5a49c3f6604d"
+        },
+        {
+            "m_Id": "11365bf9e8f7455bbab71ffe61009e3b"
         }
     ],
     "m_GroupDatas": [
@@ -907,6 +916,20 @@
                     "m_Id": "ebc5ed59405b499786d385fbae364390"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "11365bf9e8f7455bbab71ffe61009e3b"
+                },
+                "m_SlotId": 3
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "09d86415e0c84749a1c3245eefea478e"
+                },
+                "m_SlotId": 798892644
             }
         },
         {
@@ -1360,6 +1383,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "3959580842c64a54877e5a49c3f6604d"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "11365bf9e8f7455bbab71ffe61009e3b"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "3b8849c6daa74ac1a8c5a468c769b24a"
                 },
                 "m_SlotId": 0
@@ -1450,9 +1487,9 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "09d86415e0c84749a1c3245eefea478e"
+                    "m_Id": "11365bf9e8f7455bbab71ffe61009e3b"
                 },
-                "m_SlotId": 798892644
+                "m_SlotId": 2
             }
         },
         {
@@ -4113,13 +4150,13 @@
     },
     "m_Name": "MovingSand_SubGraph",
     "m_DrawState": {
-        "m_Expanded": false,
+        "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4350.66650390625,
-            "y": 668.0,
-            "width": 319.33349609375,
-            "height": 456.0
+            "x": 4365.60009765625,
+            "y": 706.4000244140625,
+            "width": 316.80029296875,
+            "height": 453.5999755859375
         }
     },
     "m_Slots": [
@@ -4338,6 +4375,30 @@
     },
     "m_Property": {
         "m_Id": "634edf65770a4ddbb9e7e47aa6a2d4d4"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
+    "m_ObjectId": "0b63b9802a9845c5a81c0ed2779a1b17",
+    "m_Id": 3,
+    "m_DisplayName": "Out",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
     }
 }
 
@@ -4587,6 +4648,52 @@
         "mix",
         "blend",
         "linear interpolate"
+    ],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BranchNode",
+    "m_ObjectId": "11365bf9e8f7455bbab71ffe61009e3b",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Branch",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 4145.60009765625,
+            "y": 612.0,
+            "width": 208.00048828125,
+            "height": 325.60003662109377
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "dea46650d59d42e189adafcf25ec6b2c"
+        },
+        {
+            "m_Id": "37dd6dac3e33461990261e8e9c28aa39"
+        },
+        {
+            "m_Id": "65e8589d3532409d853bf3ca77999cea"
+        },
+        {
+            "m_Id": "0b63b9802a9845c5a81c0ed2779a1b17"
+        }
+    ],
+    "synonyms": [
+        "switch",
+        "if",
+        "else"
     ],
     "m_Precision": 0,
     "m_PreviewExpanded": false,
@@ -6673,6 +6780,9 @@
     "m_Name": "Moving Sand",
     "m_ChildObjectList": [
         {
+            "m_Id": "9065e6b7a58c4e319f334664068480ee"
+        },
+        {
             "m_Id": "860e5842786b4b09a2cea5ffd50aaba0"
         },
         {
@@ -7769,6 +7879,66 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
+    "m_ObjectId": "37dd6dac3e33461990261e8e9c28aa39",
+    "m_Id": 1,
+    "m_DisplayName": "True",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "True",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 1.0,
+        "w": 1.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "3959580842c64a54877e5a49c3f6604d",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3924.000244140625,
+            "y": 646.4000244140625,
+            "width": 208.800048828125,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "45efddb6c92640a28bd277e4e5d9f803"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "9065e6b7a58c4e319f334664068480ee"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "3983df5d1cae4a6490352baa84dc49c3",
     "m_Id": 1,
@@ -8127,9 +8297,9 @@
         "m_Position": {
             "serializedVersion": "2",
             "x": 3436.0,
-            "y": 1304.0,
-            "width": 127.33349609375,
-            "height": 120.0
+            "y": 1285.5999755859375,
+            "width": 125.599853515625,
+            "height": 117.5999755859375
         }
     },
     "m_Slots": [
@@ -8549,10 +8719,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4232.00048828125,
-            "y": 714.0000610351563,
-            "width": 55.99951171875,
-            "height": 24.0
+            "x": 4029.60009765625,
+            "y": 729.6000366210938,
+            "width": 56.0,
+            "height": 23.99993896484375
         }
     },
     "m_Slots": [
@@ -8842,6 +9012,20 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
+    "m_ObjectId": "45efddb6c92640a28bd277e4e5d9f803",
+    "m_Id": 0,
+    "m_DisplayName": "Dust Moving in Tent Area",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": false,
+    "m_DefaultValue": false
 }
 
 {
@@ -10944,6 +11128,30 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
+    "m_ObjectId": "65e8589d3532409d853bf3ca77999cea",
+    "m_Id": 2,
+    "m_DisplayName": "False",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "False",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    }
 }
 
 {
@@ -13838,6 +14046,29 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.BooleanShaderProperty",
+    "m_ObjectId": "9065e6b7a58c4e319f334664068480ee",
+    "m_Guid": {
+        "m_GuidSerialized": "d38b9cd9-b5b8-4a56-9bb3-33cab1042f93"
+    },
+    "m_Name": "Dust Moving in Tent Area",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Dust Moving in Tent Area",
+    "m_DefaultReferenceName": "_Dust_Moving_in_Tent_Area",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": false
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "90a64fba867643888dfbdac07140d77b",
     "m_Id": 0,
@@ -14167,10 +14398,10 @@
         "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 4090.6669921875,
-            "y": 659.3333740234375,
-            "width": 120.0,
-            "height": 78.6666259765625
+            "x": 4161.60009765625,
+            "y": 537.5999755859375,
+            "width": 118.39990234375,
+            "height": 76.800048828125
         }
     },
     "m_Slots": [
@@ -18919,6 +19150,20 @@
     "m_Property": {
         "m_Id": "860e5842786b4b09a2cea5ffd50aaba0"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
+    "m_ObjectId": "dea46650d59d42e189adafcf25ec6b2c",
+    "m_Id": 0,
+    "m_DisplayName": "Predicate",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Predicate",
+    "m_StageCapability": 3,
+    "m_Value": false,
+    "m_DefaultValue": false
 }
 
 {
