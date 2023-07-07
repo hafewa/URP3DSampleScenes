@@ -205,7 +205,7 @@ Material:
     - _DstBlendAlpha: 0
     - _Dust_Wave: 1
     - _Dust_Wave_Speed: 0.1
-    - _Dust_Wave_Strength: 0.45
+    - _Dust_Wave_Strength: 0.36
     - _EnvironmentReflections: 1
     - _Fade_Distance: 100
     - _Float: 0.15
@@ -223,7 +223,7 @@ Material:
     - _Mask_Range: 1.09
     - _Metallic: 0
     - _Moving_Dust: 1
-    - _Moving_Dust_Strength: 1.74
+    - _Moving_Dust_Strength: 0.55
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
