@@ -54,7 +54,11 @@ public class PerformanceTest : MonoBehaviour
 
     private List<TestResult> m_TestResults;
 
-    
+    public static bool RunningBenchmark()
+    {
+        return m_Instance != null && m_Instance.m_State != TestState.Idle;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

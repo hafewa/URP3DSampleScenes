@@ -20,6 +20,12 @@ public class PlayerManager : MonoBehaviour
     
     void Start()
     {
+        if (PerformanceTest.RunningBenchmark())
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         m_InFlythrough = false;
 
         if (SystemInfo.deviceType == DeviceType.Handheld)

@@ -57,6 +57,12 @@ public class SceneTransitionManager : MonoBehaviour
 
     void Awake()
     {
+        if (PerformanceTest.RunningBenchmark())
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         SetupSingleton();
         
         SetupReferences();
@@ -501,7 +507,7 @@ public class SceneTransitionManager : MonoBehaviour
     
     public static bool DissolveNeeded()
     {
-        return instance.ElapsedTimeInTransition > 0.001f;
+        return instance != null && instance.ElapsedTimeInTransition > 0.001f;
     }
 
     #endregion
