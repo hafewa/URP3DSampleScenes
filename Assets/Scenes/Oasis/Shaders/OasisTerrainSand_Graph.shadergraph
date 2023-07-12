@@ -6780,6 +6780,9 @@
     "m_Name": "Moving Sand",
     "m_ChildObjectList": [
         {
+            "m_Id": "175ad07e00264d90b106c191743abdc4"
+        },
+        {
             "m_Id": "9065e6b7a58c4e319f334664068480ee"
         },
         {
@@ -6787,9 +6790,6 @@
         },
         {
             "m_Id": "699a5dc5f4e64509b6f33359c63c35fa"
-        },
-        {
-            "m_Id": "175ad07e00264d90b106c191743abdc4"
         },
         {
             "m_Id": "ca56e0145e904f4b83089993ef2e335d"
@@ -9019,7 +9019,7 @@
     "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
     "m_ObjectId": "45efddb6c92640a28bd277e4e5d9f803",
     "m_Id": 0,
-    "m_DisplayName": "Dust Moving in Tent Area",
+    "m_DisplayName": "Tent to Portal Area",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -14051,10 +14051,10 @@
     "m_Guid": {
         "m_GuidSerialized": "d38b9cd9-b5b8-4a56-9bb3-33cab1042f93"
     },
-    "m_Name": "Dust Moving in Tent Area",
+    "m_Name": "Tent to Portal Area",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Dust Moving in Tent Area",
-    "m_DefaultReferenceName": "_Dust_Moving_in_Tent_Area",
+    "m_RefNameGeneratedByDisplayName": "Tent to Portal Area",
+    "m_DefaultReferenceName": "_Tent_to_Portal_Area",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,

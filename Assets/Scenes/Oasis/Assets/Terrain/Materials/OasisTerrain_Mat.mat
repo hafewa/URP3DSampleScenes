@@ -203,7 +203,7 @@ Material:
     - _Detail_Grain_Strength: 0.3
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _Dust_Moving_in_Tent_Area: 0
+    - _Dust_Moving_in_Tent_Area: 1
     - _Dust_Wave: 1
     - _Dust_Wave_Speed: 0.1
     - _Dust_Wave_Strength: 0.3
@@ -224,7 +224,7 @@ Material:
     - _Mask_Range: 1.09
     - _Metallic: 0
     - _Moving_Dust: 1
-    - _Moving_Dust_Strength: 1.2
+    - _Moving_Dust_Strength: 1.38
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -237,6 +237,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _Tent_to_Portal_Area: 1
     - _Wet_Gravels_Darkening: 0.5
     - _Wet_Gravels_Normal_Intensity: 1
     - _Wet_Gravels_Smoothness: 0.3
