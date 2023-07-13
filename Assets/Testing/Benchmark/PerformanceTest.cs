@@ -1,19 +1,53 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [Serializable]
-public struct PerformanceTestStage
+public class PerformanceTestStage
 {
     public string SceneName;
     public Vector3 CameraPosition;
     public Quaternion CameraRotation;
+
+    private float[] m_allFrameTimes;
+    private float m_avgFrameTime = 0, m_minFrameTime = 99999999, m_maxFrameTime = 0;
+    private int recordingIndex = 0;
+
+    public float avgFrameTime => (m_allFrameTimes == null || m_allFrameTimes.Length == 0) ? 0 : m_avgFrameTime / m_allFrameTimes.Length;
+    public float minFrameTime => m_minFrameTime;
+    public float maxFrameTime => m_maxFrameTime;
+
+    public float avgFPS => 1.0f / avgFrameTime;
+    public float minFPS => 1.0f / m_maxFrameTime;
+    public float maxFPS => 1.0f / m_minFrameTime;
+
+    public void Init( int capturesCount )
+    {
+        m_allFrameTimes = new float[capturesCount];
+        m_avgFrameTime = 0;
+        m_minFrameTime = 99999999;
+        m_maxFrameTime = 0;
+        recordingIndex = 0;
+    }
+
+    public void RecordTiming ( float deltaTime )
+    {
+        m_allFrameTimes[recordingIndex] = deltaTime;
+        recordingIndex++;
+        m_avgFrameTime += deltaTime;
+        m_minFrameTime = Mathf.Min(m_minFrameTime, deltaTime);
+        m_maxFrameTime = Mathf.Max(m_maxFrameTime, deltaTime);
+    }
 }
 
 public enum TestState
@@ -46,7 +80,12 @@ public class PerformanceTest : MonoBehaviour
     private float[] m_FrameTimes;
     private float m_ElapsedWaitTime;
     private int m_CaptureIndex;
-    private int m_CurrentStage;
+    private int m_CurrentStageIndex;
+    private PerformanceTestStage m_CurrentStage => m_Stages[m_CurrentStageIndex];
+
+    private PlayableDirector m_playableDirector;
+    private float m_intermediateCaptureTime = 0;
+    private float m_intermediateCaptureCounter = 0;
 
     private Transform m_TestCamera;
     
@@ -91,24 +130,38 @@ public class PerformanceTest : MonoBehaviour
                 if(m_ElapsedWaitTime > m_WaitTime)
                 {
                     m_State = TestState.Capturing;
+                    m_intermediateCaptureCounter = 0;
+                    if (m_playableDirector != null)
+                        m_playableDirector.Play();
                 }
                 m_ElapsedWaitTime += Time.deltaTime;
                 break;
             case TestState.Capturing:
-                m_FrameTimes[m_CaptureIndex] = Time.deltaTime;
-                m_CaptureIndex++;
-                if(m_CaptureIndex >= m_FramesToCapture)
+                if (m_intermediateCaptureCounter >= m_intermediateCaptureTime)
                 {
-                    SaveTestResult();
-                    if(m_CurrentStage < m_Stages.Count - 1)
+                    m_intermediateCaptureCounter = 0;
+                    m_FrameTimes[m_CaptureIndex] = Time.deltaTime;
+
+                    m_CurrentStage.RecordTiming(Time.deltaTime);
+
+                    m_CaptureIndex++;
+                    if (m_CaptureIndex >= m_FramesToCapture)
                     {
-                        m_CurrentStage++;
-                        StartTest(m_CurrentStage);
+                        SaveTestResult();
+                        if (m_CurrentStageIndex < m_Stages.Count - 1)
+                        {
+                            m_CurrentStageIndex++;
+                            StartCoroutine( StartTest(m_CurrentStageIndex) );
+                        }
+                        else
+                        {
+                            m_State = TestState.TestFinished;
+                        }
                     }
-                    else
-                    {
-                        m_State = TestState.TestFinished;
-                    }
+                }
+                else
+                {
+                    m_intermediateCaptureCounter += Time.deltaTime;
                 }
                 break;
         }
@@ -116,7 +169,7 @@ public class PerformanceTest : MonoBehaviour
     
     public void StartTests()
     {
-        StartTest(0);
+        StartCoroutine(StartTest(0));
 
         m_TestResults = new List<TestResult>();
     }
@@ -129,6 +182,8 @@ public class PerformanceTest : MonoBehaviour
         additionalData.renderPostProcessing = true;
         m_TestCamera = go.transform;
         DontDestroyOnLoad(go);
+
+        go.AddComponent<CinemachineBrain>();
     }
     
     private Texture2D bktex;
@@ -178,11 +233,20 @@ public class PerformanceTest : MonoBehaviour
 
         names.AppendLine("<b>Test Name</b>");
         frameTimes.AppendLine("<b>FPS</b>");
+        int i = 0;
 
         foreach (var result in m_TestResults)
         {
             names.AppendLine(result.testName);
-            frameTimes.AppendLine(result.avgFPS.ToString("0.00"));
+            names.AppendLine("\taverage");
+            names.AppendLine("\tmin");
+            names.AppendLine("\tmax");
+            frameTimes.AppendLine("");
+            frameTimes.AppendLine(m_Stages[i].avgFPS.ToString("0.00"));
+            frameTimes.AppendLine(m_Stages[i].minFPS.ToString("0.00"));
+            frameTimes.AppendLine(m_Stages[i].maxFPS.ToString("0.00"));
+
+            i++;
         }
         
         GUILayout.BeginHorizontal();
@@ -195,13 +259,13 @@ public class PerformanceTest : MonoBehaviour
         switch (m_State)
         {
             case TestState.Waiting:
-                GUILayout.Label("Test "+ m_CurrentStage + " currently <b>waiting</b>. (" + m_ElapsedWaitTime.ToString("0.00") + " / " + m_WaitTime.ToString("0.00") + ")");
+                GUILayout.Label("Test "+ m_CurrentStageIndex + " currently <b>waiting</b>. (" + m_ElapsedWaitTime.ToString("0.00") + " / " + m_WaitTime.ToString("0.00") + ")");
                 break;
             case TestState.Capturing:
-                GUILayout.Label("Test "+ m_CurrentStage + " currently <b>capturing</b>. (" + m_CaptureIndex + " / " + m_FramesToCapture + ")");
+                GUILayout.Label("Test "+ m_CurrentStageIndex + " currently <b>capturing</b>. (" + m_CaptureIndex + " / " + m_FramesToCapture + ")");
                 break;
             case TestState.Loading:
-                GUILayout.Label("Loading scene " + m_Stages[m_CurrentStage].SceneName);
+                GUILayout.Label("Loading scene " + m_Stages[m_CurrentStageIndex].SceneName);
                 break;
             case TestState.TestFinished:
                 GUILayout.Label("Test finished.");
@@ -233,23 +297,26 @@ public class PerformanceTest : MonoBehaviour
     private void SaveTestResult()
     {
         TestResult result = new TestResult();
-        PerformanceTestStage currentStage = m_Stages[m_CurrentStage];
-        result.testName = "Test " + m_CurrentStage + " - " + currentStage.SceneName;
+        result.testName = "Test " + m_CurrentStageIndex + " - " + m_CurrentStage.SceneName;
 
         float sum = 0;
         for(int i = 0 ; i < m_FrameTimes.Length; i++)
         {
             sum += m_FrameTimes[i];
         }
-        result.avgFPS = m_FrameTimes.Length / sum;
+        result.avgFPS = 1.0f/m_CurrentStage.avgFrameTime;
+
+        Debug.Log($"Test {m_CurrentStage.SceneName} average frame time is : {m_CurrentStage.avgFrameTime}");
 
         m_TestResults.Add(result);
     }
     
     
 
-    private void StartTest(int i)
+    private IEnumerator StartTest(int i)
     {
+        Debug.Log($"Start test #{i}");
+
         if(m_TestCamera == null) CreateCamera();
         
         m_CaptureIndex = 0;
@@ -259,11 +326,33 @@ public class PerformanceTest : MonoBehaviour
         m_TestCamera.position = stage.CameraPosition;
         m_TestCamera.rotation = stage.CameraRotation;
 
+        stage.Init(m_FramesToCapture);
+
         m_State = TestState.Loading;
         SceneManager.LoadScene(stage.SceneName, LoadSceneMode.Single);
-        
+
+        // wait one frame for scene object to be loaded in memory
+        yield return null;
+
         DisableCamerasInScene();
-        
+
+        var directors = Resources.FindObjectsOfTypeAll<PlayableDirector>();
+        Debug.Log($"Found {directors.Length} playable director(s)");
+
+        m_playableDirector = (directors.Length > 1)? directors.Single(d => d.gameObject.name == "CinematicTimeline") : directors[0];
+
+        if (m_playableDirector != null )
+        {
+            m_playableDirector.gameObject.SetActive( true );
+            var playable = m_playableDirector.playableAsset;
+            var cinemachineTrack = playable.outputs.Single(o => o.outputTargetType == typeof(CinemachineBrain)).sourceObject;
+            m_playableDirector.SetGenericBinding(cinemachineTrack, m_TestCamera.GetComponent<CinemachineBrain>());
+
+            var duration = (float)m_playableDirector.duration;
+            m_intermediateCaptureTime = duration / (m_FramesToCapture + 1);
+
+            m_playableDirector.Pause();
+        }
 
         m_State = TestState.Waiting;
         m_FrameTimes = new float[m_FramesToCapture];
@@ -273,7 +362,7 @@ public class PerformanceTest : MonoBehaviour
     {
         //Camera[] cameras = GameObject.FindObjectsOfTypeAll(typeof(Camera)) as Camera;
 
-        foreach (var camera in FindObjectsOfTypeAll(typeof(Camera)) as Camera[])
+        foreach (var camera in FindObjectsOfType<Camera>() )
         {
             Debug.Log("Found camera: " + camera.gameObject.name);
             if (camera.gameObject != m_TestCamera.gameObject)
