@@ -1,0 +1,3 @@
+.SingleStat {
+    flex-direction: row;
+}

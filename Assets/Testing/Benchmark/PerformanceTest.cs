@@ -6,11 +6,13 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Unity.VisualScripting;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 [Serializable]
 public class PerformanceTestStage
@@ -20,10 +22,13 @@ public class PerformanceTestStage
     public Quaternion CameraRotation;
 
     private float[] m_allFrameTimes;
-    private float m_avgFrameTime = 0, m_minFrameTime = 99999999, m_maxFrameTime = 0;
+    private float m_cumulatedFrameTime = 0, m_avgFrameTime = 0, m_minFrameTime = 99999999, m_maxFrameTime = 0;
     private int recordingIndex = 0;
 
-    public float avgFrameTime => (m_allFrameTimes == null || m_allFrameTimes.Length == 0) ? 0 : m_avgFrameTime / m_allFrameTimes.Length;
+    private VisualElement visualElementRoot;
+    private Label minFPSLabel, maxFPSLabel, avgFPSLabel;
+
+    public float avgFrameTime => m_avgFrameTime;
     public float minFrameTime => m_minFrameTime;
     public float maxFrameTime => m_maxFrameTime;
 
@@ -44,9 +49,30 @@ public class PerformanceTestStage
     {
         m_allFrameTimes[recordingIndex] = deltaTime;
         recordingIndex++;
-        m_avgFrameTime += deltaTime;
+        m_cumulatedFrameTime += deltaTime;
+        m_avgFrameTime = m_cumulatedFrameTime / recordingIndex;
         m_minFrameTime = Mathf.Min(m_minFrameTime, deltaTime);
         m_maxFrameTime = Mathf.Max(m_maxFrameTime, deltaTime);
+
+        minFPSLabel.text = minFPS.ToString();
+        maxFPSLabel.text = maxFPS.ToString();
+        avgFPSLabel.text = avgFPS.ToString();
+    }
+
+    public void InstantiateVisualElement(VisualTreeAsset referenceVisuaTree, VisualElement parent = null)
+    {
+        if (referenceVisuaTree == null)
+            return;
+
+        visualElementRoot = referenceVisuaTree.Instantiate();
+        minFPSLabel = visualElementRoot.Q<Label>(name: "MinFPS");
+        maxFPSLabel = visualElementRoot.Q<Label>(name: "MaxFPS");
+        avgFPSLabel = visualElementRoot.Q<Label>(name: "AvgFPS");
+
+        if (parent != null)
+        {
+            parent.Add(visualElementRoot);
+        }
     }
 }
 
@@ -77,6 +103,9 @@ public class PerformanceTest : MonoBehaviour
     [SerializeField]
     private int m_FramesToCapture;
 
+    [SerializeField]
+    private VisualTreeAsset m_TestDataVisualTreeReference;
+
     private float[] m_FrameTimes;
     private float m_ElapsedWaitTime;
     private int m_CaptureIndex;
@@ -92,6 +121,9 @@ public class PerformanceTest : MonoBehaviour
     private static PerformanceTest m_Instance;
 
     private List<TestResult> m_TestResults;
+
+    private UIDocument m_UIDocument;
+    private TextElement currentFPSText;
 
     public static bool RunningBenchmark()
     {
@@ -119,6 +151,18 @@ public class PerformanceTest : MonoBehaviour
         }
         
         MakeBgTex();
+
+        m_UIDocument = GetComponent<UIDocument>();
+        var rootVE = m_UIDocument.rootVisualElement;
+        currentFPSText = rootVE.Q<TextElement>(name: "CurrentFPS");
+
+        var testList = rootVE.Q<VisualElement>(name: "TestsList");
+
+        foreach(var test in m_Stages)
+        {
+            test.InstantiateVisualElement(m_TestDataVisualTreeReference, testList);
+        }
+        testList.MarkDirtyRepaint();
     }
 
     // Update is called once per frame
@@ -137,6 +181,8 @@ public class PerformanceTest : MonoBehaviour
                 m_ElapsedWaitTime += Time.deltaTime;
                 break;
             case TestState.Capturing:
+
+                currentFPSText.text = $"{1.0f / Time.deltaTime}";
                 if (m_intermediateCaptureCounter >= m_intermediateCaptureTime)
                 {
                     m_intermediateCaptureCounter = 0;
@@ -202,7 +248,7 @@ public class PerformanceTest : MonoBehaviour
         bktex.Apply();
     }
 
-    private void OnGUI()
+    private void DisabledOnGUI()
     {
         
         int guiWidth = 1000;
