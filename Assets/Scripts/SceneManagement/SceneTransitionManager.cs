@@ -26,7 +26,7 @@ public class SceneTransitionManager : MonoBehaviour
     [Tooltip("Layers to render when in a location")]
     [SerializeField] private LayerMask locationLayer;
     [Tooltip("Layers to render when in the terminal")] //TODO: Rename all hub to terminal
-    [SerializeField] private LayerMask hubLayer;
+    [SerializeField] private LayerMask m_TerminalLayer;
     
     private bool InHub = true;
 
@@ -334,22 +334,22 @@ public class SceneTransitionManager : MonoBehaviour
         if (instance.InHub)
         {
             //Add to mask
-            instance.m_MainCamera.cullingMask |= instance.hubLayer;
+            instance.m_MainCamera.cullingMask |= instance.m_TerminalLayer;
             instance.m_ScreenCamera.cullingMask |= instance.locationLayer;
 
             //Remove from mask
             instance.m_MainCamera.cullingMask ^= instance.locationLayer;
-            instance.m_ScreenCamera.cullingMask ^= instance.hubLayer;
+            instance.m_ScreenCamera.cullingMask ^= instance.m_TerminalLayer;
         }
         else
         {
             //Add to mask
-            instance.m_MainCamera.cullingMask ^= instance.hubLayer;
+            instance.m_MainCamera.cullingMask ^= instance.m_TerminalLayer;
             instance.m_ScreenCamera.cullingMask ^= instance.locationLayer;
 
             //Remove from mask
             instance.m_MainCamera.cullingMask |= instance.locationLayer;
-            instance.m_ScreenCamera.cullingMask |= instance.hubLayer;
+            instance.m_ScreenCamera.cullingMask |= instance.m_TerminalLayer;
         }
     }
 
