@@ -228,7 +228,7 @@ public class SceneTransitionManager : MonoBehaviour
         {
             flythroughRoot.position = instance.m_ScreenCamera.GetComponent<OffsetCamera>().GetOffset();
             instance.m_MediaSceneLoader.GetHubSceneLoader().SetCurrentVolume(instance.m_Loader.GetDestinationVolume());
-            instance.screenScene.HubLoader.SetActive(true);
+            instance.screenScene.TerminalLoader.SetActive(true);
         }
         else
         {
@@ -355,9 +355,9 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void SetTerminalLoaderAndDirector(SceneMetaData scene, bool isActive)
     {
-        if (scene.HubLoader != null)
+        if (scene.TerminalLoader != null)
         {
-            scene.HubLoader.SetActive(isActive);
+            scene.TerminalLoader.SetActive(isActive);
         }
 
         if (scene.Director != null)
@@ -489,7 +489,7 @@ public class SceneTransitionManager : MonoBehaviour
         instance.m_MediaSceneLoader = mediaSceneLoader;
         if (!instance.InTerminal)
         {
-            instance.m_Loader = instance.currentScene.HubLoader.GetComponentInChildren<SceneLoader>();
+            instance.m_Loader = instance.currentScene.TerminalLoader.GetComponentInChildren<SceneLoader>();
         }
         StartTransition();
     }
