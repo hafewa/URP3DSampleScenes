@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 6732560574004377972}
   - component: {fileID: 1746391640726907383}
   m_Layer: 6
-  m_Name: Hub_SubRoom_ShadowCaster_02
+  m_Name: Terminal_SubRoom_ShadowCaster_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -371,7 +371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 412740513cd9e964781520a8f1a9b288, type: 3}
       propertyPath: m_Name
-      value: Hub_SubRoom_Collider
+      value: Terminal_SubRoom_Collider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -475,7 +475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3c73060396ff88e48b604bc38db0b65a, type: 3}
       propertyPath: m_Name
-      value: Hub_SubRoom_ShadowCaster
+      value: Terminal_SubRoom_ShadowCaster
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3c73060396ff88e48b604bc38db0b65a, type: 3}
       propertyPath: m_Layer
@@ -665,7 +665,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 378f5d7ea67b44771b4b684daf42a621, type: 2}
     - target: {fileID: 919132149155446097, guid: e06817da454743a4bac28c1f2c8e91ad, type: 3}
       propertyPath: m_Name
-      value: Hub_SubRoom
+      value: Terminal_SubRoom
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e06817da454743a4bac28c1f2c8e91ad, type: 3}
       propertyPath: m_Layer

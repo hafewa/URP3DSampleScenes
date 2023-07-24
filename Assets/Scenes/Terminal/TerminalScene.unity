@@ -5464,7 +5464,7 @@ GameObject:
   - component: {fileID: 466318242}
   - component: {fileID: 466318241}
   m_Layer: 0
-  m_Name: Hub_SubRoom_ShadowCaster_02
+  m_Name: Terminal_SubRoom_ShadowCaster_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13659,7 +13659,7 @@ GameObject:
   - component: {fileID: 1175237767}
   - component: {fileID: 1175237766}
   m_Layer: 6
-  m_Name: Hub_MeshCollider
+  m_Name: Terminal_MeshCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15323,7 +15323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3854622686256098689, guid: 4fb2bf3dd85e6b243ab2d8d71ee86182, type: 3}
       propertyPath: m_Name
-      value: Hub_IconsVFX
+      value: Terminal_IconsVFX
       objectReference: {fileID: 0}
     - target: {fileID: 3854622686256098689, guid: 4fb2bf3dd85e6b243ab2d8d71ee86182, type: 3}
       propertyPath: m_Layer
@@ -15634,7 +15634,7 @@ GameObject:
   - component: {fileID: 1357759038}
   - component: {fileID: 1357759037}
   m_Layer: 0
-  m_Name: Hub_SubRoom_ShadowCaster_02
+  m_Name: Terminal_SubRoom_ShadowCaster_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21683,7 +21683,7 @@ GameObject:
   - component: {fileID: 1871154808}
   - component: {fileID: 1871154807}
   m_Layer: 0
-  m_Name: Hub_SubRoom_ShadowCaster_02
+  m_Name: Terminal_SubRoom_ShadowCaster_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25189,7 +25189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3b54daf8e181d824ba0ce02ad07b3bda, type: 3}
       propertyPath: m_Name
-      value: Hub_MainRoom_ShadowCaster
+      value: Terminal_MainRoom_ShadowCaster
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3b54daf8e181d824ba0ce02ad07b3bda, type: 3}
       propertyPath: m_Layer
@@ -25791,7 +25791,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 378f5d7ea67b44771b4b684daf42a621, type: 2}
     - target: {fileID: 919132149155446097, guid: bf13f77643991384696e0869a082d2fc, type: 3}
       propertyPath: m_Name
-      value: Hub_MainRoom
+      value: Terminal_MainRoom
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bf13f77643991384696e0869a082d2fc, type: 3}
       propertyPath: m_Layer

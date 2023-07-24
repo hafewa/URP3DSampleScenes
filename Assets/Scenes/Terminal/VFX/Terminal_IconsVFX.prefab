@@ -4979,7 +4979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6733161862872374645}
   m_Layer: 6
-  m_Name: Space
+  m_Name: Cockpit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
