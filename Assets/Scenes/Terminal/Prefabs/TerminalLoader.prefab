@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6692523532005034146}
   m_Layer: 0
-  m_Name: HubLoader
+  m_Name: TerminalLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

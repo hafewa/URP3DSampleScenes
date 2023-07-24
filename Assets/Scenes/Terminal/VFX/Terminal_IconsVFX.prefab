@@ -5263,7 +5263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6206803516811091345}
   m_Layer: 0
-  m_Name: Hub_IconsVFX
+  m_Name: Terminal_IconsVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
