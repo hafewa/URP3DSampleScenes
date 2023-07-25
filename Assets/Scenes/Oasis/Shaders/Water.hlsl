@@ -49,16 +49,25 @@ float2 ViewSpacePosToUV(float3 pos)
     return ComputeNormalizedDeviceCoordinates(pos, UNITY_MATRIX_P);
 }
 
-void Raymarch_half(float3 origin, float3 direction, half steps, half stepSize, half thickness, out half2 sampleUV, out half valid, out half debug)
+half OutOfBoundsFade(half2 uv)
+{
+    half2 fade = 0;
+    fade.x = saturate(1 - abs(uv.x - 0.5) * 2);
+    fade.y = saturate(1 - abs(uv.y - 0.5) * 2);
+    return fade.x * fade.y;
+}
+
+void Raymarch_half(float3 origin, float3 direction, half steps, half stepSize, half thickness, out half2 sampleUV, out half valid, out half outOfBounds, out half debug)
 {
     sampleUV = 0;
     valid = 0;
+    outOfBounds = 0;
     debug = 0;
 
     float3 baseOrigin = origin;
     
     direction *= stepSize;
-    const int rcpStepCount = rcp(SSR_ITERATIONS);
+    const half rcpStepCount = rcp(steps);
     
     [loop]
     for(int i = 0; i < steps; i++)
@@ -70,7 +79,9 @@ void Raymarch_half(float3 origin, float3 direction, half steps, half stepSize, h
             direction *= 1.5;
             sampleUV = ViewSpacePosToUV(origin);
 
-            //sampleUV.x = sampleUV.x % 2.0;
+            outOfBounds = OutOfBoundsFade(sampleUV);
+            
+            //return;
             
             if(!(sampleUV.x > 1 || sampleUV.x < 0 || sampleUV.y > 1 || sampleUV.y < 0))
             {
@@ -78,12 +89,19 @@ void Raymarch_half(float3 origin, float3 direction, half steps, half stepSize, h
                 float3 samplePos = ViewPosFromDepth(sampleUV, deviceDepth);
 
                 if(distance(samplePos.z, origin.z) > length(direction) * thickness) continue;
+
+                
         
                 if(samplePos.z > origin.z)
                 {
                     valid = 1;
                     return;
                 }
+                
+            } else
+            {
+                //outOfBounds = OutOfBoundsFade(sampleUV);
+                return;
             }
         }
     }
