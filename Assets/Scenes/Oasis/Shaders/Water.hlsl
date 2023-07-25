@@ -107,6 +107,80 @@ void Raymarch_half(float3 origin, float3 direction, half steps, half stepSize, h
     }
 }
 
+struct WaveParams
+{
+    half2 origin;
+    half amplitude;
+    half length;
+    half speed;
+};
+
+
+
+void RadialGerstnerWaves_half(float3 worldPos, half time, out half displacement)
+{
+    const int waveCount = 1;
+
+
+    //Params should probably be moved to global scope
+    
+    WaveParams w1 = {
+        half2(0, -164),
+        1,
+        1,
+        2
+    };
+
+    WaveParams w2 = {
+        half2(20, -130),
+        0.7,
+        1.7,
+        4
+    };
+
+    WaveParams w3 = {
+        half2(-21, -156),
+        0.3,
+        3,
+        3
+    };
+
+    WaveParams w4 = {
+        half2(-4, -200),
+        1.4,
+        0.6,
+        1
+    };
+
+    WaveParams waveParams[waveCount] = {
+        w1,
+        //w2,
+        //w3,
+        //w4
+    };
+    
+    displacement = 0;
+
+    half summedAmplitude = 0;
+
+    for(int i = 0; i < waveCount; i++)
+    {
+        WaveParams params = waveParams[i];
+
+
+        half2 D = normalize(worldPos.xz - params.origin);
+        //D = half2(1, 0);
+        half w = 2/params.length;
+        half phaseConstant = w * params.speed;
+
+        displacement += sin( dot(D, worldPos.xz));
+        
+        summedAmplitude += params.amplitude;
+    }
+
+    //displacement /= summedAmplitude;
+}
+
 /*
 half3 SampleReflections(float3 normalWS, float3 positionWS, float3 viewDirectionWS, half2 screenUV)
 {
