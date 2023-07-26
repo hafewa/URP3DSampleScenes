@@ -25,7 +25,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     [Tooltip("Layers to render when in a location")]
     [SerializeField] private LayerMask locationLayer;
-    [Tooltip("Layers to render when in the terminal")] //TODO: Rename all hub to terminal
+    [Tooltip("Layers to render when in the terminal")]
     [SerializeField] private LayerMask m_TerminalLayer;
     
     private bool InTerminal = true;
@@ -227,13 +227,13 @@ public class SceneTransitionManager : MonoBehaviour
         if (!instance.InTerminal)
         {
             flythroughRoot.position = instance.m_ScreenCamera.GetComponent<OffsetCamera>().GetOffset();
-            instance.m_MediaSceneLoader.GetHubSceneLoader().SetCurrentVolume(instance.m_Loader.GetDestinationVolume());
+            instance.m_MediaSceneLoader.GetTerminalSceneLoader().SetCurrentVolume(instance.m_Loader.GetDestinationVolume());
             instance.screenScene.TerminalLoader.SetActive(true);
         }
         else
         {
             flythroughRoot.position = Vector3.zero;
-            instance.m_Loader = instance.m_MediaSceneLoader.GetHubSceneLoader();
+            instance.m_Loader = instance.m_MediaSceneLoader.GetTerminalSceneLoader();
         }
 
         (instance.screenScene, instance.currentScene) = (instance.currentScene, instance.screenScene);
