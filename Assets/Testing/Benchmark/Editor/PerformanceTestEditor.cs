@@ -17,7 +17,7 @@ public class PerformanceTestEditor : Editor
         if (GUILayout.Button("Add current"))
         {
             PerformanceTestStage stage = new PerformanceTestStage();
-            stage.SceneName = SceneManager.GetActiveScene().name;
+            stage.sceneName = SceneManager.GetActiveScene().name;
             Transform sceneCamTransform = SceneView.lastActiveSceneView.camera.transform;
             stage.CameraPosition = sceneCamTransform.position;
             stage.CameraRotation = sceneCamTransform.rotation;

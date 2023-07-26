@@ -11,30 +11,38 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 [Serializable]
 public class PerformanceTestStage
 {
-    public string SceneName;
+    [FormerlySerializedAs("SceneName")]
+    public string sceneName;
     public Vector3 CameraPosition;
     public Quaternion CameraRotation;
 
     private float[] m_allFrameTimes;
-    private float m_cumulatedFrameTime = 0, m_avgFrameTime = 0, m_minFrameTime = 99999999, m_maxFrameTime = 0;
+    private float m_cumulatedFrameTime = 0, m_avgFrameTime = 0, m_minFrameTime = 99999999, m_maxFrameTime = 0, m_medianFrameTime=0, m_upperQuartileFrameTime=0, m_lowerQuartileFrameTime=0;
     private int recordingIndex = 0;
 
     private VisualElement visualElementRoot;
-    private Label minFPSLabel, maxFPSLabel, avgFPSLabel;
+    private Label testNameLabel, minFPSLabel, maxFPSLabel, avgFPSLabel, lowerQuartileFPSLabel, medianFPSLabel, upperQuartileFPSLabel;
 
     public float avgFrameTime => m_avgFrameTime;
     public float minFrameTime => m_minFrameTime;
     public float maxFrameTime => m_maxFrameTime;
+    public float medianFrameTime => m_medianFrameTime;
+    public float upperQuartileFrameTime => m_upperQuartileFrameTime;
+    public float lowerQuartileFrameTime => m_lowerQuartileFrameTime;
 
     public float avgFPS => 1.0f / avgFrameTime;
     public float minFPS => 1.0f / m_maxFrameTime;
     public float maxFPS => 1.0f / m_minFrameTime;
+    public float medianFPS => 1.0f / m_medianFrameTime;
+    public float upperQuartileFPS => 1.0f / m_lowerQuartileFrameTime;
+    public float lowerQuartileFPS => 1.0f / m_upperQuartileFrameTime;
 
     public void Init( int capturesCount )
     {
@@ -59,20 +67,65 @@ public class PerformanceTestStage
         avgFPSLabel.text = avgFPS.ToString();
     }
 
+    public void FinishTest()
+    {
+        CalculateValues();
+        lowerQuartileFPSLabel.text = lowerQuartileFPS.ToString();
+        medianFPSLabel.text = medianFPS.ToString();
+        upperQuartileFPSLabel.text = upperQuartileFPS.ToString();
+    }
+
     public void InstantiateVisualElement(VisualTreeAsset referenceVisuaTree, VisualElement parent = null)
     {
         if (referenceVisuaTree == null)
             return;
 
         visualElementRoot = referenceVisuaTree.Instantiate();
-        minFPSLabel = visualElementRoot.Q<Label>(name: "MinFPS");
-        maxFPSLabel = visualElementRoot.Q<Label>(name: "MaxFPS");
-        avgFPSLabel = visualElementRoot.Q<Label>(name: "AvgFPS");
+        testNameLabel           = visualElementRoot.Q<Label>(name: "TestName");
+        minFPSLabel             = visualElementRoot.Q<Label>(name: "MinFPS");
+        maxFPSLabel             = visualElementRoot.Q<Label>(name: "MaxFPS");
+        avgFPSLabel             = visualElementRoot.Q<Label>(name: "AvgFPS");
+        lowerQuartileFPSLabel   = visualElementRoot.Q<Label>(name: "LowerQuartileFPS");
+        medianFPSLabel          = visualElementRoot.Q<Label>(name: "MedianFPS");
+        upperQuartileFPSLabel   = visualElementRoot.Q<Label>(name: "UpperQuartileFPS");
+
+        testNameLabel.text = sceneName;
 
         if (parent != null)
         {
             parent.Add(visualElementRoot);
         }
+    }
+
+    public void CalculateValues(bool recalculateRange = false)
+    {
+        if ( recalculateRange)
+        {
+            m_minFrameTime = m_allFrameTimes.Min();
+            m_maxFrameTime = m_allFrameTimes.Max();
+        }
+        CalculateValues( m_minFrameTime, m_minFrameTime );
+    }
+
+    public void CalculateValues( float min, float max )
+    {
+        var orderedData = new float[m_allFrameTimes.Length];
+        Array.Copy(m_allFrameTimes, orderedData, m_allFrameTimes.Length);
+        Array.Sort(orderedData);
+        var lowerQuartileIndexF = m_allFrameTimes.Length * 0.25f;
+        var medianIndexF = m_allFrameTimes.Length * 0.5f;
+        var upperQuartileIndexF = m_allFrameTimes.Length * 0.75f;
+
+        var lowerQuartileIndexI = (int)lowerQuartileIndexF;
+        lowerQuartileIndexF -= lowerQuartileIndexI;
+        var medianIndexI = (int)medianIndexF;
+        medianIndexF -= medianIndexI;
+        var upperQuartileIndexI = (int)upperQuartileIndexF;
+        upperQuartileIndexF -= upperQuartileIndexI;
+
+        m_lowerQuartileFrameTime = Mathf.Lerp( orderedData[lowerQuartileIndexI], orderedData[lowerQuartileIndexI+1], lowerQuartileIndexF );
+        m_medianFrameTime = Mathf.Lerp(orderedData[medianIndexI], orderedData[medianIndexI + 1], medianIndexF);
+        m_upperQuartileFrameTime = Mathf.Lerp(orderedData[upperQuartileIndexI], orderedData[upperQuartileIndexI + 1], upperQuartileIndexF);
     }
 }
 
@@ -194,6 +247,7 @@ public class PerformanceTest : MonoBehaviour
                     if (m_CaptureIndex >= m_FramesToCapture)
                     {
                         SaveTestResult();
+                        m_CurrentStage.FinishTest();
                         if (m_CurrentStageIndex < m_Stages.Count - 1)
                         {
                             m_CurrentStageIndex++;
@@ -311,7 +365,7 @@ public class PerformanceTest : MonoBehaviour
                 GUILayout.Label("Test "+ m_CurrentStageIndex + " currently <b>capturing</b>. (" + m_CaptureIndex + " / " + m_FramesToCapture + ")");
                 break;
             case TestState.Loading:
-                GUILayout.Label("Loading scene " + m_Stages[m_CurrentStageIndex].SceneName);
+                GUILayout.Label("Loading scene " + m_Stages[m_CurrentStageIndex].sceneName);
                 break;
             case TestState.TestFinished:
                 GUILayout.Label("Test finished.");
@@ -343,7 +397,7 @@ public class PerformanceTest : MonoBehaviour
     private void SaveTestResult()
     {
         TestResult result = new TestResult();
-        result.testName = "Test " + m_CurrentStageIndex + " - " + m_CurrentStage.SceneName;
+        result.testName = "Test " + m_CurrentStageIndex + " - " + m_CurrentStage.sceneName;
 
         float sum = 0;
         for(int i = 0 ; i < m_FrameTimes.Length; i++)
@@ -352,7 +406,7 @@ public class PerformanceTest : MonoBehaviour
         }
         result.avgFPS = 1.0f/m_CurrentStage.avgFrameTime;
 
-        Debug.Log($"Test {m_CurrentStage.SceneName} average frame time is : {m_CurrentStage.avgFrameTime}");
+        Debug.Log($"Test {m_CurrentStage.sceneName} average frame time is : {m_CurrentStage.avgFrameTime}");
 
         m_TestResults.Add(result);
     }
@@ -375,7 +429,7 @@ public class PerformanceTest : MonoBehaviour
         stage.Init(m_FramesToCapture);
 
         m_State = TestState.Loading;
-        SceneManager.LoadScene(stage.SceneName, LoadSceneMode.Single);
+        SceneManager.LoadScene(stage.sceneName, LoadSceneMode.Single);
 
         // wait one frame for scene object to be loaded in memory
         yield return null;

@@ -2,18 +2,34 @@
     <Style src="project://database/Assets/Testing/Benchmark/BenchmarkUI.uss?fileID=7433441132597879392&amp;guid=83e88789f4e4cd840be5d4567148e6d0&amp;type=3#BenchmarkUI" />
     <ui:VisualElement name="TestGroup" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
         <ui:Label tabindex="-1" text="Test Name" display-tooltip-when-elided="true" name="TestName" />
-        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
-            <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-                <ui:Label tabindex="-1" text="Minimum:" display-tooltip-when-elided="true" />
-                <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="MinFPS" />
+        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column;">
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Minimum:" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="MinFPS" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Average:" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="AvgFPS" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Maximum:" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="MaxFPS" />
+                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-                <ui:Label tabindex="-1" text="Maximum:" display-tooltip-when-elided="true" />
-                <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="MaxFPS" />
-            </ui:VisualElement>
-            <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-                <ui:Label tabindex="-1" text="Average:" display-tooltip-when-elided="true" />
-                <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="AvgFPS" />
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Lower Quartile:" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="LowerQuartileFPS" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Median:" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="MedianFPS" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Upper Quartile:" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="UpperQuartileFPS" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
