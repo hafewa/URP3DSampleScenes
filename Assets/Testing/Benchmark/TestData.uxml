@@ -3,6 +3,7 @@
     <ui:VisualElement name="TestGroup" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
         <ui:Label tabindex="-1" text="Test Name" display-tooltip-when-elided="true" name="TestName" />
         <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column;">
+            <ui:VisualElement name="TimingsGraph" />
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
                 <ui:VisualElement name="SingleStat" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
                     <ui:Label tabindex="-1" text="Minimum:" display-tooltip-when-elided="true" />

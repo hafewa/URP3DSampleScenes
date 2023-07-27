@@ -19,8 +19,8 @@ public class PerformanceTestEditor : Editor
             PerformanceTestStage stage = new PerformanceTestStage();
             stage.sceneName = SceneManager.GetActiveScene().name;
             Transform sceneCamTransform = SceneView.lastActiveSceneView.camera.transform;
-            stage.CameraPosition = sceneCamTransform.position;
-            stage.CameraRotation = sceneCamTransform.rotation;
+            stage.cameraPosition = sceneCamTransform.position;
+            stage.cameraRotation = sceneCamTransform.rotation;
             performnceTest.m_Stages.Add(stage);
         }
     }
