@@ -140,9 +140,69 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9197481963319205126, guid: 13df3b6894d9013438db11005082cc52, type: 3}
     - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: m_WaitTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.ctime0
+      value: 193
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.ctime1
+      value: 16384
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.ctime2
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.ctime3
+      value: 49151
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.ctime4
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.key0.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.key1.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.key3.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.key3.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.key4.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
       propertyPath: m_TestDataVisualTreeReference
       value: 
       objectReference: {fileID: 9197481963319205126, guid: 55b23197e3bc1df4c84c22c909c70d26, type: 3}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: frameTimingGradient.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: m_Stages.Array.data[0].useFullTimeline
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8132712973314222637, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -253,14 +253,21 @@ public class PerformanceTestStage
 
         Vertex v;
         float y;
+        Color32 c;
 
         for (int i=0; i<(m_graphVertices.Count/2); i++)
         {
+            c = PerformanceTest.instance.frameTimingGradient.Evaluate((m_allFrameTimes[i]-minFrameTime) / (m_maxFrameTime-minFrameTime));
             v = m_graphVertices[i*2];
+            v.tint = c;
             y = m_allFrameTimes[i] / m_maxFrameTime;
             y = (1.0f - y ) * r.height;
             v.position.y = y;
             m_graphVertices[i * 2] = v;
+
+            v = m_graphVertices[i * 2+1];
+            v.tint = c;
+            m_graphVertices[i * 2+1] = v;
         }
     }
 
@@ -285,10 +292,13 @@ public class PerformanceTestStage
             m_graphVertices[i * 2+1] = v;
         }
 
+        Color32 c = PerformanceTest.instance.frameTimingGradient.Evaluate(y - (minFrameTime / maxFrameTime));
+
         y = (1.0f - y) * r.height;
 
-        m_graphVertices.Add(new Vertex() { position = new Vector3(r.width, y, Vertex.nearZ), tint = Color.white });
-        m_graphVertices.Add(new Vertex() { position = new Vector3(r.width, r.height, Vertex.nearZ), tint = Color.white });
+
+        m_graphVertices.Add(new Vertex() { position = new Vector3(r.width, y, Vertex.nearZ), tint = c });
+        m_graphVertices.Add(new Vertex() { position = new Vector3(r.width, r.height, Vertex.nearZ), tint = c });
         
         int lastIndex = m_graphVertices.Count - 1;
 
@@ -515,6 +525,8 @@ public class PerformanceTest : MonoBehaviour
     public float m_WaitTime;
     [SerializeField]
     public int m_FramesToCapture;
+
+    public Gradient frameTimingGradient = new Gradient();
 
     [SerializeField]
     private VisualTreeAsset m_TestDataVisualTreeReference;
