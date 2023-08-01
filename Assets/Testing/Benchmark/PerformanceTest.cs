@@ -40,7 +40,8 @@ public class PerformanceTestStage
 
     private VisualElement visualElementRoot;
     private Label testNameLabel, minFPSLabel, maxFPSLabel, avgFPSLabel, lowerQuartileFPSLabel, medianFPSLabel, upperQuartileFPSLabel;
-    private VisualElement timingsGraphVE;
+    private VisualElement timingsGraphContainerVE;
+    private StatsGraphVE timingsGraphVE;
 
     public float avgFrameTime => m_avgFrameTime;
     public float minFrameTime => m_minFrameTime;
@@ -63,10 +64,6 @@ public class PerformanceTestStage
             initialListSize = (int) m_playableDirector.duration * 120;
 
         m_allFrameTimes = new List<float>();
-        m_graphVertices = new List<Vertex>();
-        m_graphIndices = new List<ushort>();
-
-        InitGraphMesh(initialListSize);
 
         m_avgFrameTime = 0;
         m_minFrameTime = 99999999;
@@ -81,12 +78,8 @@ public class PerformanceTestStage
         m_cumulatedFrameTime += deltaTime;
         m_avgFrameTime = m_cumulatedFrameTime / recordingIndex;
         m_minFrameTime = Mathf.Min(m_minFrameTime, deltaTime);
-        if (m_maxFrameTime < deltaTime)
-        {
-            m_maxFrameTime = deltaTime;
-            ResizeGraph();
-        }
-        AddGraphInput(deltaTime / m_maxFrameTime);
+        m_maxFrameTime = Mathf.Max(m_maxFrameTime, deltaTime);
+        timingsGraphVE.SetData(m_allFrameTimes.Select(v => v / m_maxFrameTime).ToList(), true );
 
         minFPSLabel.text = minFPS.ToString();
         maxFPSLabel.text = maxFPS.ToString();
@@ -115,7 +108,9 @@ public class PerformanceTestStage
         medianFPSLabel          = visualElementRoot.Q<Label>(name: "MedianFPS");
         upperQuartileFPSLabel   = visualElementRoot.Q<Label>(name: "UpperQuartileFPS");
 
-        timingsGraphVE          = visualElementRoot.Q(name: "TimingsGraph");
+        timingsGraphContainerVE          = visualElementRoot.Q(name: "TimingsGraph");
+        timingsGraphVE = new StatsGraphVE();
+        timingsGraphContainerVE.Add(timingsGraphVE);
 
         testNameLabel.text = sceneName;
 
@@ -123,239 +118,6 @@ public class PerformanceTestStage
         {
             parent.Add(visualElementRoot);
         }
-    }
-
-    List<Vertex> m_graphVertices;
-    List<ushort> m_graphIndices;
-
-    static readonly Vertex[] k_Vertices = new Vertex[4];
-    static readonly ushort[] k_Indices = { 0, 1, 2, 2, 3, 0 };
-
-    void TEMP_GenerateGraphMesh(MeshGenerationContext mgc)
-    {
-
-        Rect r = mgc.visualElement.contentRect;
-        if (r.width < 0.01f || r.height < 0.01f)
-            return; // Skip rendering when too small.
-        
-        Debug.Log("Do Mesh");
-
-        float left = 0;
-        float right = r.width;
-        float top = 0;
-        float bottom = r.height;
-
-        var mesh = mgc.Allocate(4, 6);
-
-        mesh.SetNextVertex(new Vertex() { position = new Vector3(left , top   , Vertex.nearZ), tint = Color.white });
-        mesh.SetNextVertex(new Vertex() { position = new Vector3(right, top   , Vertex.nearZ), tint = Color.white });
-        mesh.SetNextVertex(new Vertex() { position = new Vector3(right, bottom, Vertex.nearZ), tint = Color.white });
-        mesh.SetNextVertex(new Vertex() { position = new Vector3(left , bottom, Vertex.nearZ), tint = Color.white });
-
-        mesh.SetNextIndex(0);
-        mesh.SetNextIndex(1);
-        mesh.SetNextIndex(2);
-        mesh.SetNextIndex(0);
-        mesh.SetNextIndex(2);
-        mesh.SetNextIndex(3);
-    }
-
-    public void GenerateGraphMesh(MeshGenerationContext mgc)
-    {
-        //Debug.Log($"Updage graph with {m_graphVertices.Count} vertices and {m_graphIndices.Count/3} triangles.");
-
-        MeshWriteData mwd = mgc.Allocate(m_graphVertices.Count, m_graphIndices.Count);
-
-        /*
-        for (int i=0; i< m_graphVertices.Count/2; i++)
-        {
-            var x = mgc.visualElement.contentRect.width * (float)i * 1.0f / (m_graphVertices.Count/2);
-
-            var v = m_graphVertices[i*2];
-
-            v.position.x = x;
-            v.position.y =  mgc.visualElement.contentRect.height * (1.0f - m_allFrameTimes[i] / m_maxFrameTime);
-            v.position.z = Vertex.nearZ;
-
-            m_graphVertices[i*2] = v;
-
-            v = m_graphVertices[i * 2 + 1];
-            v.position.x = x;
-            v.position.y = mgc.visualElement.contentRect.height;
-            v.position.z = Vertex.nearZ;
-            m_graphVertices[i * 2 + 1] = v;
-        }
-        //*/
-        /*
-        Debug.Log("points:" + (m_graphVertices.Count / 2));
-        for (int i=0; i<m_graphVertices.Count/2; i++)
-        {
-            var x = (float)mgc.visualElement.contentRect.width * (float)i * 1.0f / ( ((float) m_graphVertices.Count) / 2.0f );
-
-            var v = m_graphVertices[i*2];
-            var y = Mathf.Sin( (v.position.x / mgc.visualElement.contentRect.width) * 20f );
-            v.position.x = x;
-            v.position.y = mgc.visualElement.contentRect.height * (0.5f - y * 0.3f);
-            v.position.z = Vertex.nearZ;
-            m_graphVertices[i * 2] = v;
-            v.position.y = mgc.visualElement.contentRect.height;
-            m_graphVertices[i * 2+1] = v;
-        }
-        //*/
-
-        if (m_graphVertices.Count < 4)
-            return;
-        
-        mwd.SetAllVertices(m_graphVertices.ToArray());
-        mwd.SetAllIndices(m_graphIndices.ToArray());
-    }
-
-    public void InitGraphMesh(int initialListSize)
-    {
-        timingsGraphVE.generateVisualContent = GenerateGraphMesh;
-
-        return;
-        Rect r = timingsGraphVE.contentRect;
-
-        float left = 0;
-        float right = r.width;
-        float top = 0;
-        float bottom = r.height;
-
-        for (ushort i = 0; i < initialListSize; i++)
-        {
-            Vertex v = new Vertex();
-            v.position = new Vector3(right * (i * 1.0f / (initialListSize - 1) ), bottom, Vertex.nearZ);
-            v.tint = Color.white;
-            m_graphVertices.Add(v);
-            v.position = new Vector3(right * (i * 1.0f / (initialListSize - 1)), bottom, Vertex.nearZ);
-            m_graphVertices.Add(v);
-
-            m_graphIndices.AddRange(new[]
-            {
-                (ushort)(i*2), (ushort)(i *2+2), (ushort)(i *2+1),
-                (ushort)(i *2+2), (ushort)(i *2+3), (ushort)(i *2+1)
-                // (ushort)(i*2), (ushort)(i *2+1), (ushort)(i *2+2),
-                // (ushort)(i *2+2), (ushort)(i *2+1), (ushort)(i *2+3)
-            });
-        }
-    }
-
-    public void ResizeGraph()
-    {
-        //return;
-        Rect r = timingsGraphVE.contentRect;
-
-        float left = 0;
-        float right = r.width;
-        float top = 0;
-        float bottom = r.height;
-
-        Vertex v;
-        float y;
-        Color32 c;
-
-        for (int i=0; i<(m_graphVertices.Count/2); i++)
-        {
-            c = PerformanceTest.instance.frameTimingGradient.Evaluate((m_allFrameTimes[i]-minFrameTime) / (m_maxFrameTime-minFrameTime));
-            v = m_graphVertices[i*2];
-            v.tint = c;
-            y = m_allFrameTimes[i] / m_maxFrameTime;
-            y = (1.0f - y ) * r.height;
-            v.position.y = y;
-            m_graphVertices[i * 2] = v;
-
-            v = m_graphVertices[i * 2+1];
-            v.tint = c;
-            m_graphVertices[i * 2+1] = v;
-        }
-    }
-
-    public void AddGraphInput( float y )
-    {
-        Rect r = timingsGraphVE.contentRect;
-
-        Vertex v;
-        float x = 0;
-        float xOffset = r.width / (m_graphVertices.Count / 2.0f);
-
-        for (int i = 0; i < (m_graphVertices.Count / 2); i++)
-        {
-            x = i * xOffset;
-
-            v = m_graphVertices[i * 2];
-            v.position.x = x;
-            m_graphVertices[i * 2] = v;
-
-            v = m_graphVertices[i * 2+1];
-            v.position.x = x;
-            m_graphVertices[i * 2+1] = v;
-        }
-
-        Color32 c = PerformanceTest.instance.frameTimingGradient.Evaluate(y - (minFrameTime / maxFrameTime));
-
-        y = (1.0f - y) * r.height;
-
-
-        m_graphVertices.Add(new Vertex() { position = new Vector3(r.width, y, Vertex.nearZ), tint = c });
-        m_graphVertices.Add(new Vertex() { position = new Vector3(r.width, r.height, Vertex.nearZ), tint = c });
-        
-        int lastIndex = m_graphVertices.Count - 1;
-
-        if (lastIndex > 2)
-            m_graphIndices.AddRange(new[]
-            {
-                //(ushort)(lastIndex), (ushort)(lastIndex + 2), (ushort)(lastIndex + 1),
-                //(ushort)(lastIndex + 2), (ushort)(lastIndex + 3), (ushort)(lastIndex + 1)
-                (ushort)(lastIndex-3), (ushort)(lastIndex - 1), (ushort)(lastIndex - 2),
-                (ushort)(lastIndex - 2), (ushort)(lastIndex - 1), (ushort)(lastIndex )
-            });
-
-
-        /*
-        xOffset = r.width / (m_graphVertices.Count / 2.0f);
-        for (int i = 0; i < m_graphVertices.Count / 2; i++)
-        {
-            x = r.width * (float)i * 1.0f / (m_graphVertices.Count / 2);
-            x = i * xOffset;
-
-            v = m_graphVertices[i * 2];
-
-            v.position.x = x;
-            v.position.y = r.height * (1.0f - m_allFrameTimes[i] / m_maxFrameTime);
-            v.position.z = Vertex.nearZ;
-
-            m_graphVertices[i * 2] = v;
-
-            v = m_graphVertices[i * 2 + 1];
-            v.position.x = x;
-            v.position.y =r.height;
-            v.position.z = Vertex.nearZ;
-            m_graphVertices[i * 2 + 1] = v;
-        }
-        */
-
-        UpdateGraphVisual();
-    }
-
-    public void CleanGraph()
-    {
-        return;
-        Debug.Log("prev" + m_graphVertices.Capacity+ " , "+ m_graphVertices.Count);
-
-        m_graphVertices.RemoveRange(m_allFrameTimes.Count * 2, m_graphVertices.Count - m_allFrameTimes.Count * 2);
-        m_graphVertices.Capacity = m_allFrameTimes.Count*2;
-
-        Debug.Log("after" + m_graphVertices.Capacity + " , " + m_graphVertices.Count);
-
-        m_graphIndices.RemoveRange(m_allFrameTimes.Count * 3, m_graphIndices.Count - m_allFrameTimes.Count * 3);
-        m_graphIndices.Capacity = m_allFrameTimes.Count*3;
-        UpdateGraphVisual();
-    }
-
-    public void UpdateGraphVisual()
-    {
-        timingsGraphVE.MarkDirtyRepaint();
     }
 
     public void CalculateValues(bool recalculateRange = false)
@@ -476,7 +238,6 @@ public class PerformanceTestStage
     {
         Debug.Log($"Test {sceneName} finished and captured {m_allFrameTimes.Count} frames timings");
         FinishTest();
-        CleanGraph();
         yield return null;
     }
 
@@ -568,7 +329,9 @@ public class PerformanceTest : MonoBehaviour
             Destroy(this);
             return;
         }
-        
+
+        Time.maximumDeltaTime = 120;
+
         m_instance = this;
         
         m_State = TestState.Idle; 

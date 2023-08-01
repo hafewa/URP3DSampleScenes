@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 9197481963319205126, guid: 13df3b6894d9013438db11005082cc52, type: 3}
     - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
       propertyPath: m_WaitTime
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
       propertyPath: frameTimingGradient.ctime0
