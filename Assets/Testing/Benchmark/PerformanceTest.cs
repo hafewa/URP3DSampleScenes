@@ -29,6 +29,9 @@ public class PerformanceTestStage
 
     public bool useFullTimeline = true;
 
+    private List<FrameData> _frameDatas;
+    private FrameData _minFrameData, _maxFrameData, _avgFrameData, _medianFrameData, _lowerQuartileFrameData, _upperQuartileFrameData;
+
     private List<float> m_allFrameTimes;
     private float m_cumulatedFrameTime = 0, m_avgFrameTime = 0, m_minFrameTime = 99999999, m_maxFrameTime = 0, m_medianFrameTime=0, m_upperQuartileFrameTime=0, m_lowerQuartileFrameTime=0;
     private int recordingIndex = 0;
@@ -69,17 +72,35 @@ public class PerformanceTestStage
         m_minFrameTime = 99999999;
         m_maxFrameTime = 0;
         recordingIndex = 0;
+        
+        _frameDatas = new List<FrameData>();
+        _maxFrameData
+            = _avgFrameData
+            = _medianFrameData
+            = _upperQuartileFrameData
+            = _lowerQuartileFrameData
+            = new FrameData(0f);
+        _minFrameData = new FrameData(Mathf.Infinity);
     }
 
     public void RecordTiming ( float deltaTime )
     {
+        var currentFrameData = new FrameData(deltaTime * 1000f);
+        _frameDatas.Add(currentFrameData);
+        _minFrameData.MinWith(currentFrameData);
+        _maxFrameData.MaxWith(currentFrameData);
+
+        // Debug.Log("Current frame: " + currentFrameData.ToString());
+        // Debug.Log($"CpuTimerFrequency: {FrameTimingManager.GetCpuTimerFrequency()}, GpuTimerFrequency: {FrameTimingManager.GetGpuTimerFrequency()}");
+
         m_allFrameTimes.Add( deltaTime );
         recordingIndex++;
         m_cumulatedFrameTime += deltaTime;
         m_avgFrameTime = m_cumulatedFrameTime / recordingIndex;
         m_minFrameTime = Mathf.Min(m_minFrameTime, deltaTime);
         m_maxFrameTime = Mathf.Max(m_maxFrameTime, deltaTime);
-        timingsGraphVE.SetData(m_allFrameTimes.Select(v => v / m_maxFrameTime).ToList(), true );
+
+        timingsGraphVE.SetData(_frameDatas.Select(v => v.frameTime / _maxFrameData.frameTime).ToList(), true );
 
         minFPSLabel.text = minFPS.ToString();
         maxFPSLabel.text = maxFPS.ToString();
