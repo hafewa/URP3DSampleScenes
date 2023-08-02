@@ -4,12 +4,12 @@
         <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
             <ui:Label tabindex="-1" text="Benchmark" display-tooltip-when-elided="true" />
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
-            <ui:Button text="Change Data" display-tooltip-when-elided="true" />
+            <ui:Button text="Change Data" display-tooltip-when-elided="true" name="ChangeDataButton" />
         </ui:VisualElement>
         <ui:ScrollView name="TestsList">
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
-                <ui:Label tabindex="-1" text="Current FPS:" display-tooltip-when-elided="true" />
-                <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="CurrentFPS" />
+                <ui:Label tabindex="-1" text="Current FPS:" display-tooltip-when-elided="true" name="CurrentTimingLabel" />
+                <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="CurrentTiming" />
             </ui:VisualElement>
         </ui:ScrollView>
     </ui:VisualElement>

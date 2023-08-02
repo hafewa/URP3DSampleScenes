@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Benchmarking;
 
 [CustomEditor(typeof(PerformanceTest))]
 public class PerformanceTestEditor : Editor
@@ -21,7 +22,7 @@ public class PerformanceTestEditor : Editor
             Transform sceneCamTransform = SceneView.lastActiveSceneView.camera.transform;
             stage.cameraPosition = sceneCamTransform.position;
             stage.cameraRotation = sceneCamTransform.rotation;
-            performnceTest.m_Stages.Add(stage);
+            performnceTest._stages.Add(stage);
         }
     }
 }

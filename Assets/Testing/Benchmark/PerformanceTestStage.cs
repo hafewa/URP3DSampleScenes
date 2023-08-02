@@ -25,27 +25,42 @@ namespace Benchmarking
         private List<FrameData> _frameDatas;
         private FrameData _minFrameData, _maxFrameData, _avgFrameData, _medianFrameData, _lowerQuartileFrameData, _upperQuartileFrameData;
 
-        private int recordingIndex = 0;
+        private int _recordingIndex = 0;
 
-        private Camera m_testCamera => PerformanceTest.instance.testCamera;
-        private Action m_finishedAction;
-        private PlayableDirector m_playableDirector;
-        private float m_intermediateCaptureTime;
+        private Camera _testCamera => PerformanceTest.instance.testCamera;
+        private Action _finishedAction;
+        private PlayableDirector _playableDirector;
+        private float _intermediateCaptureTime;
 
-        private VisualElement visualElementRoot;
-        private Label testNameLabel, minFPSLabel, maxFPSLabel, avgFPSLabel, lowerQuartileFPSLabel, medianFPSLabel, upperQuartileFPSLabel;
-        private VisualElement timingsGraphContainerVE;
-        private StatsGraphVE timingsGraphVE;
+        private VisualElement _visualElementRoot;
+        private Label _testNameLabel, _minLabel, _maxLabel, _avgLabel, _lowerQuartileLabel, _medianLabel, _upperQuartileLabel;
+        private VisualElement _timingsGraphContainerVE;
+        private StatsGraphVE _timingsGraphVE;
 
         private TestStageStatus _status = TestStageStatus.Waiting;
         public TestStageStatus status => _status;
 
+
+        private DataType _displayedDataType = DataType.FrameTime;
+        public DataType displayedDataType
+        {
+            get
+            {
+                return _displayedDataType;
+            }
+
+            set
+            {
+                SetDisplayedDataType(value);
+            }
+        }
+
         public void Init()
         {
-            var initialListSize = PerformanceTest.instance.m_FramesToCapture;
-            if (m_playableDirector != null && useFullTimeline)
-                initialListSize = (int)m_playableDirector.duration * 120;
-            recordingIndex = 0;
+            var initialListSize = PerformanceTest.instance._framesToCapture;
+            if (_playableDirector != null && useFullTimeline)
+                initialListSize = (int)_playableDirector.duration * 120;
+            _recordingIndex = 0;
 
             _frameDatas = new List<FrameData>();
             _maxFrameData
@@ -57,11 +72,10 @@ namespace Benchmarking
             _minFrameData = new FrameData(Mathf.Infinity);
         }
 
-        public void RecordTiming(float deltaTime)
+        public void RecordTiming(FrameData currentFrameData)
         {
-            var currentFrameData = new FrameData(deltaTime * 1000f);
             _frameDatas.Add(currentFrameData);
-            if (recordingIndex == 0)
+            if (_recordingIndex == 0)
             {
                 _minFrameData = _maxFrameData = _avgFrameData = currentFrameData;
             }
@@ -69,19 +83,17 @@ namespace Benchmarking
             {
                 _minFrameData.MinWith(currentFrameData, true);
                 _maxFrameData.MaxWith(currentFrameData, true);
-                _avgFrameData.AverageWith(currentFrameData, recordingIndex + 1, true);
+                _avgFrameData.AverageWith(currentFrameData, _recordingIndex + 1, true);
             }
 
             // Debug.Log("Current frame: " + currentFrameData.ToString());
             // Debug.Log($"CpuTimerFrequency: {FrameTimingManager.GetCpuTimerFrequency()}, GpuTimerFrequency: {FrameTimingManager.GetGpuTimerFrequency()}");
 
-            recordingIndex++;
+            _recordingIndex++;
 
-            timingsGraphVE.SetData(_frameDatas.Select(v => v.frameTime / _maxFrameData.frameTime).ToList(), true);
-
-            minFPSLabel.text = _minFrameData.fps.ToString();
-            maxFPSLabel.text = _maxFrameData.fps.ToString();
-            avgFPSLabel.text = _avgFrameData.fps.ToString();
+            _minLabel.text = _minFrameData.GetValueString(_displayedDataType);
+            _maxLabel.text = _maxFrameData.GetValueString(_displayedDataType);
+            _avgLabel.text = _avgFrameData.GetValueString(_displayedDataType);
         }
 
         public void InstantiateVisualElement(VisualTreeAsset referenceVisuaTree, VisualElement parent = null)
@@ -89,24 +101,24 @@ namespace Benchmarking
             if (referenceVisuaTree == null)
                 return;
 
-            visualElementRoot = referenceVisuaTree.Instantiate();
-            testNameLabel = visualElementRoot.Q<Label>(name: "TestName");
-            minFPSLabel = visualElementRoot.Q<Label>(name: "MinFPS");
-            maxFPSLabel = visualElementRoot.Q<Label>(name: "MaxFPS");
-            avgFPSLabel = visualElementRoot.Q<Label>(name: "AvgFPS");
-            lowerQuartileFPSLabel = visualElementRoot.Q<Label>(name: "LowerQuartileFPS");
-            medianFPSLabel = visualElementRoot.Q<Label>(name: "MedianFPS");
-            upperQuartileFPSLabel = visualElementRoot.Q<Label>(name: "UpperQuartileFPS");
+            _visualElementRoot = referenceVisuaTree.Instantiate();
+            _testNameLabel = _visualElementRoot.Q<Label>(name: "TestName");
+            _minLabel = _visualElementRoot.Q<Label>(name: "MinFPS");
+            _maxLabel = _visualElementRoot.Q<Label>(name: "MaxFPS");
+            _avgLabel = _visualElementRoot.Q<Label>(name: "AvgFPS");
+            _lowerQuartileLabel = _visualElementRoot.Q<Label>(name: "LowerQuartileFPS");
+            _medianLabel = _visualElementRoot.Q<Label>(name: "MedianFPS");
+            _upperQuartileLabel = _visualElementRoot.Q<Label>(name: "UpperQuartileFPS");
 
-            timingsGraphContainerVE = visualElementRoot.Q(name: "TimingsGraph");
-            timingsGraphVE = new StatsGraphVE();
-            timingsGraphContainerVE.Add(timingsGraphVE);
+            _timingsGraphContainerVE = _visualElementRoot.Q(name: "TimingsGraph");
+            _timingsGraphVE = new StatsGraphVE();
+            _timingsGraphContainerVE.Add(_timingsGraphVE);
 
-            testNameLabel.text = sceneName;
+            _testNameLabel.text = sceneName;
 
             if (parent != null)
             {
-                parent.Add(visualElementRoot);
+                parent.Add(_visualElementRoot);
             }
         }
 
@@ -149,25 +161,25 @@ namespace Benchmarking
         public void Start(Action finishedAction)
         {
             if (finishedAction != null)
-                m_finishedAction = finishedAction;
+                _finishedAction = finishedAction;
 
             Debug.Log("Called start for : " + sceneName);
 
             PerformanceTest.instance.StartCoroutine(ProcessTest());
         }
-        public void SetFinishedAction(Action finishedAction) { m_finishedAction = finishedAction; }
+        public void SetFinishedAction(Action finishedAction) { _finishedAction = finishedAction; }
 
         IEnumerator ProcessTest()
         {
             yield return LoadAndInit();
-            yield return new WaitForSeconds(PerformanceTest.instance.m_WaitTime);
+            yield return new WaitForSeconds(PerformanceTest.instance._waitTime);
             yield return RunTest();
             yield return End();
 
-            if (m_finishedAction != null)
+            if (_finishedAction != null)
             {
                 Debug.Log("Invoking Finish action");
-                m_finishedAction.Invoke();
+                _finishedAction.Invoke();
             }
         }
 
@@ -175,8 +187,8 @@ namespace Benchmarking
         {
             Debug.Log($"Start test {sceneName}");
 
-            m_testCamera.transform.position = cameraPosition;
-            m_testCamera.transform.rotation = cameraRotation;
+            _testCamera.transform.position = cameraPosition;
+            _testCamera.transform.rotation = cameraRotation;
 
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
 
@@ -188,20 +200,20 @@ namespace Benchmarking
             var directors = Resources.FindObjectsOfTypeAll<PlayableDirector>();
             Debug.Log($"Found {directors.Length} playable director(s)");
 
-            m_playableDirector = (directors.Length > 1) ? directors.Single(d => d.gameObject.name == "CinematicTimeline") : directors[0];
+            _playableDirector = (directors.Length > 1) ? directors.Single(d => d.gameObject.name == "CinematicTimeline") : directors[0];
 
-            if (m_playableDirector != null)
+            if (_playableDirector != null)
             {
-                m_playableDirector.gameObject.SetActive(true);
-                var playable = m_playableDirector.playableAsset;
+                _playableDirector.gameObject.SetActive(true);
+                var playable = _playableDirector.playableAsset;
                 var cinemachineTrack = playable.outputs.Single(o => o.outputTargetType == typeof(CinemachineBrain)).sourceObject;
-                m_playableDirector.SetGenericBinding(cinemachineTrack, m_testCamera.GetComponent<CinemachineBrain>());
+                _playableDirector.SetGenericBinding(cinemachineTrack, _testCamera.GetComponent<CinemachineBrain>());
 
-                var duration = (float)m_playableDirector.duration;
-                m_intermediateCaptureTime = duration / (PerformanceTest.instance.m_FramesToCapture + 1);
+                var duration = (float)_playableDirector.duration;
+                _intermediateCaptureTime = duration / (PerformanceTest.instance._framesToCapture + 1);
 
-                m_playableDirector.Pause();
-                m_playableDirector.extrapolationMode = DirectorWrapMode.None;
+                _playableDirector.Pause();
+                _playableDirector.extrapolationMode = DirectorWrapMode.None;
             }
 
             Init();
@@ -211,19 +223,22 @@ namespace Benchmarking
         {
             _status = TestStageStatus.Running;
 
-            bool noIntermediateTime = useFullTimeline && m_playableDirector != null;
+            bool noIntermediateTime = useFullTimeline && _playableDirector != null;
 
-            if (m_playableDirector != null)
-                m_playableDirector.Play();
+            if (_playableDirector != null)
+                _playableDirector.Play();
 
-            while (recordingIndex < _frameDatas.Count || (useFullTimeline && m_playableDirector != null && m_playableDirector.state != PlayState.Paused))
+            while (_recordingIndex < _frameDatas.Count || (useFullTimeline && _playableDirector != null && _playableDirector.state != PlayState.Paused))
             {
-                PerformanceTest.instance.SetCurrentFPS(1.0f / Time.deltaTime);
-                RecordTiming(Time.deltaTime);
+                FrameData currentFrameData = FrameData.GetCurrentFrameData();
+
+                PerformanceTest.instance.SetCurrentTiming(currentFrameData);
+                RecordTiming(currentFrameData);
+                UpdateGraph(_displayedDataType);
                 if (noIntermediateTime)
                     yield return null;
                 else
-                    yield return new WaitForSeconds(m_intermediateCaptureTime);
+                    yield return new WaitForSeconds(_intermediateCaptureTime);
             }
         }
 
@@ -234,9 +249,9 @@ namespace Benchmarking
             Debug.Log($"Test {sceneName} finished and captured {_frameDatas.Count} frames timings");
 
             CalculateValues();
-            lowerQuartileFPSLabel.text = _lowerQuartileFrameData.fps.ToString();
-            medianFPSLabel.text = _medianFrameData.fps.ToString();
-            upperQuartileFPSLabel.text = _upperQuartileFrameData.fps.ToString();
+            _lowerQuartileLabel.text = _lowerQuartileFrameData.GetValueString(_displayedDataType);
+            _medianLabel.text = _medianFrameData.GetValueString(_displayedDataType);
+            _upperQuartileLabel.text = _upperQuartileFrameData.GetValueString(_displayedDataType);
 
             yield return null;
         }
@@ -246,11 +261,42 @@ namespace Benchmarking
             foreach (var camera in UnityEngine.Object.FindObjectsOfType<Camera>())
             {
                 // Debug.Log("Found camera: " + camera.gameObject.name);
-                if (camera.gameObject != m_testCamera.gameObject)
+                if (camera.gameObject != _testCamera.gameObject)
                 {
                     camera.enabled = false;
                 }
             }
+        }
+
+        private void SetDisplayedDataType( DataType dataType )
+        {
+            if (dataType != _displayedDataType)
+            {
+
+            }
+
+            _displayedDataType = dataType;
+
+            if (status == TestStageStatus.Finished )
+            {
+                RefreshDisplayedData(dataType);
+            }
+        }
+
+        private void RefreshDisplayedData( DataType dataType )
+        {
+            _minLabel.text = _minFrameData.GetValueString(dataType);
+            _maxLabel.text = _maxFrameData.GetValueString(dataType);
+            _avgLabel.text = _avgFrameData.GetValueString(dataType);
+            _lowerQuartileLabel.text = _lowerQuartileFrameData.GetValueString(dataType);
+            _upperQuartileLabel.text = _lowerQuartileFrameData.GetValueString(dataType);
+            _medianLabel.text = _medianFrameData.GetValueString(dataType);
+            UpdateGraph(dataType);
+        }
+
+        private void UpdateGraph( DataType dataType )
+        {
+            _timingsGraphVE.SetData(_frameDatas.Select(v => v.GetValue(dataType) / _maxFrameData.GetValue(dataType)).ToList(), true);
         }
     }
 
@@ -258,6 +304,7 @@ namespace Benchmarking
     {
         Waiting,
         Running,
-        Finished
+        Finished,
+        Canceled
     }
 }

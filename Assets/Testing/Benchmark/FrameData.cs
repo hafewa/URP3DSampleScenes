@@ -41,6 +41,11 @@ namespace Benchmarking
             }
         }
 
+        public static FrameData GetCurrentFrameData( float timelineTime = 0, bool captureAdvancedTimings = true )
+        {
+            return new FrameData(Time.deltaTime * 1000f, timelineTime, captureAdvancedTimings);
+        }
+
         public void SetFPSOverride(float fpsOverride)
         {
             _fpsOverride = fpsOverride;
@@ -186,6 +191,40 @@ namespace Benchmarking
         override public string ToString()
         {
             return $"FrameData{{frameTime: {frameTime} ms, fps: {fps}, advancedFrameTiming: {advancedFrameTiming}, cpuTime: {cpuTime} ms, cpuRenderTime: {cpuRenderTime} ms, gpuTime: {gpuTime} ms}}";
+        }
+
+        public string GetValueString (DataType dataType)
+        {
+            switch (dataType)
+            {
+                case DataType.FPS:
+                    return fps.ToString();
+                case DataType.CPUTime:
+                    return cpuTime.ToString();
+                case DataType.CPURenderTime:
+                    return cpuRenderTime.ToString();
+                case DataType.GPUTime:
+                    return gpuTime.ToString();
+                default:
+                    return frameTime.ToString();
+            }
+        }
+
+        public float GetValue(DataType dataType)
+        {
+            switch (dataType)
+            {
+                case DataType.FPS:
+                    return fps;
+                case DataType.CPUTime:
+                    return (float)cpuTime;
+                case DataType.CPURenderTime:
+                    return (float)cpuRenderTime;
+                case DataType.GPUTime:
+                    return (float)gpuTime;
+                default:
+                    return frameTime;
+            }
         }
     }
 }
