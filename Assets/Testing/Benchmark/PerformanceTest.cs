@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEditor.UIElements;
@@ -32,8 +33,6 @@ public class PerformanceTestStage
     private List<FrameData> _frameDatas;
     private FrameData _minFrameData, _maxFrameData, _avgFrameData, _medianFrameData, _lowerQuartileFrameData, _upperQuartileFrameData;
 
-    private List<float> m_allFrameTimes;
-    private float m_cumulatedFrameTime = 0, m_avgFrameTime = 0, m_minFrameTime = 99999999, m_maxFrameTime = 0, m_medianFrameTime=0, m_upperQuartileFrameTime=0, m_lowerQuartileFrameTime=0;
     private int recordingIndex = 0;
 
     private Camera m_testCamera => PerformanceTest.instance.testCamera;
@@ -46,31 +45,11 @@ public class PerformanceTestStage
     private VisualElement timingsGraphContainerVE;
     private StatsGraphVE timingsGraphVE;
 
-    public float avgFrameTime => m_avgFrameTime;
-    public float minFrameTime => m_minFrameTime;
-    public float maxFrameTime => m_maxFrameTime;
-    public float medianFrameTime => m_medianFrameTime;
-    public float upperQuartileFrameTime => m_upperQuartileFrameTime;
-    public float lowerQuartileFrameTime => m_lowerQuartileFrameTime;
-
-    public float avgFPS => 1.0f / avgFrameTime;
-    public float minFPS => 1.0f / m_maxFrameTime;
-    public float maxFPS => 1.0f / m_minFrameTime;
-    public float medianFPS => 1.0f / m_medianFrameTime;
-    public float upperQuartileFPS => 1.0f / m_lowerQuartileFrameTime;
-    public float lowerQuartileFPS => 1.0f / m_upperQuartileFrameTime;
-
     public void Init()
     {
         var initialListSize = PerformanceTest.instance.m_FramesToCapture;
         if (m_playableDirector != null && useFullTimeline)
             initialListSize = (int) m_playableDirector.duration * 120;
-
-        m_allFrameTimes = new List<float>();
-
-        m_avgFrameTime = 0;
-        m_minFrameTime = 99999999;
-        m_maxFrameTime = 0;
         recordingIndex = 0;
         
         _frameDatas = new List<FrameData>();
@@ -87,32 +66,35 @@ public class PerformanceTestStage
     {
         var currentFrameData = new FrameData(deltaTime * 1000f);
         _frameDatas.Add(currentFrameData);
-        _minFrameData.MinWith(currentFrameData);
-        _maxFrameData.MaxWith(currentFrameData);
+        if (recordingIndex == 0)
+        {
+            _minFrameData = _maxFrameData = _avgFrameData = currentFrameData;
+        }
+        else
+        {
+            _minFrameData.MinWith(currentFrameData, true);
+            _maxFrameData.MaxWith(currentFrameData, true);
+            _avgFrameData.AverageWith(currentFrameData, recordingIndex + 1, true);
+        }
 
         // Debug.Log("Current frame: " + currentFrameData.ToString());
         // Debug.Log($"CpuTimerFrequency: {FrameTimingManager.GetCpuTimerFrequency()}, GpuTimerFrequency: {FrameTimingManager.GetGpuTimerFrequency()}");
 
-        m_allFrameTimes.Add( deltaTime );
         recordingIndex++;
-        m_cumulatedFrameTime += deltaTime;
-        m_avgFrameTime = m_cumulatedFrameTime / recordingIndex;
-        m_minFrameTime = Mathf.Min(m_minFrameTime, deltaTime);
-        m_maxFrameTime = Mathf.Max(m_maxFrameTime, deltaTime);
 
         timingsGraphVE.SetData(_frameDatas.Select(v => v.frameTime / _maxFrameData.frameTime).ToList(), true );
 
-        minFPSLabel.text = minFPS.ToString();
-        maxFPSLabel.text = maxFPS.ToString();
-        avgFPSLabel.text = avgFPS.ToString();
+        minFPSLabel.text = _minFrameData.fps.ToString();
+        maxFPSLabel.text = _maxFrameData.fps.ToString();
+        avgFPSLabel.text = _avgFrameData.fps.ToString();
     }
 
     public void FinishTest()
     {
         CalculateValues();
-        lowerQuartileFPSLabel.text = lowerQuartileFPS.ToString();
-        medianFPSLabel.text = medianFPS.ToString();
-        upperQuartileFPSLabel.text = upperQuartileFPS.ToString();
+        lowerQuartileFPSLabel.text = _lowerQuartileFrameData.fps.ToString();
+        medianFPSLabel.text = _medianFrameData.fps.ToString();
+        upperQuartileFPSLabel.text = _upperQuartileFrameData.fps.ToString();
     }
 
     public void InstantiateVisualElement(VisualTreeAsset referenceVisuaTree, VisualElement parent = null)
@@ -143,21 +125,16 @@ public class PerformanceTestStage
 
     public void CalculateValues(bool recalculateRange = false)
     {
-        if ( recalculateRange)
+        if (recalculateRange)
         {
-            m_minFrameTime = m_allFrameTimes.Min();
-            m_maxFrameTime = m_allFrameTimes.Max();
+            _minFrameData = FrameData.MinMultiple(_frameDatas);
+            _maxFrameData = FrameData.MaxMultiple(_frameDatas);
         }
-        CalculateValues( m_minFrameTime, m_minFrameTime );
-    }
 
-    public void CalculateValues( float min, float max )
-    {
-        var orderedData = new List<float>(m_allFrameTimes);
-        orderedData.Sort();
-        var lowerQuartileIndexF = m_allFrameTimes.Count * 0.25f;
-        var medianIndexF = m_allFrameTimes.Count * 0.5f;
-        var upperQuartileIndexF = m_allFrameTimes.Count * 0.75f;
+        var orderedData = new List<FrameData>(_frameDatas).OrderBy(v => v.frameTime).ToArray();
+        var lowerQuartileIndexF = _frameDatas.Count * 0.25f;
+        var medianIndexF = _frameDatas.Count * 0.5f;
+        var upperQuartileIndexF = _frameDatas.Count * 0.75f;
 
         var lowerQuartileIndexI = (int)lowerQuartileIndexF;
         lowerQuartileIndexF -= lowerQuartileIndexI;
@@ -166,9 +143,13 @@ public class PerformanceTestStage
         var upperQuartileIndexI = (int)upperQuartileIndexF;
         upperQuartileIndexF -= upperQuartileIndexI;
 
-        m_lowerQuartileFrameTime = Mathf.Lerp( orderedData[lowerQuartileIndexI], orderedData[lowerQuartileIndexI+1], lowerQuartileIndexF );
-        m_medianFrameTime = Mathf.Lerp(orderedData[medianIndexI], orderedData[medianIndexI + 1], medianIndexF);
-        m_upperQuartileFrameTime = Mathf.Lerp(orderedData[upperQuartileIndexI], orderedData[upperQuartileIndexI + 1], upperQuartileIndexF);
+        _lowerQuartileFrameData = FrameData.Lerp( orderedData[lowerQuartileIndexI], orderedData[lowerQuartileIndexI+1], lowerQuartileIndexF );
+        _medianFrameData = FrameData.Lerp(orderedData[medianIndexI], orderedData[medianIndexI + 1], medianIndexF);
+        _upperQuartileFrameData = FrameData.Lerp(orderedData[upperQuartileIndexI], orderedData[upperQuartileIndexI + 1], upperQuartileIndexF);
+
+        float tmpFPS = _lowerQuartileFrameData.fps;
+        _lowerQuartileFrameData.SetFPSOverride(_upperQuartileFrameData.fps);
+        _upperQuartileFrameData.SetFPSOverride(tmpFPS);
     }
 
     public void Start()
@@ -244,7 +225,7 @@ public class PerformanceTestStage
         if (m_playableDirector != null)
             m_playableDirector.Play();
 
-        while (recordingIndex < m_allFrameTimes.Count || (useFullTimeline && m_playableDirector != null && m_playableDirector.state != PlayState.Paused) )
+        while (recordingIndex < _frameDatas.Count || (useFullTimeline && m_playableDirector != null && m_playableDirector.state != PlayState.Paused) )
         {
             PerformanceTest.instance.SetCurrentFPS(1.0f / Time.deltaTime);
             RecordTiming(Time.deltaTime);
@@ -257,7 +238,7 @@ public class PerformanceTestStage
 
     IEnumerator End()
     {
-        Debug.Log($"Test {sceneName} finished and captured {m_allFrameTimes.Count} frames timings");
+        Debug.Log($"Test {sceneName} finished and captured {_frameDatas.Count} frames timings");
         FinishTest();
         yield return null;
     }
