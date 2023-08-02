@@ -1,7 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Testing/Benchmark/BenchmarkUI.uss?fileID=7433441132597879392&amp;guid=83e88789f4e4cd840be5d4567148e6d0&amp;type=3#BenchmarkUI" />
     <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.44); margin-left: 50px; margin-right: 50px; margin-top: 50px; margin-bottom: 50px; color: rgb(255, 255, 255); font-size: 30px;">
-        <ui:Label tabindex="-1" text="Benchmark" display-tooltip-when-elided="true" />
+        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+            <ui:Label tabindex="-1" text="Benchmark" display-tooltip-when-elided="true" />
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+            <ui:Button text="Change Data" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
         <ui:ScrollView name="TestsList">
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
                 <ui:Label tabindex="-1" text="Current FPS:" display-tooltip-when-elided="true" />
