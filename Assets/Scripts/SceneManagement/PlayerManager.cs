@@ -2,6 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using Benchmarking;
 
 /// <summary>
 /// This class will enable the touch input canvas on handheld devices and will trigger the camera flythrough if the player is idle
