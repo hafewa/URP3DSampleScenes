@@ -17,6 +17,8 @@ namespace Benchmarking
         private Vertex[] _vertices = null;
         private ushort[] _triangles = null;
         private int _pointsCounts = 0;
+        private bool _isDirty = false;
+        public bool isDirty => _isDirty;
 
         public StatsGraphVE()
         {
@@ -33,6 +35,8 @@ namespace Benchmarking
             MeshWriteData mwd = mgc.Allocate(_vertices.Length, _triangles.Length);
             mwd.SetAllVertices(_vertices);
             mwd.SetAllIndices(_triangles);
+
+            _isDirty = false;
         }
 
         private void GenerateVertices()
@@ -86,12 +90,20 @@ namespace Benchmarking
                     _triangles[t + 5] = (ushort)(i2 + 3);
                 }
             }
+
+            SetData();
         }
 
-        public void SetData(List<float> data, bool refresh = false)
+        public void SetData(List<float> data = null, bool refresh = false)
         {
-            _dataset.Clear();
-            _dataset.AddRange(data);
+            if (data != null)
+            {
+                _dataset.Clear();
+                _dataset.AddRange(data);
+            }
+
+            if (_dataset == null || _dataset.Count < 2 )
+                    return;
 
             for (int i = 0; i < _pointsCounts; i++)
             {
@@ -113,6 +125,7 @@ namespace Benchmarking
                 return;
 
             MarkDirtyRepaint();
+            _isDirty = true;
         }
     }
 }

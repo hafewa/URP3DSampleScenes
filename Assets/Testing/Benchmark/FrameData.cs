@@ -53,7 +53,7 @@ namespace Benchmarking
 
         public void ResetFPSOverride() { _fpsOverride = -1f; }
 
-        public static FrameData Min(FrameData a, FrameData b, bool overrideFPS = false)
+        public static FrameData Min(FrameData a, FrameData b, ref bool bSmaller, bool overrideFPS = false)
         {
             FrameData o = new FrameData();
 
@@ -73,12 +73,14 @@ namespace Benchmarking
 
             return o;
         }
-        public void MinWith(FrameData other, bool overrideFPS = false)
+        public bool MinWith(FrameData other, bool overrideFPS = false)
         {
-            this = Min(this, other, overrideFPS);
+            bool o = false;
+            this = Min(this, other, ref o, overrideFPS);
+            return o;
         }
 
-        public static FrameData Max(FrameData a, FrameData b, bool overrideFPS = false)
+        public static FrameData Max(FrameData a, FrameData b, ref bool bGreater, bool overrideFPS = false)
         {
             FrameData o = new FrameData();
 
@@ -99,9 +101,11 @@ namespace Benchmarking
             return o;
         }
 
-        public void MaxWith(FrameData other, bool overrideFPS = false)
+        public bool MaxWith(FrameData other, bool overrideFPS = false)
         {
-            this = Max(this, other, overrideFPS);
+            bool o = false;
+            this = Max(this, other, ref o, overrideFPS);
+            return o;
         }
 
         public static FrameData Average(FrameData a, int countA, FrameData b, int countB, bool overrideFPS = false)
@@ -195,18 +199,19 @@ namespace Benchmarking
 
         public string GetValueString (DataType dataType)
         {
+            string format = "F2";
             switch (dataType)
             {
                 case DataType.FPS:
-                    return fps.ToString();
+                    return fps.ToString(format);
                 case DataType.CPUTime:
-                    return cpuTime.ToString();
+                    return cpuTime.ToString(format);
                 case DataType.CPURenderTime:
-                    return cpuRenderTime.ToString();
+                    return cpuRenderTime.ToString(format);
                 case DataType.GPUTime:
-                    return gpuTime.ToString();
+                    return gpuTime.ToString(format);
                 default:
-                    return frameTime.ToString();
+                    return frameTime.ToString(format);
             }
         }
 
