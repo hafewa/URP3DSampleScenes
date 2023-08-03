@@ -20,6 +20,8 @@ namespace Benchmarking
         private bool _isDirty = false;
         public bool isDirty => _isDirty;
 
+        private Color32 k_graphColor = new Color(1, 1, 1, 0.5f);
+
         public StatsGraphVE()
         {
             generateVisualContent = GenerateGraphMesh;
@@ -71,12 +73,12 @@ namespace Benchmarking
                 _vertices[i2] = new Vertex()
                 {
                     position = new Vector3(x, 0.5f * contentRect.height, Vertex.nearZ), // top
-                    tint = Color.white
+                    tint = k_graphColor
                 };
                 _vertices[i2 + 1] = new Vertex()
                 {
                     position = new Vector3(x, contentRect.height, Vertex.nearZ), // bottom
-                    tint = Color.white
+                    tint = k_graphColor
                 };
 
                 if (i < (_pointsCounts - 1))

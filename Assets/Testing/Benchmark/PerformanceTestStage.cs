@@ -10,6 +10,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Benchmarking
 {
@@ -34,6 +35,7 @@ namespace Benchmarking
         private PlayableDirector _playableDirector;
         private float _intermediateCaptureTime;
 
+        private bool _uiInitialized = false;
         private VisualElement
             _visualElementRoot,
             _timingsGraphContainerVE,
@@ -54,25 +56,13 @@ namespace Benchmarking
         public TestStageStatus status => _status;
 
 
-        private DataType _displayedDataType = DataType.FrameTime;
-        public DataType displayedDataType
-        {
-            get
-            {
-                return _displayedDataType;
-            }
-
-            set
-            {
-                SetDisplayedDataType(value);
-            }
-        }
+        private DataType _displayedDataType => PerformanceTest.instance.displayedDataType;
 
         const float
-            k_frameLineMul = 1f,
-            k_cpuLineMul = 0.4f,
-            k_cpuRenderLineMul = 0.2f,
-            k_gpuLineMul = 0.4f;
+            k_frameLineMul = 1000f,
+            k_cpuLineMul = 400f,
+            k_cpuRenderLineMul = 200f,
+            k_gpuLineMul = 400f;
 
         private Dictionary<int, Color> k_fpsLines = new()
         {
@@ -184,6 +174,8 @@ namespace Benchmarking
             {
                 parent.Add(_visualElementRoot);
             }
+
+            _uiInitialized = true;
         }
 
         public void CalculateValues(bool recalculateRange = false)
@@ -298,7 +290,7 @@ namespace Benchmarking
 
                 PerformanceTest.instance.SetCurrentTiming(currentFrameData);
                 RecordTiming(currentFrameData);
-                UpdateGraph(_displayedDataType);
+                UpdateGraph();
                 if (noIntermediateTime)
                     yield return null;
                 else
@@ -351,38 +343,26 @@ namespace Benchmarking
             }
         }
 
-        private void SetDisplayedDataType( DataType dataType )
+        public void RefreshDisplayedData()
         {
-            if (dataType != _displayedDataType)
-            {
-
-            }
-
-            _displayedDataType = dataType;
-
-            if (status == TestStageStatus.Finished )
-            {
-                RefreshDisplayedData(dataType);
-            }
-        }
-
-        private void RefreshDisplayedData( DataType dataType )
-        {
-            _minLabel.text = _minFrameData.GetValueString(dataType);
-            _maxLabel.text = _maxFrameData.GetValueString(dataType);
-            _avgLabel.text = _avgFrameData.GetValueString(dataType);
-            _lowerQuartileLabel.text = _lowerQuartileFrameData.GetValueString(dataType);
-            _upperQuartileLabel.text = _lowerQuartileFrameData.GetValueString(dataType);
-            _medianLabel.text = _medianFrameData.GetValueString(dataType);
-            UpdateGraph(dataType);
-        }
-
-        private void UpdateGraph( DataType dataType )
-        {
-            if (_timingsGraphVE.isDirty)
+            if (!_uiInitialized)
                 return;
 
-            _timingsGraphVE.SetData(_frameDatas.Select(v => v.GetValue(dataType) / _maxFrameData.GetValue(dataType)).ToList(), true);
+            _minLabel.text = _minFrameData.GetValueString(_displayedDataType);
+            _maxLabel.text = _maxFrameData.GetValueString(_displayedDataType);
+            _avgLabel.text = _avgFrameData.GetValueString(_displayedDataType);
+            _lowerQuartileLabel.text = _lowerQuartileFrameData.GetValueString(_displayedDataType);
+            _upperQuartileLabel.text = _lowerQuartileFrameData.GetValueString(_displayedDataType);
+            _medianLabel.text = _medianFrameData.GetValueString(_displayedDataType);
+            UpdateGraph();
+        }
+
+        private void UpdateGraph()
+        {
+            if (_timingsGraphVE.isDirty || !_uiInitialized || _frameDatas == null || _frameDatas.Count < 2)
+                return;
+
+            _timingsGraphVE.SetData(_frameDatas.Select(v => v.GetValue(_displayedDataType) / _maxFrameData.GetValue(_displayedDataType)).ToList(), true);
         }
 
         private void UpdateRange()
@@ -392,6 +372,9 @@ namespace Benchmarking
             StyleLength styleLength = new StyleLength();
             Length length = new Length(0f, LengthUnit.Percent);
 
+            float min = _minFrameData.GetValue(_displayedDataType);
+            float max = _maxFrameData.GetValue(_displayedDataType);
+
             length.value = 0f;
             styleLength.value = length;
             _quartilesMinMaxRangeVE.style.top = styleLength;
@@ -400,7 +383,23 @@ namespace Benchmarking
             styleLength.value = length;
             _quartilesMinMaxRangeVE.style.bottom = styleLength;
 
-            UpdateGraph(_displayedDataType);
+            foreach (var kvp in _timingLines)
+            {
+                length.value = kvp.Key.GetValue(_displayedDataType) / max;
+                if (length.value < 1f)
+                {
+                    length.value = 100f * length.value;
+                    styleLength.value = length.value;
+                    kvp.Value.style.bottom = styleLength;
+                    kvp.Value.style.display = DisplayStyle.Flex;
+                }
+                else
+                {
+                    kvp.Value.style.display = DisplayStyle.None;
+                }
+            }
+
+            UpdateGraph();
         }
     }
 

@@ -57,7 +57,8 @@ namespace Benchmarking
         {
             FrameData o = new FrameData();
 
-            o.frameTime = Mathf.Min(a.frameTime, b.frameTime);
+            bSmaller = b.frameTime < a.frameTime;
+            o.frameTime = bSmaller? b.frameTime : a.frameTime;
             if (overrideFPS)
                 o._fpsOverride = Mathf.Min(a.fps, b.fps);
             else
@@ -84,7 +85,9 @@ namespace Benchmarking
         {
             FrameData o = new FrameData();
 
-            o.frameTime = Mathf.Max(a.frameTime, b.frameTime);
+            bGreater = b.frameTime > a.frameTime;
+
+            o.frameTime = bGreater? b.frameTime : a.frameTime;
             if (overrideFPS)
                 o._fpsOverride = Mathf.Max(a.fps, b.fps);
             else

@@ -1,5 +1,6 @@
 using Cinemachine;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
@@ -68,6 +69,7 @@ namespace Benchmarking
         private Button _changeDataButton;
 
         private DataType _displayedDataType = DataType.FrameTime;
+        public DataType displayedDataType => _displayedDataType;
 
         public void SetCurrentTiming(FrameData currentFrameData)
         {
@@ -92,6 +94,7 @@ namespace Benchmarking
             Time.maximumDeltaTime = 120;
 
             _instance = this;
+            Application.runInBackground = true;
 
             DontDestroyOnLoad(this);
 
@@ -140,12 +143,11 @@ namespace Benchmarking
         private void SetDisplayedData(DataType dataType)
         {
             _displayedDataType = dataType;
-            foreach (var stage in _stages)
-            {
-                stage.displayedDataType = dataType;
-            }
 
             _currentTimingLabel.text = $"Current {dataType}:";
+
+            foreach (var stage in _stages)
+                stage.RefreshDisplayedData();
         }
 
         private void LoopDisplayedData()
