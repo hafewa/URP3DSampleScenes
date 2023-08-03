@@ -34,6 +34,16 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.collections": {
+      "version": "1.2.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.6.6",
+        "com.unity.test-framework": "1.1.31"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 1,
@@ -221,16 +231,6 @@
       "dependencies": {
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
-      }
-    },
-    "com.unity.urp-water-system": {
-      "version": "file:boat-attack-water",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.mathematics": "1.1.0",
-        "com.unity.burst": "1.2.3",
-        "com.unity.render-pipelines.universal": "10.5.0"
       }
     },
     "com.unity.visualscripting": {
