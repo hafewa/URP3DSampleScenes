@@ -50,10 +50,11 @@ Label {
 }
 
 .Timing_Col1 {
-    width: 65%;
+    width: 140px;
 }
 
 .Timing_Col2 {
+    width: 60px;
 }
 
 .StatLine {

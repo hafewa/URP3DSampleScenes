@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Testing/Benchmark/BenchmarkUI.uss?fileID=7433441132597879392&amp;guid=83e88789f4e4cd840be5d4567148e6d0&amp;type=3#BenchmarkUI" />
     <ui:VisualElement name="TestGroup" class="Root" style="flex-grow: 1; padding-top: 5px; margin-top: 20px; border-left-color: rgba(255, 255, 255, 0.75); border-right-color: rgba(255, 255, 255, 0.75); border-top-color: rgba(255, 255, 255, 0.75); border-bottom-color: rgba(255, 255, 255, 0.75); border-top-width: 1px;">
-        <ui:VisualElement name="v_Header" style="flex-direction: row; justify-content: space-between; align-items: flex-end; padding-left: 10px; padding-right: 10px;">
+        <ui:VisualElement name="v_Header" style="flex-direction: row; justify-content: space-between; align-items: flex-end; padding-left: 10px; padding-right: 10px; margin-bottom: 10px;">
             <ui:Label tabindex="-1" text="Test Name" display-tooltip-when-elided="true" name="TestName" style="font-size: 24px; width: 25%;" />
             <ui:Label tabindex="-1" text="Status" display-tooltip-when-elided="true" name="Status" style="width: 15%;" />
             <ui:VisualElement name="ProgressContainer" style="flex-direction: row;">
@@ -28,10 +28,9 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="Timings" style="width: 20%;">
-                <ui:VisualElement name="Unit" class="SingleStat">
-                    <ui:Label tabindex="-1" text="&#10;" display-tooltip-when-elided="true" class="Timing_Col1" />
-                    <ui:Label tabindex="-1" text="ms" display-tooltip-when-elided="true" name="UnitText" class="Timing_Col2" />
+            <ui:VisualElement name="Timings">
+                <ui:VisualElement name="Unit" class="SingleStat" style="flex-direction: row-reverse;">
+                    <ui:Label tabindex="-1" text="ms" display-tooltip-when-elided="true" name="UnitText" enable-rich-text="true" class="Timing_Col2" style="flex-shrink: 1; -unity-text-align: upper-center;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Max" class="SingleStat" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
                     <ui:Label tabindex="-1" text="Maximum:" display-tooltip-when-elided="true" class="Timing_Col1" />

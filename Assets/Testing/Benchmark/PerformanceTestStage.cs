@@ -44,6 +44,7 @@ namespace Benchmarking
         private Label
             _testNameLabel,
             _statusLabel,
+            _timingsUnitLabel,
             _minLabel,
             _maxLabel,
             _avgLabel,
@@ -113,6 +114,8 @@ namespace Benchmarking
             _visualElementRoot = referenceVisuaTree.Instantiate();
             _testNameLabel = _visualElementRoot.Q<Label>(name: "TestName");
             _statusLabel = _visualElementRoot.Q<Label>(name: "Status");
+
+            _timingsUnitLabel = _visualElementRoot.Q<Label>(name: "UnitText");
             _minLabel = _visualElementRoot.Q<Label>(name: "MinText");
             _maxLabel = _visualElementRoot.Q<Label>(name: "MaxText");
             _avgLabel = _visualElementRoot.Q<Label>(name: "AvgText");
@@ -391,6 +394,8 @@ namespace Benchmarking
                 status == TestStageStatus.Warming
             )
                 return;
+
+            _timingsUnitLabel.text = (PerformanceTest.displayedDataType == DataType.FPS) ? "" : "ms";
 
             _minLabel.Set(_minFrameData);
             _maxLabel.Set(_maxFrameData);
