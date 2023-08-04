@@ -2,22 +2,19 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Benchmarking
 {
-
     [Serializable]
     public class PerformanceTestStage
     {
+
         [FormerlySerializedAs("SceneName")]
         public string sceneName;
         public Vector3 cameraPosition;
@@ -41,55 +38,41 @@ namespace Benchmarking
             _timingsGraphContainerVE,
             _quartilesVE,
             _quartilesMinMaxRangeVE,
-            _quartilesRangeVE;
+            _quartilesRangeVE,
+            _progressContainerVE,
+            _progressBarVe;
         private Label
             _testNameLabel,
+            _statusLabel,
             _minLabel,
             _maxLabel,
             _avgLabel,
             _lowerQuartileLabel,
             _medianLabel,
-            _upperQuartileLabel;
+            _upperQuartileLabel,
+            _progressLabel;
         private StatsGraphVE _timingsGraphVE;
+        private Button _cancelButton;
 
         private TestStageStatus _status = TestStageStatus.Waiting;
-        public TestStageStatus status => _status;
-
-
-        private DataType _displayedDataType => PerformanceTest.instance.displayedDataType;
-
-        const float
-            k_frameLineMul = 1000f,
-            k_cpuLineMul = 400f,
-            k_cpuRenderLineMul = 200f,
-            k_gpuLineMul = 400f;
-
-        private Dictionary<int, Color> k_fpsLines = new()
+        public TestStageStatus status
         {
-            {  30, Color.red },
-            {  60, Color.green },
-            {  90, Color.cyan },
-            { 120, Color.blue }
-        };
-
-        private Dictionary<FrameData, VisualElement> _timingLines = new(){};
-
-        public void Init()
-        {
-            var initialListSize = PerformanceTest.instance._framesToCapture;
-            if (_playableDirector != null && useFullTimeline)
-                initialListSize = (int)_playableDirector.duration * 120;
-            _recordingIndex = 0;
-
-            _frameDatas = new List<FrameData>();
-            _maxFrameData
-                = _avgFrameData
-                = _medianFrameData
-                = _upperQuartileFrameData
-                = _lowerQuartileFrameData
-                = new FrameData(0f);
-            _minFrameData = new FrameData(Mathf.Infinity);
+            get
+            {
+                return _status;
+            }
+            private set
+            {
+                _status = value;
+                if (_statusLabel != null)
+                    _statusLabel.text = _status.ToString();
+            }
         }
+
+
+        private DataType _displayedDataType => PerformanceTest.displayedDataType;
+
+        private Dictionary<FrameData, VisualElement> _timingLines = new();
 
         public void RecordTiming(FrameData currentFrameData)
         {
@@ -112,13 +95,13 @@ namespace Benchmarking
 
             _recordingIndex++;
 
-            _avgLabel.text = _avgFrameData.GetValueString(_displayedDataType);
+            _avgLabel.Set(_avgFrameData);
             if (needsRangeUpdate)
             {
-                _minLabel.text = _minFrameData.GetValueString(_displayedDataType);
-                _maxLabel.text = _maxFrameData.GetValueString(_displayedDataType);
+                _minLabel.Set(_minFrameData);
+                _maxLabel.Set(_maxFrameData);
 
-                UpdateRange();
+                UpdateRangeAndGraph();
             }
         }
 
@@ -129,6 +112,7 @@ namespace Benchmarking
 
             _visualElementRoot = referenceVisuaTree.Instantiate();
             _testNameLabel = _visualElementRoot.Q<Label>(name: "TestName");
+            _statusLabel = _visualElementRoot.Q<Label>(name: "Status");
             _minLabel = _visualElementRoot.Q<Label>(name: "MinText");
             _maxLabel = _visualElementRoot.Q<Label>(name: "MaxText");
             _avgLabel = _visualElementRoot.Q<Label>(name: "AvgText");
@@ -145,12 +129,21 @@ namespace Benchmarking
             _quartilesMinMaxRangeVE = _visualElementRoot.Q(name: "MinMaxRange");
             _quartilesRangeVE = _visualElementRoot.Q(name: "QuartilesRange");
 
+            _progressContainerVE = _visualElementRoot.Q(name: "ProgressContainer");
+            _progressBarVe = _visualElementRoot.Q(name: "ProgressBar");
+            _progressLabel = _visualElementRoot.Q<Label>(name: "ProgressLabel");
+            _progressContainerVE.style.opacity = 0f;
+
+            _cancelButton = _visualElementRoot.Q<Button>(name: "CancelButton");
+            _cancelButton.clicked += Cancel;
+            _cancelButton.text = "Skip";
+
             var refLine = _visualElementRoot.Q(name: "StatLine");
             refLine.parent.Remove(refLine);
 
-            var offset = 100f / (k_fpsLines.Count + 2);
+            var offset = 100f / (PerformanceTest.timingThresholds.Count + 2);
             var lengthValue = new Length(offset, LengthUnit.Percent );
-            foreach(var kvp in k_fpsLines)
+            foreach(var kvp in PerformanceTest.timingThresholds)
             {
                 var ve = new VisualElement();
                 ve.style.backgroundColor = kvp.Value;
@@ -159,13 +152,7 @@ namespace Benchmarking
                 _timingsGraphContainerVE.Add(ve);
                 lengthValue.value += offset;
 
-                _timingLines.Add(new FrameData()
-                {
-                    frameTime = k_frameLineMul / kvp.Key,
-                    cpuTime = k_cpuLineMul / kvp.Key,
-                    cpuRenderTime = k_cpuRenderLineMul / kvp.Key,
-                    gpuTime = k_gpuLineMul / kvp.Key,
-                }, ve);
+                _timingLines.Add(kvp.Key, ve);
             }
 
             _testNameLabel.text = sceneName;
@@ -176,6 +163,8 @@ namespace Benchmarking
             }
 
             _uiInitialized = true;
+
+            status = TestStageStatus.Waiting;
         }
 
         public void CalculateValues(bool recalculateRange = false)
@@ -227,10 +216,13 @@ namespace Benchmarking
 
         IEnumerator ProcessTest()
         {
-            yield return LoadAndInit();
-            yield return new WaitForSeconds(PerformanceTest.instance._waitTime);
-            yield return RunTest();
-            yield return End();
+            if (status == TestStageStatus.Waiting)
+            {
+                yield return LoadAndInit();
+                yield return new WaitForSeconds(PerformanceTest.instance._waitTime);
+                yield return RunTest();
+                yield return End();
+            }
 
             if (_finishedAction != null)
             {
@@ -241,6 +233,9 @@ namespace Benchmarking
 
         IEnumerator LoadAndInit()
         {
+            status = TestStageStatus.Warming;
+            _cancelButton.text = "Stop";
+
             Debug.Log($"Start test {sceneName}");
 
             _testCamera.transform.position = cameraPosition;
@@ -268,29 +263,64 @@ namespace Benchmarking
                 var duration = (float)_playableDirector.duration;
                 _intermediateCaptureTime = duration / (PerformanceTest.instance._framesToCapture + 1);
 
-                _playableDirector.Pause();
+                _playableDirector.Play();
                 _playableDirector.extrapolationMode = DirectorWrapMode.None;
             }
 
-            Init();
+            // Init
+            var initialListSize = PerformanceTest.instance._framesToCapture;
+            if (_playableDirector != null && useFullTimeline)
+                initialListSize = (int)_playableDirector.duration * 120;
+            _recordingIndex = 0;
+
+            _frameDatas = new List<FrameData>();
+            _maxFrameData
+                = _avgFrameData
+                = _medianFrameData
+                = _upperQuartileFrameData
+                = _lowerQuartileFrameData
+                = new FrameData(0f);
+            _minFrameData = new FrameData(Mathf.Infinity);
         }
 
         IEnumerator RunTest()
         {
-            _status = TestStageStatus.Running;
+            status = TestStageStatus.Running;
+            _progressContainerVE.style.opacity = 1f;
+            _progressLabel.text = "0";
+            _progressBarVe.style.width = 0;
 
             bool noIntermediateTime = useFullTimeline && _playableDirector != null;
 
             if (_playableDirector != null)
+            {
+                _playableDirector.time = 0f;
                 _playableDirector.Play();
+            }
 
-            while (_recordingIndex < _frameDatas.Count || (useFullTimeline && _playableDirector != null && _playableDirector.state != PlayState.Paused))
+            while (
+                status != TestStageStatus.Stopped &&
+                (
+                    _recordingIndex < _frameDatas.Count ||
+                    (
+                        useFullTimeline && _playableDirector != null &&
+                        _playableDirector.state != PlayState.Paused
+                    )
+                )
+            )
             {
                 FrameData currentFrameData = FrameData.GetCurrentFrameData();
+                currentFrameData.CaptureFrameTimings();
 
                 PerformanceTest.instance.SetCurrentTiming(currentFrameData);
                 RecordTiming(currentFrameData);
                 UpdateGraph();
+
+                int timerLineAdvancement = (int) (100 * _playableDirector.time / _playableDirector.duration);
+
+                _progressLabel.text = timerLineAdvancement.ToString();
+                _progressBarVe.style.width = P(timerLineAdvancement);
+
                 if (noIntermediateTime)
                     yield return null;
                 else
@@ -300,35 +330,43 @@ namespace Benchmarking
 
         IEnumerator End()
         {
-            _status = TestStageStatus.Finished;
+            if (status == TestStageStatus.Running)
+                status = TestStageStatus.Finished;
+
+            _cancelButton.style.opacity = 0;
+            _cancelButton.clicked -= Cancel;
+
+            _progressContainerVE.style.opacity = 0f;
             Debug.Log($"Test {sceneName} finished and captured {_frameDatas.Count} frames timings");
             CalculateValues();
-            _lowerQuartileLabel.text = _lowerQuartileFrameData.GetValueString(_displayedDataType);
-            _medianLabel.text = _medianFrameData.GetValueString(_displayedDataType);
-            _upperQuartileLabel.text = _upperQuartileFrameData.GetValueString(_displayedDataType);
+            _lowerQuartileLabel.Set(_lowerQuartileFrameData);
+            _upperQuartileLabel.Set(_upperQuartileFrameData);
+            _medianLabel.Set(_medianFrameData);
 
             float maxScale = 100f / _maxFrameData.GetValue(_displayedDataType);
 
-            StyleLength styleLength = new StyleLength();
-            Length length = new Length(0f, LengthUnit.Percent);
-
-            length.value = 0f;
-            styleLength.value = length;
-            _quartilesMinMaxRangeVE.style.top = styleLength;
-
-            length.value = _minFrameData.GetValue(_displayedDataType) * maxScale;
-            styleLength.value = length;
-            _quartilesMinMaxRangeVE.style.bottom = styleLength;
-
-            length.value = 100f - _upperQuartileFrameData.GetValue(_displayedDataType) * maxScale;
-            styleLength.value = length;
-            _quartilesRangeVE.style.top = styleLength;
-
-            length.value = _lowerQuartileFrameData.GetValue(_displayedDataType) * maxScale;
-            styleLength.value = length;
-            _quartilesRangeVE.style.bottom = styleLength;
+            _quartilesMinMaxRangeVE.style.top = P(0);
+            _quartilesMinMaxRangeVE.style.bottom = P(_minFrameData.GetValue(_displayedDataType) * maxScale);
+            _quartilesRangeVE.style.top = P(100f - _upperQuartileFrameData.GetValue(_displayedDataType) * maxScale);
+            _quartilesRangeVE.style.bottom = P(_lowerQuartileFrameData.GetValue(_displayedDataType) * maxScale);
 
             yield return null;
+        }
+
+        void Cancel()
+        {
+            if (status == TestStageStatus.Waiting || status == TestStageStatus.Warming)
+            {
+                status = TestStageStatus.Skipped;
+            }
+            else
+            {
+                status = TestStageStatus.Stopped;
+                // _progressContainerVE.style.opacity = 0f;
+            }
+
+            _cancelButton.style.opacity = 0;
+            _cancelButton.clicked -= Cancel;
         }
 
         private void DisableCamerasInScene()
@@ -345,16 +383,22 @@ namespace Benchmarking
 
         public void RefreshDisplayedData()
         {
-            if (!_uiInitialized)
+            if
+            (
+                !_uiInitialized ||
+                status == TestStageStatus.Waiting ||
+                status == TestStageStatus.Skipped ||
+                status == TestStageStatus.Warming
+            )
                 return;
 
-            _minLabel.text = _minFrameData.GetValueString(_displayedDataType);
-            _maxLabel.text = _maxFrameData.GetValueString(_displayedDataType);
-            _avgLabel.text = _avgFrameData.GetValueString(_displayedDataType);
-            _lowerQuartileLabel.text = _lowerQuartileFrameData.GetValueString(_displayedDataType);
-            _upperQuartileLabel.text = _lowerQuartileFrameData.GetValueString(_displayedDataType);
-            _medianLabel.text = _medianFrameData.GetValueString(_displayedDataType);
-            UpdateGraph();
+            _minLabel.Set(_minFrameData);
+            _maxLabel.Set(_maxFrameData);
+            _avgLabel.Set(_avgFrameData);
+            _lowerQuartileLabel.Set(_lowerQuartileFrameData);
+            _upperQuartileLabel.Set(_lowerQuartileFrameData);
+            _medianLabel.Set(_medianFrameData);
+            UpdateRangeAndGraph();
         }
 
         private void UpdateGraph()
@@ -365,32 +409,23 @@ namespace Benchmarking
             _timingsGraphVE.SetData(_frameDatas.Select(v => v.GetValue(_displayedDataType) / _maxFrameData.GetValue(_displayedDataType)).ToList(), true);
         }
 
-        private void UpdateRange()
+        private void UpdateRangeAndGraph()
         {
             float maxScale = 100f / _maxFrameData.GetValue(_displayedDataType);
-
-            StyleLength styleLength = new StyleLength();
-            Length length = new Length(0f, LengthUnit.Percent);
 
             float min = _minFrameData.GetValue(_displayedDataType);
             float max = _maxFrameData.GetValue(_displayedDataType);
 
-            length.value = 0f;
-            styleLength.value = length;
-            _quartilesMinMaxRangeVE.style.top = styleLength;
+            _quartilesMinMaxRangeVE.style.top = P(0);
+            _quartilesMinMaxRangeVE.style.bottom = P(_minFrameData.GetValue(_displayedDataType) * maxScale);
 
-            length.value = _minFrameData.GetValue(_displayedDataType) * maxScale;
-            styleLength.value = length;
-            _quartilesMinMaxRangeVE.style.bottom = styleLength;
-
+            float v;
             foreach (var kvp in _timingLines)
             {
-                length.value = kvp.Key.GetValue(_displayedDataType) / max;
-                if (length.value < 1f)
+                v = kvp.Key.GetValue(_displayedDataType) / max;
+                if (v < 1f)
                 {
-                    length.value = 100f * length.value;
-                    styleLength.value = length.value;
-                    kvp.Value.style.bottom = styleLength;
+                    kvp.Value.style.bottom = P(100*v);
                     kvp.Value.style.display = DisplayStyle.Flex;
                 }
                 else
@@ -401,13 +436,20 @@ namespace Benchmarking
 
             UpdateGraph();
         }
+
+        public static Length P(float percentage, bool isNormalizedValue = false)
+        {
+            return new Length(isNormalizedValue ? percentage * 100f : percentage, LengthUnit.Percent);
+        }
     }
 
     public enum TestStageStatus
     {
         Waiting,
+        Warming,
         Running,
         Finished,
-        Canceled
+        Stopped,
+        Skipped
     }
 }

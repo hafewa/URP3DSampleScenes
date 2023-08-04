@@ -1,10 +1,13 @@
 using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace Benchmarking
 {
@@ -43,11 +46,14 @@ namespace Benchmarking
         [SerializeField]
         public int _framesToCapture = 500;
 
-        public Gradient frameTimingGradient = new Gradient();
-
         [SerializeField]
         [FormerlySerializedAs("m_TestDataVisualTreeReference")]
         private VisualTreeAsset _testDataVisualTreeReference;
+
+        [SerializeField]
+        private int _currentTimingRefreshCount = 10;
+        private int _currentTimingRefreshCounter = 11;
+        private FrameData _maxCurrentTiming = new FrameData(0);
 
         private int _currentStageIndex;
         private PerformanceTestStage _currentStage => _stages[_currentStageIndex];
@@ -65,15 +71,24 @@ namespace Benchmarking
         }
 
         private UIDocument _UIDocument;
-        private TextElement _currentTimingLabel, _currentTimingText;
+        private TextElement _currentDataTypeLabel, _currentTimingLabel, _currentTimingUnitLabel;
         private Button _changeDataButton;
 
-        private DataType _displayedDataType = DataType.FrameTime;
-        public DataType displayedDataType => _displayedDataType;
+        private static DataType _displayedDataType = DataType.FrameTime;
+        public static DataType displayedDataType => _displayedDataType;
 
         public void SetCurrentTiming(FrameData currentFrameData)
         {
-            _currentTimingText.text = currentFrameData.GetValueString(_displayedDataType);
+            _maxCurrentTiming.MaxWith(currentFrameData);
+            if (_currentTimingRefreshCounter > _currentTimingRefreshCount)
+            {
+                _currentTimingLabel.text = _maxCurrentTiming.GetValueString(_displayedDataType);
+                _currentTimingLabel.style.color = GetColorForFrameData(_maxCurrentTiming);
+
+                _currentTimingRefreshCounter = 0;
+                _maxCurrentTiming = new FrameData(0);
+            }
+            _currentTimingRefreshCounter++;
         }
 
         public static bool RunningBenchmark()
@@ -81,8 +96,68 @@ namespace Benchmarking
             return _instance != null;
         }
 
-        // Start is called before the first frame update
-        void Start()
+        const float
+            k_frameLineMul = 1000f,
+            k_cpuLineMul = 400f,
+            k_cpuRenderLineMul = 200f,
+            k_gpuLineMul = 400f;
+
+        private static Dictionary<int, Color> k_fpsThresholds = new()
+        {
+            {  30, Color.red },
+            {  45, Color.yellow },
+            {  60, Color.green },
+            {  90, Color.cyan },
+            { 120, Color.blue }
+        };
+        private static Color s_worstColor = Color.red;
+
+        private static Dictionary<FrameData, Color> s_timingThresholds;
+        public static Dictionary<FrameData, Color> timingThresholds
+        {
+            get
+            {
+                if (s_timingThresholds == null)
+                {
+                    s_timingThresholds = new Dictionary<FrameData, Color>();
+                    foreach (var kvp in k_fpsThresholds)
+                    {
+
+                        s_timingThresholds.Add(new FrameData()
+                        {
+                            frameTime = k_frameLineMul / kvp.Key,
+                            cpuTime = k_cpuLineMul / kvp.Key,
+                            cpuRenderTime = k_cpuRenderLineMul / kvp.Key,
+                            gpuTime = k_gpuLineMul / kvp.Key,
+                        }, kvp.Value);
+                    }
+                    s_worstColor = s_timingThresholds.First().Value;
+                }
+                return s_timingThresholds;
+            }
+        }
+
+        public static Color GetColorForFrameData( FrameData frameData)
+        {
+            Color c = s_worstColor;
+            if (_displayedDataType == DataType.FPS)
+            {
+                foreach (var kvp in s_timingThresholds)
+                    if (frameData.fps < kvp.Key.fps)
+                        return c;
+                    else
+                        c = kvp.Value;
+            }
+            else
+            {
+                foreach (var kvp in s_timingThresholds)
+                    if (frameData.frameTime < kvp.Key.frameTime)
+                        c = kvp.Value;
+            }
+            return c;
+        }
+
+        private void Awake()
         {
             //Destroy if assigned
             if (_instance != null)
@@ -91,17 +166,22 @@ namespace Benchmarking
                 return;
             }
 
-            Time.maximumDeltaTime = 120;
-
             _instance = this;
+            DontDestroyOnLoad(this);
+        }
+
+        void Start()
+        {
+            Time.maximumDeltaTime = 120;
             Application.runInBackground = true;
 
-            DontDestroyOnLoad(this);
+            QualitySettings.vSyncCount = 0;
 
             _UIDocument = GetComponent<UIDocument>();
             var rootVE = _UIDocument.rootVisualElement;
-            _currentTimingLabel = rootVE.Q<TextElement>(name: "CurrentTimingLabel");
-            _currentTimingText = rootVE.Q<TextElement>(name: "CurrentTiming");
+            _currentDataTypeLabel = rootVE.Q<TextElement>(name: "DataTypeLabel");
+            _currentTimingLabel = rootVE.Q<TextElement>(name: "CurrentTiming");
+            _currentTimingUnitLabel = rootVE.Q<TextElement>(name: "CurrentTimingUnit");
             _changeDataButton = rootVE.Q<Button>(name: "ChangeDataButton");
             _changeDataButton.clicked += LoopDisplayedData;
             SetDisplayedData(_displayedDataType);
@@ -144,7 +224,8 @@ namespace Benchmarking
         {
             _displayedDataType = dataType;
 
-            _currentTimingLabel.text = $"Current {dataType}:";
+            _currentDataTypeLabel.text = dataType.ToString();
+            _currentTimingUnitLabel.text = (dataType == DataType.FPS)?"":"ms";
 
             foreach (var stage in _stages)
                 stage.RefreshDisplayedData();

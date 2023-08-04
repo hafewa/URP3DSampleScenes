@@ -17,33 +17,50 @@ namespace Benchmarking
 
         public double timeLineTime;
 
-        public FrameData(float timeMS, float timelineTime = 0, bool captureAdvancedTimings = true)
+        const int k_timingsCaptureCount = 3;
+
+        public FrameData(float timeMS, float timelineTime = 0)
         {
             frameTime = timeMS;
             this.timeLineTime = timelineTime;
             _fpsOverride = -1f;
 
-            advancedFrameTiming = FrameTimingManager.IsFeatureEnabled() && captureAdvancedTimings;
-
+            advancedFrameTiming = false;
             cpuTime = cpuRenderTime = gpuTime = timeMS;
+        }
+
+        public void CaptureFrameTimings()
+        {
+            advancedFrameTiming = FrameTimingManager.IsFeatureEnabled();
 
             if (advancedFrameTiming)
             {
                 FrameTimingManager.CaptureFrameTimings();
-                FrameTiming[] timings = new FrameTiming[1];
-                uint count = FrameTimingManager.GetLatestTimings(1, timings);
+                FrameTiming[] timings = new FrameTiming[k_timingsCaptureCount];
+                uint count = FrameTimingManager.GetLatestTimings(k_timingsCaptureCount, timings);
                 if (count > 0)
                 {
                     cpuTime = timings[0].cpuFrameTime;
                     cpuRenderTime = timings[0].cpuRenderThreadFrameTime;
                     gpuTime = timings[0].gpuFrameTime;
+
+                    // Sometimes GPU timing is invalid, try to get the previous timing values and average
+                    //*
+                    if (count > 1)
+                    {
+                        for (int i = 1; i < count; i++)
+                            gpuTime += timings[i].gpuFrameTime;
+
+                        gpuTime /= count;
+                    }
+                    //*/
                 }
             }
         }
 
-        public static FrameData GetCurrentFrameData( float timelineTime = 0, bool captureAdvancedTimings = true )
+        public static FrameData GetCurrentFrameData( float timelineTime = 0 )
         {
-            return new FrameData(Time.deltaTime * 1000f, timelineTime, captureAdvancedTimings);
+            return new FrameData(Time.deltaTime * 1000f, timelineTime);
         }
 
         public void SetFPSOverride(float fpsOverride)
