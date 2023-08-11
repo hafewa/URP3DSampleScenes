@@ -24,6 +24,11 @@ Button {
     padding-right: 6px;
     padding-top: 0;
     padding-bottom: 0;
+    border-left-color: rgb(119, 119, 119);
+    border-right-color: rgb(119, 119, 119);
+    border-top-color: rgb(119, 119, 119);
+    border-bottom-color: rgb(119, 119, 119);
+    background-color: rgb(204, 204, 204);
 }
 
 Label {
@@ -64,4 +69,19 @@ Label {
     height: 1px;
     position: absolute;
     bottom: 15%;
+}
+
+.SmallButton {
+    width: 20px;
+    height: 20px;
+    -unity-text-align: middle-center;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 2px;
+    padding-bottom: 0;
+    align-self: center;
 }

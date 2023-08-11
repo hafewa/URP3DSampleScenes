@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -14,13 +15,14 @@ namespace Benchmarking
     [Serializable]
     public class PerformanceTestStage
     {
-
         [FormerlySerializedAs("SceneName")]
         public string sceneName;
+
+        // TODO: Remove followings
         public Vector3 cameraPosition;
         public Quaternion cameraRotation;
-
         public bool useFullTimeline = true;
+        // ENDTODO
 
         private List<FrameData> _frameDatas;
         private FrameData _minFrameData, _maxFrameData, _avgFrameData, _medianFrameData, _lowerQuartileFrameData, _upperQuartileFrameData;
@@ -191,10 +193,12 @@ namespace Benchmarking
 
             var upperQuartileIndexI = (int)upperQuartileIndexF;
             upperQuartileIndexF -= upperQuartileIndexI;
-
-            _lowerQuartileFrameData = FrameData.Lerp(orderedData[lowerQuartileIndexI], orderedData[lowerQuartileIndexI + 1], lowerQuartileIndexF);
-            _medianFrameData = FrameData.Lerp(orderedData[medianIndexI], orderedData[medianIndexI + 1], medianIndexF);
-            _upperQuartileFrameData = FrameData.Lerp(orderedData[upperQuartileIndexI], orderedData[upperQuartileIndexI + 1], upperQuartileIndexF);
+            
+            int lastIndex = orderedData.Length - 1;
+            // Debug.Log($"lowerQuartileIndexI: {lowerQuartileIndexI} , orderedData.Length: {orderedData.Length}");
+            _lowerQuartileFrameData = FrameData.Lerp(orderedData[lowerQuartileIndexI], orderedData[Mathf.Min(lowerQuartileIndexI + 1, lastIndex)], lowerQuartileIndexF);
+            _medianFrameData = FrameData.Lerp(orderedData[medianIndexI], orderedData[Mathf.Min(medianIndexI + 1, lastIndex)], medianIndexF);
+            _upperQuartileFrameData = FrameData.Lerp(orderedData[upperQuartileIndexI], orderedData[Mathf.Min(upperQuartileIndexI + 1, lastIndex)], upperQuartileIndexF);
 
             float tmpFPS = _lowerQuartileFrameData.fps;
             _lowerQuartileFrameData.SetFPSOverride(_upperQuartileFrameData.fps);
@@ -211,7 +215,7 @@ namespace Benchmarking
             if (finishedAction != null)
                 _finishedAction = finishedAction;
 
-            Debug.Log("Called start for : " + sceneName);
+            // Debug.Log("Called start for : " + sceneName);
 
             PerformanceTest.instance.StartCoroutine(ProcessTest());
         }
@@ -229,7 +233,7 @@ namespace Benchmarking
 
             if (_finishedAction != null)
             {
-                Debug.Log("Invoking Finish action");
+                // Debug.Log("Invoking Finish action");
                 _finishedAction.Invoke();
             }
         }
@@ -239,7 +243,7 @@ namespace Benchmarking
             status = TestStageStatus.Warming;
             _cancelButton.text = "Stop";
 
-            Debug.Log($"Start test {sceneName}");
+            // Debug.Log($"Start test {sceneName}");
 
             _testCamera.transform.position = cameraPosition;
             _testCamera.transform.rotation = cameraRotation;
@@ -252,7 +256,7 @@ namespace Benchmarking
             DisableCamerasInScene();
 
             var directors = Resources.FindObjectsOfTypeAll<PlayableDirector>();
-            Debug.Log($"Found {directors.Length} playable director(s)");
+            // Debug.Log($"Found {directors.Length} playable director(s)");
 
             _playableDirector = (directors.Length > 1) ? directors.Single(d => d.gameObject.name == "CinematicTimeline") : directors[0];
 
@@ -268,6 +272,8 @@ namespace Benchmarking
 
                 _playableDirector.Play();
                 _playableDirector.extrapolationMode = DirectorWrapMode.None;
+
+                // Debug.Log($"Will use timeline: {_playableDirector.name} of duration: {_playableDirector.duration}");
             }
 
             // Init
@@ -288,6 +294,11 @@ namespace Benchmarking
 
         IEnumerator RunTest()
         {
+            if (status != TestStageStatus.Warming)
+                yield break;
+
+            // Debug.Log("Start running test.");
+
             status = TestStageStatus.Running;
             _progressContainerVE.style.opacity = 1f;
             _progressLabel.text = "0";
@@ -333,14 +344,16 @@ namespace Benchmarking
 
         IEnumerator End()
         {
-            if (status == TestStageStatus.Running)
-                status = TestStageStatus.Finished;
-
             _cancelButton.style.opacity = 0;
             _cancelButton.clicked -= Cancel;
 
+            if (status == TestStageStatus.Running)
+                status = TestStageStatus.Finished;
+            else
+                yield break;
+
             _progressContainerVE.style.opacity = 0f;
-            Debug.Log($"Test {sceneName} finished and captured {_frameDatas.Count} frames timings");
+            // Debug.Log($"Test {sceneName} finished and captured {_frameDatas.Count} frames timings");
             CalculateValues();
             _lowerQuartileLabel.Set(_lowerQuartileFrameData);
             _upperQuartileLabel.Set(_upperQuartileFrameData);

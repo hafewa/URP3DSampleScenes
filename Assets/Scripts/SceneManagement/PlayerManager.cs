@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     
     void Start()
     {
-        if (PerformanceTest.RunningBenchmark())
+        if (PerformanceTest.RunningBenchmark)
         {
             Destroy(gameObject);
             return;

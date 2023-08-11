@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
@@ -43,6 +45,7 @@ namespace Benchmarking
 
         [SerializeField]
         public float _waitTime = 5f;
+        // TODO: Remove _framesToCapture
         [SerializeField]
         public int _framesToCapture = 500;
 
@@ -72,7 +75,7 @@ namespace Benchmarking
 
         private UIDocument _UIDocument;
         private TextElement _currentDataTypeLabel, _currentTimingLabel, _currentTimingUnitLabel;
-        private Button _changeDataButton;
+        private Button _changeDataButtonNext, _changeDataButtonPrev, _closeButton;
 
         private static DataType _displayedDataType = DataType.FrameTime;
         public static DataType displayedDataType => _displayedDataType;
@@ -91,10 +94,8 @@ namespace Benchmarking
             _currentTimingRefreshCounter++;
         }
 
-        public static bool RunningBenchmark()
-        {
-            return _instance != null;
-        }
+        public static bool RunningBenchmark =>
+            _instance != null;
 
         const float
             k_frameLineMul = 1000f,
@@ -168,6 +169,14 @@ namespace Benchmarking
 
             _instance = this;
             DontDestroyOnLoad(this);
+
+            var playerManager = FindObjectOfType<PlayerManager>();
+            if (playerManager != null)
+            {
+                playerManager.gameObject.SetActive(false);
+            }
+
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
         }
 
         void Start()
@@ -182,9 +191,13 @@ namespace Benchmarking
             _currentDataTypeLabel = rootVE.Q<TextElement>(name: "DataTypeLabel");
             _currentTimingLabel = rootVE.Q<TextElement>(name: "CurrentTiming");
             _currentTimingUnitLabel = rootVE.Q<TextElement>(name: "CurrentTimingUnit");
-            _changeDataButton = rootVE.Q<Button>(name: "ChangeDataButton");
-            _changeDataButton.clicked += LoopDisplayedData;
+            _changeDataButtonNext = rootVE.Q<Button>(name: "ChangeDataButtonNext");
+            _changeDataButtonNext.clicked += LoopDisplayedDataNext;
+            _changeDataButtonPrev = rootVE.Q<Button>(name: "ChangeDataButtonPrev");
+            _changeDataButtonPrev.clicked += LoopDisplayedDataPrevious;
             SetDisplayedData(_displayedDataType);
+            _closeButton = rootVE.Q<Button>(name: "CloseButton");
+            _closeButton.style.opacity = 0;
 
             var testList = rootVE.Q<VisualElement>(name: "TestsList");
 
@@ -217,7 +230,8 @@ namespace Benchmarking
 
         private void FinalizeTests()
         {
-
+            _closeButton.style.opacity = 1f;
+            _closeButton.clicked += CloseBenchmark;
         }
 
         private void SetDisplayedData(DataType dataType)
@@ -231,13 +245,35 @@ namespace Benchmarking
                 stage.RefreshDisplayedData();
         }
 
-        private void LoopDisplayedData()
+        private void LoopDisplayedDataNext() { LoopDisplayedData(1); }
+        private void LoopDisplayedDataPrevious() { LoopDisplayedData(-1); }
+
+        private void LoopDisplayedData(int offset = 1)
         {
+            int max = FrameTimingManager.IsFeatureEnabled() ? (int)DataType.Count-1 : (int)DataType.FPS;
 
-            int modulo = FrameTimingManager.IsFeatureEnabled() ? (int)DataType.Count : (int)DataType.FPS+1;
-            int nextType = ((int)_displayedDataType + 1) % modulo;
+            int newValue = (int)_displayedDataType + offset;
+            if (newValue < 0)
+                newValue = max;
+            else if (newValue > max)
+                newValue = 0;
 
-            SetDisplayedData((DataType)nextType);
+            SetDisplayedData((DataType)newValue);
+        }
+
+        private void CloseBenchmark()
+        {
+            Object.Destroy(this.gameObject);
+
+            var playerManager = FindObjectOfType<PlayerManager>();
+            if (playerManager != null)
+            {
+                playerManager.gameObject.SetActive(true);
+            }
+
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
+            SceneManager.LoadScene(0);
         }
     }
 }

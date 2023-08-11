@@ -58,7 +58,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     void Awake()
     {
-        if (PerformanceTest.RunningBenchmark())
+        if (PerformanceTest.RunningBenchmark)
         {
             Destroy(gameObject);
             return;

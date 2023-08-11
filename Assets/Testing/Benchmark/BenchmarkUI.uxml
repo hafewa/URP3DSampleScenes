@@ -6,14 +6,16 @@
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
             <ui:VisualElement name="VisualElement" style="background-color: rgba(0, 0, 0, 0); flex-direction: row;">
                 <ui:Label tabindex="-1" text="Showing:" display-tooltip-when-elided="true" name="l_Showing" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="DataTypeLabel" />
+                <ui:Button text="◂" display-tooltip-when-elided="true" name="ChangeDataButtonPrev" class="SmallButton" />
+                <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="DataTypeLabel" text="Label" style="width: 200px; -unity-text-align: upper-center;" />
+                <ui:Button text="▸" display-tooltip-when-elided="true" name="ChangeDataButtonNext" class="SmallButton" />
                 <ui:Label tabindex="-1" text="Current:" display-tooltip-when-elided="true" name="l_Current" style="margin-left: 50px;" />
                 <ui:Label tabindex="-1" text="XXX" display-tooltip-when-elided="true" name="CurrentTiming" />
                 <ui:Label tabindex="-1" text="ms" display-tooltip-when-elided="true" name="CurrentTimingUnit" style="margin-left: 2px;" />
             </ui:VisualElement>
             <ui:VisualElement style="background-color: rgba(0, 0, 0, 0); flex-grow: 1;" />
-            <ui:Button text="Change Data" display-tooltip-when-elided="true" name="ChangeDataButton" />
         </ui:VisualElement>
         <ui:ScrollView name="TestsList" />
+        <ui:Button text="Close" display-tooltip-when-elided="true" name="CloseButton" style="align-self: center;" />
     </ui:VisualElement>
 </ui:UXML>
