@@ -26,10 +26,10 @@ public class SceneTransitionManager : MonoBehaviour
 
     [Tooltip("Layers to render when in a location")]
     [SerializeField] private LayerMask locationLayer;
-    [Tooltip("Layers to render when in the terminal")] //TODO: Rename all hub to terminal
-    [SerializeField] private LayerMask hubLayer;
+    [Tooltip("Layers to render when in the terminal")]
+    [SerializeField] private LayerMask m_TerminalLayer;
     
-    private bool InHub = true;
+    private bool InTerminal = true;
 
     private SceneLoader m_Loader;
 
@@ -113,7 +113,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     public void SetupInitialState()
     {
-        InHub = true;
+        InTerminal = true;
         m_InitialSceneLoad = true;
 
         registeredScenes = new Dictionary<string, SceneMetaData>();
@@ -226,21 +226,21 @@ public class SceneTransitionManager : MonoBehaviour
 
     public static void CinemachineTeleport()
     {
-        instance.InHub = !instance.InHub;
+        instance.InTerminal = !instance.InTerminal;
         instance.UpdateCullingMasks();
 
         Transform flythroughRoot = instance.m_MediaSceneLoader.transform;
 
-        if (!instance.InHub)
+        if (!instance.InTerminal)
         {
             flythroughRoot.position = instance.m_ScreenCamera.GetComponent<OffsetCamera>().GetOffset();
-            instance.m_MediaSceneLoader.GetHubSceneLoader().SetCurrentVolume(instance.m_Loader.GetDestinationVolume());
-            instance.screenScene.HubLoader.SetActive(true);
+            instance.m_MediaSceneLoader.GetTerminalSceneLoader().SetCurrentVolume(instance.m_Loader.GetDestinationVolume());
+            instance.screenScene.TerminalLoader.SetActive(true);
         }
         else
         {
             flythroughRoot.position = Vector3.zero;
-            instance.m_Loader = instance.m_MediaSceneLoader.GetHubSceneLoader();
+            instance.m_Loader = instance.m_MediaSceneLoader.GetTerminalSceneLoader();
         }
 
         (instance.screenScene, instance.currentScene) = (instance.currentScene, instance.screenScene);
@@ -254,7 +254,7 @@ public class SceneTransitionManager : MonoBehaviour
             return;
         }
         
-        instance.InHub = !instance.InHub;
+        instance.InTerminal = !instance.InTerminal;
         instance.UpdateCullingMasks();
 
         //Swap Camera positions
@@ -329,42 +329,42 @@ public class SceneTransitionManager : MonoBehaviour
         //Swap references to screen and current scene
         (instance.screenScene, instance.currentScene) = (instance.currentScene, instance.screenScene);
 
-        //Setup hub loader so player can get back and reset the timeline director
-        instance.SetHubLoaderAndDirector(instance.screenScene, false);
-        instance.SetHubLoaderAndDirector(instance.currentScene, true);
+        //Setup terminal loader so player can get back and reset the timeline director
+        instance.SetTerminalLoaderAndDirector(instance.screenScene, false);
+        instance.SetTerminalLoaderAndDirector(instance.currentScene, true);
         
         
     }
 
     private void UpdateCullingMasks()
     {
-        if (instance.InHub)
+        if (instance.InTerminal)
         {
             //Add to mask
-            instance.m_MainCamera.cullingMask |= instance.hubLayer;
+            instance.m_MainCamera.cullingMask |= instance.m_TerminalLayer;
             instance.m_ScreenCamera.cullingMask |= instance.locationLayer;
 
             //Remove from mask
             instance.m_MainCamera.cullingMask ^= instance.locationLayer;
-            instance.m_ScreenCamera.cullingMask ^= instance.hubLayer;
+            instance.m_ScreenCamera.cullingMask ^= instance.m_TerminalLayer;
         }
         else
         {
             //Add to mask
-            instance.m_MainCamera.cullingMask ^= instance.hubLayer;
+            instance.m_MainCamera.cullingMask ^= instance.m_TerminalLayer;
             instance.m_ScreenCamera.cullingMask ^= instance.locationLayer;
 
             //Remove from mask
             instance.m_MainCamera.cullingMask |= instance.locationLayer;
-            instance.m_ScreenCamera.cullingMask |= instance.hubLayer;
+            instance.m_ScreenCamera.cullingMask |= instance.m_TerminalLayer;
         }
     }
 
-    private void SetHubLoaderAndDirector(SceneMetaData scene, bool isActive)
+    private void SetTerminalLoaderAndDirector(SceneMetaData scene, bool isActive)
     {
-        if (scene.HubLoader != null)
+        if (scene.TerminalLoader != null)
         {
-            scene.HubLoader.SetActive(isActive);
+            scene.TerminalLoader.SetActive(isActive);
         }
 
         if (scene.Director != null)
@@ -494,9 +494,9 @@ public class SceneTransitionManager : MonoBehaviour
     public static void StartTransition(MediaSceneLoader mediaSceneLoader)
     {
         instance.m_MediaSceneLoader = mediaSceneLoader;
-        if (!instance.InHub)
+        if (!instance.InTerminal)
         {
-            instance.m_Loader = instance.currentScene.HubLoader.GetComponentInChildren<SceneLoader>();
+            instance.m_Loader = instance.currentScene.TerminalLoader.GetComponentInChildren<SceneLoader>();
         }
         StartTransition();
     }

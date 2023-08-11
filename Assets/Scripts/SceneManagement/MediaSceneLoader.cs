@@ -9,11 +9,11 @@ public class MediaSceneLoader : MonoBehaviour
     [SerializeField] private SceneLoader m_CockpitSceneLoader;
     [SerializeField] private SceneLoader m_OasisSceneLoader;
     
-    private SceneLoader HubSceneLoader;
+    private SceneLoader TerminalSceneLoader;
 
     void Start()
     {
-        HubSceneLoader = GetComponent<SceneLoader>();
+        TerminalSceneLoader = GetComponent<SceneLoader>();
     }
     public void EnableGarden()
     {
@@ -35,9 +35,9 @@ public class MediaSceneLoader : MonoBehaviour
         m_CockpitSceneLoader.DisableScene();
     }
 
-    public void EnableHub()
+    public void EnableTerminal()
     {
-        HubSceneLoader.EnableScene();
+        TerminalSceneLoader.EnableScene();
     }
 
     public void EnableOasis()
@@ -55,9 +55,9 @@ public class MediaSceneLoader : MonoBehaviour
         SceneTransitionManager.StartTransition(this);
     }
 
-    public SceneLoader GetHubSceneLoader()
+    public SceneLoader GetTerminalSceneLoader()
     {
-        return HubSceneLoader;
+        return TerminalSceneLoader;
     }
     
 }

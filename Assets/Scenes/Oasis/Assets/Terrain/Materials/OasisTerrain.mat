@@ -56,7 +56,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Detail_Grain_Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Dust_Wave_Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Glitter_Clip_Mask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Glitter_Mask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -102,6 +118,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_5a22baadb0a04fc8a6cd9ce0a5aac1d4_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 4d58dccd557d3bf4681ce0efdfd3fb6a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_acc6d1f533db4de48f1d8a0a83301fdf_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 4d58dccd557d3bf4681ce0efdfd3fb6a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Sand_Footsteps_Packed:
@@ -153,16 +177,31 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Detail_Distance: 10
+    - _Detail_Grain_On: 0
+    - _Detail_Grain_Strength: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _Dust_Wave: 0
+    - _Dust_Wave_Speed: 0
+    - _Dust_Wave_Strength: 1
     - _EnvironmentReflections: 1
+    - _Fade_Distance: 100
+    - _Fresnel_Power: 1.45
+    - _Glitter_On: 1
+    - _Glitter_Strength: 0
+    - _Glitter_Strength_in_Shadow: 0.4
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Gravels_Height_Offset: 0.158
     - _Layer2_Normal_Intensity: 1
     - _Layer3_Normal_Intensity: 1
+    - _Mask_Fuziness: 0.24
+    - _Mask_Range: 1.09
     - _Metallic: 0
+    - _Moving_Dust: 0
+    - _Moving_Dust_Strength: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -183,7 +222,11 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Detail_Grain_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Dust_Normal_Tiling: {r: 0.5, g: 0.86, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Giltter_Tiling: {r: 5, g: 5, b: 0, a: 0}
+    - _Glitter_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Gravels_Height_Remap: {r: -0.2, g: 1, b: 0, a: 0}
     - _Layer2_Dark_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Layer2_Highlight_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -193,6 +236,7 @@ Material:
     - _Layer3_Highlight_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Layer3_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Layer3_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Moving_Dust_Offset_Speed: {r: 1.32, g: 0.78, b: 0, a: 0}
     - _Sand_Dark_Color: {r: 0.4862745, g: 0.30349493, b: 0.14636862, a: 0.7843137}
     - _Sand_Highlight_Color: {r: 0.936, g: 0.7524706, b: 0.5322353, a: 0.6862745}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
