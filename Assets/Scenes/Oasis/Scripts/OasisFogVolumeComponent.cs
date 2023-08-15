@@ -8,5 +8,6 @@ using UnityEngine.Rendering;
 [VolumeComponentMenu("Sample Scene/Oasis Fog")]
 public class OasisFogVolumeComponent : VolumeComponent
 {
-    public FloatParameter Intensity = new(0);
+    public ClampedFloatParameter Density = new ClampedFloatParameter(0, 0, 0.05f);
+    public ColorParameter Tint = new ColorParameter(UnityEngine.Color.white, true, false, false);
 }

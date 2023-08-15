@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-[ExecuteAlways, DefaultExecutionOrder(600)]
+//TODO: Manage the material from script instead of inspector
+
+[ExecuteAlways]
 public class OasisFog : MonoBehaviour
 {
     private OasisFogPass _pass;
@@ -16,6 +18,8 @@ public class OasisFog : MonoBehaviour
     
     private void OnEnable()
     {
+        Debug.Log("enabled?");
+        
         _pass = new OasisFogPass();
         
         // setup callback
@@ -24,23 +28,20 @@ public class OasisFog : MonoBehaviour
 
     private void OnDisable()
     {
+        Debug.Log("disabled?");
         RenderPipelineManager.beginCameraRendering -= OnBeginCamera;
     }
 
     private void OnBeginCamera(ScriptableRenderContext context, Camera cam)
     {
-        //if (_pass == null) return;
-        
         // injection point
         _pass.renderPassEvent = injectionPoint + injectionPointOffset;
         _pass.passMaterial = material;
         _pass.inputReq = inputRequirements;
+
+
         
-        // inject pass
-        if (VolumeManager.instance.stack.GetComponent<OasisFogVolumeComponent>().Intensity.value > 0)
-        {
-            cam.GetUniversalAdditionalCameraData().scriptableRenderer.EnqueuePass(_pass);
-        }
+        cam.GetUniversalAdditionalCameraData().scriptableRenderer.EnqueuePass(_pass);
     }
     
     private class OasisFogPass : ScriptableRenderPass
@@ -60,13 +61,25 @@ public class OasisFog : MonoBehaviour
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
+            OasisFogVolumeComponent volumeComponent = VolumeManager.instance.stack.GetComponent<OasisFogVolumeComponent>();
+            
+            float fogDensity = volumeComponent.Density.value;
+            if (fogDensity < Mathf.Epsilon) return; 
+            
             //if (passMaterial == null) return;
             // do render
             
-            Debug.Log("injecting pass");
+            //Debug.Log("injecting pass");
 
             var cmd = CommandBufferPool.Get("CameraFullscreenQuad");
             
+            
+            
+            Color fogTint = volumeComponent.Tint.value;
+            
+            passMaterial.SetColor("_Tint", fogTint);
+            passMaterial.SetFloat("_Density", fogDensity);
+
             var flipY = renderingData.cameraData.IsRenderTargetProjectionMatrixFlipped(renderingData.cameraData.renderer.cameraColorTargetHandle);
             passMaterial.SetKeyword(keyword, flipY);
             var cam = renderingData.cameraData.camera;
