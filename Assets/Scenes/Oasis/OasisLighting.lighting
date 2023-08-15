@@ -21,8 +21,8 @@ LightingSettings:
   m_BakeResolution: 8
   m_Padding: 4
   m_LightmapCompression: 2
-  m_AO: 0
-  m_AOMaxDistance: 15
+  m_AO: 1
+  m_AOMaxDistance: 5
   m_CompAOExponent: 0.5
   m_CompAOExponentDirect: 0
   m_ExtractAO: 0
@@ -51,7 +51,7 @@ LightingSettings:
   m_PVRFilteringMode: 2
   m_PVRDenoiserTypeDirect: 2
   m_PVRDenoiserTypeIndirect: 2
-  m_PVRDenoiserTypeAO: 1
+  m_PVRDenoiserTypeAO: 2
   m_PVRFilterTypeDirect: 0
   m_PVRFilterTypeIndirect: 0
   m_PVRFilterTypeAO: 0
