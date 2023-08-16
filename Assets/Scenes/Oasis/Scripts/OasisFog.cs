@@ -18,8 +18,6 @@ public class OasisFog : MonoBehaviour
     
     private void OnEnable()
     {
-        Debug.Log("enabled?");
-        
         _pass = new OasisFogPass();
         
         // setup callback
@@ -28,7 +26,6 @@ public class OasisFog : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("disabled?");
         RenderPipelineManager.beginCameraRendering -= OnBeginCamera;
     }
 
@@ -64,17 +61,10 @@ public class OasisFog : MonoBehaviour
             OasisFogVolumeComponent volumeComponent = VolumeManager.instance.stack.GetComponent<OasisFogVolumeComponent>();
             
             float fogDensity = volumeComponent.Density.value;
-            if (fogDensity < Mathf.Epsilon) return; 
-            
-            //if (passMaterial == null) return;
-            // do render
-            
-            //Debug.Log("injecting pass");
+            if (passMaterial == null || fogDensity < Mathf.Epsilon) return;
 
             var cmd = CommandBufferPool.Get("CameraFullscreenQuad");
-            
-            
-            
+
             Color fogTint = volumeComponent.Tint.value;
             
             passMaterial.SetColor("_Tint", fogTint);
