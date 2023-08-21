@@ -56,7 +56,10 @@ public class OutlineEffect : MonoBehaviour
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-            if (passMaterial == null) return;
+            OutlineVolumeComponent volumeComponent = VolumeManager.instance.stack.GetComponent<OutlineVolumeComponent>();
+            
+            
+            if (passMaterial == null || !volumeComponent.Enabled.value) return;
             // do render
 
             var cmd = CommandBufferPool.Get("OutlineEffect");

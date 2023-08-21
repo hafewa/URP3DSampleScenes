@@ -47,5 +47,5 @@ Material:
     - _Rotation: 11.73
     m_Colors:
     - _Height_Range: {r: 0, g: 33.83, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 0}
+    - _Tint: {r: 1, g: 0.6376865, b: 0.4669811, a: 1}
   m_BuildTextureStacks: []
