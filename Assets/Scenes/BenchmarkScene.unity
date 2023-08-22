@@ -135,6 +135,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Benchmark
       objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: _stages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: _stages.Array.data[3].enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: _stages.Array.data[3].sceneName
+      value: Cockpit_Ride
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871017663001273271, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
+      propertyPath: _stages.Array.data[3].useFullTimeline
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8132712973314222637, guid: ef27707b7f6ec0343b7a177d22a225ca, type: 3}
       propertyPath: m_RootOrder
       value: 0

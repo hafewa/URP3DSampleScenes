@@ -201,20 +201,35 @@ namespace Benchmarking
 
             var testList = rootVE.Q<VisualElement>(name: "TestsList");
 
-            for (int i = 0; i < _stages.Count; i++)
+            var cleanedUpStages = _stages.Where(s => SceneExists(s.sceneName) && s.enabled).ToList();
+
+            for (int i = 0; i < cleanedUpStages.Count; i++)
             {
-                var stage = _stages[i];
+                var stage = cleanedUpStages[i];
 
                 stage.InstantiateVisualElement(_testDataVisualTreeReference, testList);
 
-                if (i < _stages.Count - 1)
-                    stage.SetFinishedAction(_stages[i + 1].Start);
+                if (i < cleanedUpStages.Count - 1)
+                    stage.SetFinishedAction(cleanedUpStages[i + 1].Start);
                 else
                     stage.SetFinishedAction(FinalizeTests);
             }
             testList.MarkDirtyRepaint();
 
-            _stages[0].Start();
+            cleanedUpStages[0].Start();
+        }
+
+        static bool SceneExists(string sceneName)
+        {
+            for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+            {
+                string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+                if (scenePath.Contains(sceneName))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void CreateCamera()

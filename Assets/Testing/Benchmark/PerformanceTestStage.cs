@@ -15,6 +15,8 @@ namespace Benchmarking
     [Serializable]
     public class PerformanceTestStage
     {
+        public bool enabled = true;
+
         [FormerlySerializedAs("SceneName")]
         public string sceneName;
 
@@ -256,16 +258,20 @@ namespace Benchmarking
             DisableCamerasInScene();
 
             var directors = Resources.FindObjectsOfTypeAll<PlayableDirector>();
-            // Debug.Log($"Found {directors.Length} playable director(s)");
+            
+            //Debug.Log($"Found {directors.Length} playable director(s)");
 
-            _playableDirector = (directors.Length > 1) ? directors.Single(d => d.gameObject.name == "CinematicTimeline") : directors[0];
+            _playableDirector = (directors.Length > 1) ? directors.Single(d => (d.gameObject.name == "CinematicTimeline") || d.gameObject.CompareTag("BenchmarkTimeline")) : directors[0];
 
             if (_playableDirector != null)
             {
                 _playableDirector.gameObject.SetActive(true);
                 var playable = _playableDirector.playableAsset;
-                var cinemachineTrack = playable.outputs.Single(o => o.outputTargetType == typeof(CinemachineBrain)).sourceObject;
-                _playableDirector.SetGenericBinding(cinemachineTrack, _testCamera.GetComponent<CinemachineBrain>());
+                if (playable.outputs.Any(o => o.outputTargetType == typeof(CinemachineBrain)))
+                {
+                    var cinemachineTrack = playable.outputs.Single(o => o.outputTargetType == typeof(CinemachineBrain)).sourceObject;
+                    _playableDirector.SetGenericBinding(cinemachineTrack, _testCamera.GetComponent<CinemachineBrain>());
+                }
 
                 var duration = (float)_playableDirector.duration;
                 _intermediateCaptureTime = duration / (PerformanceTest.instance._framesToCapture + 1);
