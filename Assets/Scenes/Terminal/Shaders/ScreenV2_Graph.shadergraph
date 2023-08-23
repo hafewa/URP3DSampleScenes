@@ -35,6 +35,9 @@
         },
         {
             "m_Id": "ecef6c4d2f184dc18aceeb4786669d85"
+        },
+        {
+            "m_Id": "b114843d051d46fc9542d444c87aae99"
         }
     ],
     "m_Keywords": [
@@ -210,6 +213,9 @@
         },
         {
             "m_Id": "765820333b344fbfb57c04011b522405"
+        },
+        {
+            "m_Id": "f8c4b60dfd854672a6983cb47489104b"
         }
     ],
     "m_GroupDatas": [
@@ -945,6 +951,20 @@
                     "m_Id": "b04dcac8d1c24b138c67a4fdc8daa331"
                 },
                 "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "f8c4b60dfd854672a6983cb47489104b"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "765820333b344fbfb57c04011b522405"
+                },
+                "m_SlotId": 1
             }
         },
         {
@@ -2302,6 +2322,21 @@
     "m_ObjectId": "38f6051ed6b0489ca48ffef50785952c",
     "m_Id": 0,
     "m_DisplayName": "Out",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "38fae75684194e5e9287f627035ff4d5",
+    "m_Id": 0,
+    "m_DisplayName": "ScreenLEDPattern",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -4668,6 +4703,9 @@
         },
         {
             "m_Id": "96d795264ecb4bac972cc63332f9ddfe"
+        },
+        {
+            "m_Id": "b114843d051d46fc9542d444c87aae99"
         }
     ]
 }
@@ -5194,6 +5232,34 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "b114843d051d46fc9542d444c87aae99",
+    "m_Guid": {
+        "m_GuidSerialized": "aef8c0ce-20e7-49f5-92ed-092cf405978a"
+    },
+    "m_Name": "ScreenLEDPattern",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "ScreenLEDPattern",
+    "m_DefaultReferenceName": "_ScreenLEDPattern",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 2000.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
 }
 
 {
@@ -7079,6 +7145,42 @@
     "m_Value": {
         "x": 0.0,
         "y": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "f8c4b60dfd854672a6983cb47489104b",
+    "m_Group": {
+        "m_Id": "dcbf99247d0b4c8e878f4714c6aa2076"
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 722.0,
+            "y": 146.0,
+            "width": 171.0,
+            "height": 34.00001525878906
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "38fae75684194e5e9287f627035ff4d5"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "b114843d051d46fc9542d444c87aae99"
     }
 }
 
