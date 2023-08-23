@@ -62,6 +62,32 @@ MonoBehaviour:
   components:
   - {fileID: 8585060473353627000}
   - {fileID: -1187785409583909056}
+  - {fileID: 686280061857758836}
+--- !u!114 &686280061857758836
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a00a63fdd6bd2a45ab1f2d869305ffd, type: 3}
+  m_Name: OasisFogVolumeComponent
+  m_EditorClassIdentifier: 
+  active: 1
+  Density:
+    m_OverrideState: 1
+    m_Value: 0.002
+  HeightRange:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 35}
+  Tint:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0.35708064, b: 0.23018867, a: 1}
+  SunScatteringIntensity:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &8585060473353627000
 MonoBehaviour:
   m_ObjectHideFlags: 3
