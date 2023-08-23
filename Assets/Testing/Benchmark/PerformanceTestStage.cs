@@ -355,7 +355,7 @@ namespace Benchmarking
 
             if (status == TestStageStatus.Running)
                 status = TestStageStatus.Finished;
-            else
+            else if (status != TestStageStatus.Stopped)
                 yield break;
 
             _progressContainerVE.style.opacity = 0f;
@@ -420,7 +420,7 @@ namespace Benchmarking
             _maxLabel.Set(_maxFrameData);
             _avgLabel.Set(_avgFrameData);
             _lowerQuartileLabel.Set(_lowerQuartileFrameData);
-            _upperQuartileLabel.Set(_lowerQuartileFrameData);
+            _upperQuartileLabel.Set(_upperQuartileFrameData);
             _medianLabel.Set(_medianFrameData);
             UpdateRangeAndGraph();
         }
