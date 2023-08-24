@@ -106,7 +106,7 @@ MonoBehaviour:
   active: 1
   Density:
     m_OverrideState: 1
-    m_Value: 0.0025
+    m_Value: 0.004
   HeightRange:
     m_OverrideState: 1
     m_Value: {x: 0, y: 35}
@@ -115,4 +115,4 @@ MonoBehaviour:
     m_Value: {r: 1, g: 0.35708064, b: 0.23018867, a: 1}
   SunScatteringIntensity:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
