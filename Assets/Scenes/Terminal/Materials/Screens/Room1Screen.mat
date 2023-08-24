@@ -139,6 +139,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _LEDPatternResolution: 500
     - _MaxPixelation: 9
     - _Metallic: 0
     - _MinimumBlackness: 0.4
