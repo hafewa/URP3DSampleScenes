@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -250,6 +251,37 @@ namespace Benchmarking
                 default:
                     return frameTime;
             }
+        }
+
+        public void WriteCSV(string before = null, bool writeTimeLineTime = false)
+        {
+            string[] strings = new string[ 5 + (before == null? 0:1) + (writeTimeLineTime?1:0) ];
+
+            int i = 0;
+
+            if (before != null)
+            {
+                strings[i] = before;
+                i++;
+            }
+
+            if (writeTimeLineTime)
+            {
+                strings[i] = timeLineTime.ToString();
+                i++;
+            }
+
+            strings[i] = frameTime.ToString();
+            i++;
+            strings[i] = fps.ToString();
+            i++;
+            strings[i] = cpuTime.ToString();
+            i++;
+            strings[i] = cpuRenderTime.ToString();
+            i++;
+            strings[i] = gpuTime.ToString();
+
+            PerformanceTest.CSVWrinteLine(strings);
         }
     }
 }

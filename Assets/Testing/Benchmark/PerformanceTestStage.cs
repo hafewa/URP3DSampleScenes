@@ -331,6 +331,7 @@ namespace Benchmarking
             {
                 FrameData currentFrameData = FrameData.GetCurrentFrameData();
                 currentFrameData.CaptureFrameTimings();
+                currentFrameData.timeLineTime = _playableDirector.time;
 
                 PerformanceTest.instance.SetCurrentTiming(currentFrameData);
                 RecordTiming(currentFrameData);
@@ -371,6 +372,8 @@ namespace Benchmarking
             _quartilesMinMaxRangeVE.style.bottom = P(_minFrameData.GetValue(_displayedDataType) * maxScale);
             _quartilesRangeVE.style.top = P(100f - _upperQuartileFrameData.GetValue(_displayedDataType) * maxScale);
             _quartilesRangeVE.style.bottom = P(_lowerQuartileFrameData.GetValue(_displayedDataType) * maxScale);
+
+            WriteCSV();
 
             yield return null;
         }
@@ -464,6 +467,27 @@ namespace Benchmarking
         public static Length P(float percentage, bool isNormalizedValue = false)
         {
             return new Length(isNormalizedValue ? percentage * 100f : percentage, LengthUnit.Percent);
+        }
+
+        public void WriteCSV()
+        {
+            PerformanceTest.CSVWrinteLine();
+            PerformanceTest.CSVWrinteLine("Scene", sceneName);
+            PerformanceTest.CSVWrinteLine();
+            PerformanceTest.CSVWrinteLine("", "Frame Time", "FPS", "CPU time", "CPU Render Thread Time", "GPU Time");
+            _minFrameData.WriteCSV("Minimum");
+            _maxFrameData.WriteCSV("Maximum");
+            _avgFrameData.WriteCSV("Average");
+            _lowerQuartileFrameData.WriteCSV("Lower Quartile");
+            _medianFrameData.WriteCSV("Median");
+            _upperQuartileFrameData.WriteCSV("Upper Quartile");
+
+            PerformanceTest.CSVWrinteLine();
+
+            PerformanceTest.CSVWrinteLine("Captured frames", _frameDatas.Count().ToString());
+            PerformanceTest.CSVWrinteLine("", "Frame Time", "FPS", "CPU time", "CPU Render Thread Time", "GPU Time");
+            for (int i = 0; i < _frameDatas.Count(); i++)
+                _frameDatas[i].WriteCSV(writeTimeLineTime: true);
         }
     }
 

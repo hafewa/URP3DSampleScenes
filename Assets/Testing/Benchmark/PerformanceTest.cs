@@ -1,15 +1,12 @@
 using Cinemachine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
+using System.Text;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace Benchmarking
 {
@@ -245,6 +242,9 @@ namespace Benchmarking
 
         private void FinalizeTests()
         {
+            Debug.Log(_sb.ToString());
+            GUIUtility.systemCopyBuffer = _sb.ToString();
+
             _closeButton.style.opacity = 1f;
             _closeButton.clicked += CloseBenchmark;
         }
@@ -289,6 +289,18 @@ namespace Benchmarking
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
             SceneManager.LoadScene(0);
+        }
+
+        private StringBuilder _sb = new StringBuilder("URP Template Performance Test");
+        public static void CSVWrinteLine( params string[] values )
+        {
+            instance._sb.AppendLine();
+            for(int i=0 ; i<values.Length; i++)
+            {
+                instance._sb.Append((values[i] == null)? "" : values[i]);
+                if ( i < values.Length - 1)
+                    instance._sb.Append(",");
+            }
         }
     }
 }
