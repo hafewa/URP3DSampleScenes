@@ -53,6 +53,8 @@ namespace Benchmarking
                 .With("Modifier", "<Keyboard>/rightShift");
             action.performed += ctx => StartBenchmark();
             action.Enable();
+
+            UnityEngine.InputSystem.EnhancedTouch.EnhancedTouchSupport.Enable();
 #endif
         }
 
@@ -64,8 +66,13 @@ namespace Benchmarking
             if (SystemInfo.deviceType != DeviceType.Handheld)
                 return;
 
-            if (UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.Count > 3)
+            if (UnityEngine.InputSystem.EnhancedTouch.Touch.activeFingers.Count > 3)
                 StartBenchmark();
+        }
+
+        public void OnGUI()
+        {
+            GUILayout.Label($"Touches: {UnityEngine.InputSystem.EnhancedTouch.Touch.activeFingers.Count}");
         }
 #endif
 
@@ -86,9 +93,21 @@ namespace Benchmarking
         }
 #endif
 
-        static void StartBenchmark()
+        private bool availableToStart = true;
+        void StartBenchmark()
         {
-            SceneManager.LoadScene("BenchmarkScene");
+            if (!PerformanceTest.RunningBenchmark && availableToStart)
+            {
+                StartCoroutine(WaitingTime());
+                SceneManager.LoadScene("BenchmarkScene");
+            }
+        }
+
+        IEnumerator WaitingTime()
+        {
+            availableToStart = false;
+            yield return new WaitForSeconds(5);
+            availableToStart = true;
         }
     }
 }

@@ -77,6 +77,8 @@ namespace Benchmarking
         private static DataType _displayedDataType = DataType.FrameTime;
         public static DataType displayedDataType => _displayedDataType;
 
+        private int _previousSleepTimeout;
+
         public void SetCurrentTiming(FrameData currentFrameData)
         {
             _maxCurrentTiming.MaxWith(currentFrameData);
@@ -213,6 +215,9 @@ namespace Benchmarking
             }
             testList.MarkDirtyRepaint();
 
+            _previousSleepTimeout = Screen.sleepTimeout;
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
             cleanedUpStages[0].Start();
         }
 
@@ -287,6 +292,8 @@ namespace Benchmarking
             }
 
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
+            Screen.sleepTimeout = _previousSleepTimeout;
 
             SceneManager.LoadScene(0);
         }

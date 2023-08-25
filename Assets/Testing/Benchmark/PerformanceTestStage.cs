@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -250,18 +249,24 @@ namespace Benchmarking
             _testCamera.transform.position = cameraPosition;
             _testCamera.transform.rotation = cameraRotation;
 
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            // Debug.Log($"Load Scene {sceneName}");
 
-            // wait one frame for scene object to be loaded in memory
-            yield return null;
+            SceneManager.sceneLoaded += SceneLoadCallback;
+            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+
+            // Wait for scene to be loaded
+            yield return new WaitUntil(HasSceneLoaded);
 
             DisableCamerasInScene();
 
             var directors = Resources.FindObjectsOfTypeAll<PlayableDirector>();
             
-            //Debug.Log($"Found {directors.Length} playable director(s)");
+            // Debug.Log($"Found {directors.Length} playable director(s) in the scene {SceneManager.GetActiveScene().name}");
 
-            _playableDirector = (directors.Length > 1) ? directors.Single(d => (d.gameObject.name == "CinematicTimeline") || d.gameObject.CompareTag("BenchmarkTimeline")) : directors[0];
+            if (directors.Length > 1 && directors.Any(d => (d.gameObject.name == "CinematicTimeline") || d.gameObject.CompareTag("BenchmarkTimeline")))
+                _playableDirector = directors.First(d => (d.gameObject.name == "CinematicTimeline") || d.gameObject.CompareTag("BenchmarkTimeline"));
+            else if (directors.Length > 0)
+                _playableDirector = directors[0];
 
             if (_playableDirector != null)
             {
@@ -296,6 +301,21 @@ namespace Benchmarking
                 = _lowerQuartileFrameData
                 = new FrameData(0f);
             _minFrameData = new FrameData(Mathf.Infinity);
+        }
+
+        private bool sceneLoaded = false;
+        private bool HasSceneLoaded()
+        {
+            return sceneLoaded;
+        }
+
+        void SceneLoadCallback( Scene scene, LoadSceneMode loadSceneMode)
+        {
+            // Debug.Log($"Scene {scene.name} has loaded.");
+
+            SceneManager.SetActiveScene(scene);
+            sceneLoaded = true;
+            SceneManager.sceneLoaded -= SceneLoadCallback;
         }
 
         IEnumerator RunTest()
