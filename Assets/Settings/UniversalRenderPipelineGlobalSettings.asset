@@ -17,12 +17,8 @@ MonoBehaviour:
   - Default
   - Screen
   - Lamps
-  - Light Layer 3
-  - Light Layer 4
-  - Light Layer 5
-  - Light Layer 6
-  - Light Layer 7
-  m_ValidRenderingLayers: 255
+  - Ground
+  m_ValidRenderingLayers: 15
   lightLayerName0: Light Layer default
   lightLayerName1: Light Layer 1
   lightLayerName2: Light Layer 2

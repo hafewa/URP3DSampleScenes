@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &975884834261442337
 Transform:
@@ -186,7 +186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2348625522528789152, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 126
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3361634513375469152, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
       propertyPath: m_Layer
@@ -195,6 +195,18 @@ PrefabInstance:
     - target: {fileID: 3361634513375469152, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
+      propertyPath: m_LODs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.021559326
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
+      propertyPath: m_LODs.Array.data[3].renderers.Array.data[0].renderer
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7971466825394142555, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
       propertyPath: m_Layer
@@ -209,7 +221,8 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2348625522528789152, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d80777d98e5db5245bbbdda090e5f173, type: 3}

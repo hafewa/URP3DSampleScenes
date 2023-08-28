@@ -8,6 +8,21 @@ public class WashiLightController : MonoBehaviour
     [SerializeField]
     private Vector3 size = new Vector3(4f, 2f, 0.5f);
     [SerializeField]
+    private Material referenceMaterial;
+    private Material _instancedMaterial;
+    private Material instancedMaterial
+    {
+        get
+        {
+            if (_instancedMaterial == null)
+            {
+                _instancedMaterial = Instantiate(referenceMaterial);
+                _instancedMaterial.name = $"{gameObject.name} {referenceMaterial.name}";
+            }
+            return _instancedMaterial;
+        }
+    }
+    [SerializeField]
     private Texture2D texture = null;
     enum ChannelIndex { r, g, b, a };
     [SerializeField]
@@ -29,26 +44,14 @@ public class WashiLightController : MonoBehaviour
     private Shader shaderSearchFilter;
 
     [SerializeField]
-#if UNITY_EDITOR
-    [ContextMenuItem("Get matching renderers in volume", "GetRenderers")]
-    [ContextMenuItem("Get matching renderers in volume + enable", "GetAndEnableFacingRenderers")]
-#endif
     private Renderer[] renderers;
+
+    Vector3 worldU = Vector3.right;
+    Vector3 worldV = Vector3.up;
+    Vector4 tilingOffset = new Vector4(1, 1, 0, 0);
 
     [SerializeField]
     private bool displayAffectedRenderers = false;
-
-    private MaterialPropertyBlock m_propertyBlock;
-    private MaterialPropertyBlock propertyBlock
-    {
-        get
-        {
-            if (m_propertyBlock == null)
-                m_propertyBlock = new MaterialPropertyBlock();
-
-            return m_propertyBlock;
-        }
-    }
 
     private float intensitySeed = 0f;
     private float presenceSeed = 0f;
@@ -70,23 +73,28 @@ public class WashiLightController : MonoBehaviour
 
     private void Update()
     {
-        propertyBlock.SetFloat("_Intensity", Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise( Time.time / randomDuration, intensitySeed )) );
-        var isHere = Mathf.PerlinNoise(Time.time / presenceRandomDuration, presenceSeed) < presenceAmount;
+        var intensity = Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise(Time.time / randomDuration, intensitySeed));
+        var isHere = (presenceAmount >= 1)? true : Mathf.PerlinNoise(Time.time / presenceRandomDuration, presenceSeed) < presenceAmount;
+
+        instancedMaterial.SetFloat("_Intensity", intensity);
 
         foreach (var r in renderers)
         {
             r.enabled = isHere;
-            r.SetPropertyBlock(propertyBlock);
         }
     }
 
     [ContextMenu("Apply Texture")]
     private void ApplyTexture()
     {
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+            return;
+#endif
         transform.localScale = Vector3.one;
 
-        var worldU = transform.right;
-        var worldV = transform.up;
+        worldU = transform.right;
+        worldV = transform.up;
 
         var start = transform.TransformPoint(-0.5f * size);
         var end = transform.TransformPoint(0.5f * size);
@@ -101,22 +109,22 @@ public class WashiLightController : MonoBehaviour
             Vector3.Dot(end, worldV)
             );
 
-        var tilingOffset = new Vector4(
+        tilingOffset = new Vector4(
             end2D.x - start2D.x,
             end2D.y - start2D.y,
             start2D.x,
             start2D.y
             );
 
-        propertyBlock.SetVector("_World_U", worldU);
-        propertyBlock.SetVector("_World_V", worldV);
-        propertyBlock.SetVector("_TilingOffset", tilingOffset);
-        propertyBlock.SetTexture("_Texture", (texture==null)? Texture2D.whiteTexture : texture);
-        propertyBlock.SetFloat("_Texture_Channel", (int)channelIndex);
+        instancedMaterial.SetVector("_World_U", worldU);
+        instancedMaterial.SetVector("_World_V", worldV);
+        instancedMaterial.SetVector("_TilingOffset", tilingOffset);
+        instancedMaterial.SetTexture("_Texture", texture);
+        instancedMaterial.SetFloat("_Texture_Channel", (int)channelIndex);
 
         foreach (var r in renderers)
         {
-            r.SetPropertyBlock(propertyBlock);
+            r.sharedMaterial = instancedMaterial;
         }
     }
 
@@ -144,6 +152,10 @@ public class WashiLightController : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+    [ContextMenuItem("Get matching renderers in volume", "GetRenderers")]
+    [ContextMenuItem("Get matching renderers in volume + enable", "GetAndEnableFacingRenderers")]
+    private bool dummyField;
+
     void GetRenderers()
     {
         GetRenderersActive(false);
