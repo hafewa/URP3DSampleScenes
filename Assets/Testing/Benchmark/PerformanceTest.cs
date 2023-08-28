@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -78,6 +79,7 @@ namespace Benchmarking
         public static DataType displayedDataType => _displayedDataType;
 
         private int _previousSleepTimeout;
+        private int _previousVSyncCount = 0;
 
         public void SetCurrentTiming(FrameData currentFrameData)
         {
@@ -218,6 +220,9 @@ namespace Benchmarking
             _previousSleepTimeout = Screen.sleepTimeout;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
+            _previousVSyncCount = QualitySettings.vSyncCount;
+            QualitySettings.vSyncCount = 0;
+
             cleanedUpStages[0].Start();
         }
 
@@ -283,7 +288,7 @@ namespace Benchmarking
 
         private void CloseBenchmark()
         {
-            Object.Destroy(this.gameObject);
+            UnityEngine.Object.Destroy(this.gameObject);
 
             var playerManager = FindObjectOfType<PlayerManager>();
             if (playerManager != null)
@@ -294,6 +299,7 @@ namespace Benchmarking
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
             Screen.sleepTimeout = _previousSleepTimeout;
+            QualitySettings.vSyncCount = _previousVSyncCount;
 
             SceneManager.LoadScene(0);
         }

@@ -69,11 +69,6 @@ namespace Benchmarking
             if (UnityEngine.InputSystem.EnhancedTouch.Touch.activeFingers.Count > 3)
                 StartBenchmark();
         }
-
-        public void OnGUI()
-        {
-            GUILayout.Label($"Touches: {UnityEngine.InputSystem.EnhancedTouch.Touch.activeFingers.Count}");
-        }
 #endif
 
 #if !ENABLE_INPUT_SYSTEM

@@ -56,6 +56,7 @@ namespace Benchmarking
             _upperQuartileLabel,
             _progressLabel;
         private StatsGraphVE _timingsGraphVE;
+        private bool _timingVisible = true;
         private Button _cancelButton;
 
         private TestStageStatus _status = TestStageStatus.Waiting;
@@ -130,6 +131,12 @@ namespace Benchmarking
             _timingsGraphContainerVE.style.backgroundImage = null;
             _timingsGraphVE = new StatsGraphVE();
             _timingsGraphContainerVE.Add(_timingsGraphVE);
+
+            if (Application.isMobilePlatform)
+            {
+                _timingsGraphVE.style.display = DisplayStyle.None;
+                _timingVisible = false;
+            }
 
             _quartilesVE = _visualElementRoot.Q(name: "Quartiles");
             _quartilesMinMaxRangeVE = _visualElementRoot.Q(name: "MinMaxRange");
@@ -393,6 +400,13 @@ namespace Benchmarking
             _quartilesRangeVE.style.top = P(100f - _upperQuartileFrameData.GetValue(_displayedDataType) * maxScale);
             _quartilesRangeVE.style.bottom = P(_lowerQuartileFrameData.GetValue(_displayedDataType) * maxScale);
 
+            if (Application.isMobilePlatform)
+            {
+                _timingsGraphVE.style.display = DisplayStyle.Flex;
+                _timingVisible = true;
+                UpdateGraph();
+            }
+
             WriteCSV();
 
             yield return null;
@@ -450,7 +464,7 @@ namespace Benchmarking
 
         private void UpdateGraph()
         {
-            if (_timingsGraphVE.isDirty || !_uiInitialized || _frameDatas == null || _frameDatas.Count < 2)
+            if ( !_timingVisible || _timingsGraphVE.isDirty || !_uiInitialized || _frameDatas == null || _frameDatas.Count < 2)
                 return;
 
             _timingsGraphVE.SetData(_frameDatas.Select(v => v.GetValue(_displayedDataType) / _maxFrameData.GetValue(_displayedDataType)).ToList(), true);
