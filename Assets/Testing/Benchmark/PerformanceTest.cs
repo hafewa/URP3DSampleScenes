@@ -79,6 +79,7 @@ namespace Benchmarking
         public static DataType displayedDataType => _displayedDataType;
 
         private int _previousSleepTimeout;
+        private int _previousTargetFrameRate = -1;
         private int _previousVSyncCount = 0;
 
         public void SetCurrentTiming(FrameData currentFrameData)
@@ -223,6 +224,9 @@ namespace Benchmarking
             _previousVSyncCount = QualitySettings.vSyncCount;
             QualitySettings.vSyncCount = 0;
 
+            _previousTargetFrameRate = Application.targetFrameRate;
+            Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value * 8;
+
             cleanedUpStages[0].Start();
         }
 
@@ -300,6 +304,7 @@ namespace Benchmarking
 
             Screen.sleepTimeout = _previousSleepTimeout;
             QualitySettings.vSyncCount = _previousVSyncCount;
+            Application.targetFrameRate = _previousTargetFrameRate;
 
             SceneManager.LoadScene(0);
         }
