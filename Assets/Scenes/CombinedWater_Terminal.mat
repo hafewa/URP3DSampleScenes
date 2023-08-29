@@ -114,6 +114,7 @@ Material:
     - _CastShadows: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ColorAlpha: 0.179
     - _ColorThickness: 32.4
     - _Cull: 2
     - _Cutoff: 0.5
@@ -132,7 +133,7 @@ Material:
     - _NormalScale: 1
     - _NormalTiling: 0.7
     - _NormalTiling1: 0.1
-    - _NormalTiling2: 0.2
+    - _NormalTiling2: 0.26
     - _OcclusionStrength: 1
     - _OffsetSpeed: 0.3
     - _Parallax: 0.005
@@ -155,7 +156,7 @@ Material:
     - _BaseColor: {r: 0.39030796, g: 0.42028973, b: 0.46226418, a: 0.5254902}
     - _Color: {r: 0.74874204, g: 0.771371, b: 0.794, a: 0.8039216}
     - _Color2: {r: 0.2601014, g: 0.29514503, b: 0.3301886, a: 0.8039216}
-    - _ColorBright: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 0.8039216}
+    - _ColorBright: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDark: {r: 0.2601014, g: 0.29514503, b: 0.3301886, a: 0.8039216}
     - _ColorDeep: {r: 0.2601014, g: 0.29514503, b: 0.3301886, a: 0.8039216}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
