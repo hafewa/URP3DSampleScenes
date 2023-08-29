@@ -1,7 +1,37 @@
 fileFormatVersion: 2
 guid: d4df0dfb9a78203488311ef26256fb68
 SpeedTreeImporter:
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark_LOD0
+    second: {fileID: 3886889157694241205, guid: 148444551c51e5f45be707d99292a729, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark_LOD1
+    second: {fileID: 5793027613912649552, guid: 148444551c51e5f45be707d99292a729, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark_LOD2
+    second: {fileID: -1215820453034824416, guid: 148444551c51e5f45be707d99292a729, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Palm_2_LOD0
+    second: {fileID: 7417662119976902721, guid: 148444551c51e5f45be707d99292a729, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Palm_2_LOD1
+    second: {fileID: 8092325645429357651, guid: 148444551c51e5f45be707d99292a729, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Palm_2_LOD2
+    second: {fileID: -9130818743838546196, guid: 148444551c51e5f45be707d99292a729, type: 3}
   serializedVersion: 6
   mainColor: {r: 1, g: 1, b: 1, a: 1}
   hueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
@@ -41,6 +71,7 @@ SpeedTreeImporter:
   billboardTransitionCrossFadeWidth: 0.25
   fadeOutWidth: 0.25
   scaleFactor: 0.3048
+  motionVectorModeEnumValue: 1
   materialVersion: 3
   materialLocation: 1
   fileIDType: 2
