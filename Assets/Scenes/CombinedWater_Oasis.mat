@@ -36,7 +36,6 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - DepthOnly
-  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -64,24 +63,25 @@ Material:
     - _BaseColorFactor: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _CastShadows: 0
+    - _BrighterColor: 0
+    - _CastShadows: 1
     - _ColorThickness: 1
     - _Cull: 2
     - _DstBlend: 10
-    - _EdgeFade: 0
-    - _NormalMapStrength: 1
+    - _EdgeFade: 0.677
+    - _NormalMapStrength: 0.2
     - _NormalMapStrength_1: 1
     - _NormalMapStrength_2: 1
     - _NormalMapStrength_3: 1
     - _NormalTiling: 1
     - _NormalTiling1: 0.0025
     - _NormalTiling2: 0.01
-    - _OffsetSpeed: 0
+    - _OffsetSpeed: 0.01
     - _QueueControl: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RefractionDepth: 1
-    - _RefractionIntensity: 1
+    - _RefractionIntensity: 0.09
     - _SrcBlend: 1
     - _Surface: 1
     - _ThicknessPower: 1
@@ -92,6 +92,9 @@ Material:
     m_Colors:
     - _Color: {r: 0.11372546, g: 0.47896016, b: 0.62352943, a: 0}
     - _Color2: {r: 0.09545211, g: 0.31132078, b: 0.25649697, a: 0}
-    - _ColorBright: {r: 0.11372546, g: 0.47896016, b: 0.62352943, a: 0}
+    - _ColorBright: {r: 0, g: 0.3685596, b: 0.376, a: 0}
     - _ColorDark: {r: 0.09545211, g: 0.31132078, b: 0.25649697, a: 0}
+    - _ColorDeep: {r: 0, g: 0.603, b: 0.44838455, a: 0}
+    - _RefractionFade: {r: 0, g: 10, b: 0, a: 0}
+    - _WaterDepthRange: {r: 0, g: 10, b: 0, a: 0}
   m_BuildTextureStacks: []
