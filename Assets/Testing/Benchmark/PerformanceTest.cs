@@ -56,6 +56,10 @@ namespace Benchmarking
         private int _currentTimingRefreshCounter = 11;
         private FrameData _maxCurrentTiming = new FrameData(0);
 
+        [SerializeField]
+        private bool _liveRefreshGraph = true;
+        public bool liveRefreshGraph => _liveRefreshGraph;
+
         private int _currentStageIndex;
         private PerformanceTestStage _currentStage => _stages[_currentStageIndex];
 

@@ -132,7 +132,7 @@ namespace Benchmarking
             _timingsGraphVE = new StatsGraphVE();
             _timingsGraphContainerVE.Add(_timingsGraphVE);
 
-            if (Application.isMobilePlatform)
+            if (!PerformanceTest.instance.liveRefreshGraph)
             {
                 _timingsGraphVE.style.display = DisplayStyle.None;
                 _timingVisible = false;
@@ -400,7 +400,7 @@ namespace Benchmarking
             _quartilesRangeVE.style.top = P(100f - _upperQuartileFrameData.GetValue(_displayedDataType) * maxScale);
             _quartilesRangeVE.style.bottom = P(_lowerQuartileFrameData.GetValue(_displayedDataType) * maxScale);
 
-            if (Application.isMobilePlatform)
+            if (!_timingVisible)
             {
                 _timingsGraphVE.style.display = DisplayStyle.Flex;
                 _timingVisible = true;
