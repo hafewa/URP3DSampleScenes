@@ -23,6 +23,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8354524949365800270}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -30,7 +31,6 @@ Transform:
   m_Children:
   - {fileID: 6699349095396864531}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6589443539238360568
 PrefabInstance:
@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7846336184909613119, guid: ea13339030b31934a9405838ac25d8a9, type: 3}
       propertyPath: m_ScaleInLightmap
-      value: 2
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: -7026052583360672283, guid: ea13339030b31934a9405838ac25d8a9, type: 3}
       propertyPath: m_StaticEditorFlags
