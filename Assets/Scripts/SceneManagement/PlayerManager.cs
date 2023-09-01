@@ -42,6 +42,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
+        transform.parent = null;
         DontDestroyOnLoad(gameObject);
     }
 
