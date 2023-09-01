@@ -65,12 +65,14 @@ public class OasisFog : MonoBehaviour
 
             var cmd = CommandBufferPool.Get("CameraFullscreenQuad");
 
+            float fogStartDistance = volumeComponent.StartDistance.value;
             Color fogTint = volumeComponent.Tint.value;
             float fogSunScatteringIntensity = volumeComponent.SunScatteringIntensity.value;
             Vector2 fogHeightRange = volumeComponent.HeightRange.value;
 
             passMaterial.SetColor("_Tint", fogTint);
             passMaterial.SetFloat("_Density", fogDensity);
+            passMaterial.SetFloat("_StartDistance", fogStartDistance);
             passMaterial.SetFloat("_SunScatteringIntensity", fogSunScatteringIntensity);
             passMaterial.SetVector("_Height_Range", fogHeightRange);
 
