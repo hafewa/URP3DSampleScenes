@@ -42,8 +42,10 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
-        transform.parent = null;
-        DontDestroyOnLoad(gameObject);
+        if (transform.parent == null)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public void EnableFlythrough()
