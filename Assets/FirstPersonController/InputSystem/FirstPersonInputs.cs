@@ -1,3 +1,4 @@
+using Benchmarking;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
@@ -91,6 +92,9 @@ namespace StarterAssets
 
 		private void SetCursorState(bool newState)
 		{
+			if (PerformanceTest.RunningBenchmark)
+				return;
+
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
