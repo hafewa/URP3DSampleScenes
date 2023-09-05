@@ -45,6 +45,7 @@ Material:
     - _Density: 0.004
     - _Final_Mip_Distance: 0
     - _Rotation: 11.73
+    - _StartDistance: 15
     - _SunScatteringIntensity: 1
     m_Colors:
     - _Height_Range: {r: 0, g: 35, b: 0, a: 0}

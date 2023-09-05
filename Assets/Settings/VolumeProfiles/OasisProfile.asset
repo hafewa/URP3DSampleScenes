@@ -107,6 +107,9 @@ MonoBehaviour:
   Density:
     m_OverrideState: 1
     m_Value: 0.004
+  StartDistance:
+    m_OverrideState: 1
+    m_Value: 15
   HeightRange:
     m_OverrideState: 1
     m_Value: {x: 0, y: 35}
