@@ -41,6 +41,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Blend_Map:
+        m_Texture: {fileID: 2800000, guid: 202102724a9170f4580890744f2af4e4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Normal_Map:
         m_Texture: {fileID: 2800000, guid: dd444bbd1a5706d44a4dd972e16eeb37, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -64,6 +68,7 @@ Material:
     - _BaseColorFactor: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 0
+    - _BlendTiling: 0.02
     - _BrighterColor: 0
     - _CastShadows: 0
     - _ColorAlpha: 0.557
@@ -74,12 +79,12 @@ Material:
     - _EdgeFade: 0.588
     - _Float: -1.6
     - _Metallic: 1
-    - _NormalMapStrength: 0.2
+    - _NormalMapStrength: 0.1
     - _NormalMapStrength_1: 1
     - _NormalMapStrength_2: 1
     - _NormalMapStrength_3: 1
     - _NormalTiling: 1
-    - _NormalTiling1: 0.0025
+    - _NormalTiling1: 0.004
     - _NormalTiling2: 0.01
     - _OffsetSpeed: 0.01
     - _QueueControl: 1
@@ -95,6 +100,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
+    - _BlendOffsetSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _Color: {r: 0.11372546, g: 0.47896016, b: 0.62352943, a: 0}
     - _Color2: {r: 0.09545211, g: 0.31132078, b: 0.25649697, a: 0}
     - _ColorBright: {r: 0.005339978, g: 0.1909339, b: 0.2264151, a: 0}
