@@ -118,10 +118,10 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShadowOffset: 0.096
-    - _ShadowRotation: 147.77
+    - _ShadowOffset: 0.07
+    - _ShadowRotation: -99.3
     - _ShadowScale: 0.707
-    - _ShadowStrength: 0.962
+    - _ShadowStrength: 0.888
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -131,10 +131,12 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.5330188, g: 0.7600401, b: 1, a: 1}
-    - _DistanceRemap: {r: 0.25, g: 0.5, b: 0, a: 0}
+    - _Color: {r: 0.82425594, g: 0.8396226, b: 0.45545566, a: 1}
+    - _ColorA: {r: 1, g: 0.20058572, b: 0, a: 1}
+    - _ColorB: {r: 1, g: 0.83704364, b: 0.16509432, a: 1}
+    - _DistanceRemap: {r: 0.54, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadowScale: {r: 0.6, g: 0.5, b: 0, a: 0}
+    - _ShadowScale: {r: -1.21, g: 0.4, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TilingOffset: {r: 1, g: 1, b: 0.25, a: 0}
   m_BuildTextureStacks: []

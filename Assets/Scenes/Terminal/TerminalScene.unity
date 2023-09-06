@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d5da90f844e4aaa9a50312f1f3725a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneName: Cockpit_Ride
+  SceneName: Cockpit
   m_CurrentVolume: {fileID: 0}
   m_DestinationVolume: {fileID: 0}
   m_SkipLoading: 0

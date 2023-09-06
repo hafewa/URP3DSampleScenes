@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Garden/Garden.unity
     guid: 81e71078978223e4c8ffbf973484c9c5
   - enabled: 1
-    path: Assets/Scenes/Cockpit/Scenes/Cockpit_Ride.unity
+    path: Assets/Scenes/Cockpit/Cockpit.unity
     guid: b78a0ca5d851e4ddf993dcc6feab56d0
   - enabled: 1
     path: Assets/Scenes/BenchmarkScene.unity
