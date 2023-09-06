@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
+using UnityEngine.Profiling;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.Universal.Internal;
+using UnityEngine.XR;
 
 [ExecuteAlways]
 public class _3DSkybox : MonoBehaviour
@@ -14,7 +17,6 @@ public class _3DSkybox : MonoBehaviour
     private DrawObjectsPass drawPass;
     
     public LayerMask mask;
-    public LayerMask depthClearMask;
 
     private FilteringSettings filterOpaqueSettings = FilteringSettings.defaultValue;
     private FilteringSettings filterTransparentSettings = FilteringSettings.defaultValue;
@@ -35,10 +37,10 @@ public class _3DSkybox : MonoBehaviour
 
         // injection point
         pass.renderPassEvent = RenderPassEvent.AfterRenderingSkybox;
-        
+
         // setup 3D skybox stuff
-        filterOpaqueSettings = new FilteringSettings(RenderQueueRange.opaque, mask);
-        filterTransparentSettings = new FilteringSettings(RenderQueueRange.transparent, mask);
+        filterOpaqueSettings = new FilteringSettings(RenderQueueRange.opaque, mask.value);
+        filterTransparentSettings = new FilteringSettings(RenderQueueRange.transparent, mask.value);
         renderStateBlock = new RenderStateBlock(RenderStateMask.Stencil);
         
         stencilState = StencilState.defaultValue;
@@ -109,27 +111,37 @@ public class _3DSkybox : MonoBehaviour
         {
             new("SRPDefaultUnlit"), new("UniversalForward"), new("UniversalForwardOnly")
         };
-
-        public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
+        
+        public _3DSkyboxPass()
         {
-            ConfigureInput(ScriptableRenderPassInput.Normal);
+            profilingSampler = new ProfilingSampler(nameof(_3DSkyboxPass));
         }
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-            var drawSettings = RenderingUtils.CreateDrawingSettings(shaderTags, ref renderingData, SortingCriteria.CommonOpaque);
-            
-            context.DrawRenderers(renderingData.cullResults, ref drawSettings, ref filterOpaqueSettings,
-                    ref renderStateBlock);
-            context.DrawRenderers(renderingData.cullResults, ref drawSettings, ref filterTransparentSettings,
-                    ref renderStateBlock);
-            
+            DrawSkyboxObjects(ref renderingData, context);
+
             // Clear the depth values
-            if (depthClearMat == null) return;
-            var cmd = CommandBufferPool.Get("DepthClearStencilMasked");
-            CoreUtils.DrawFullScreen(cmd, depthClearMat);
+            var cmd = CommandBufferPool.Get("3D Skybox");
+            
+            if (depthClearMat != null)
+            {
+                CoreUtils.DrawFullScreen(cmd, depthClearMat);
+            }
+
             context.ExecuteCommandBuffer(cmd);
             cmd.Clear();
+        }
+
+        private void DrawSkyboxObjects(ref RenderingData renderingData, ScriptableRenderContext context)
+        {
+            var drawSettings =
+                RenderingUtils.CreateDrawingSettings(shaderTags, ref renderingData, SortingCriteria.CommonOpaque);
+
+            context.DrawRenderers(renderingData.cullResults, ref drawSettings, ref filterOpaqueSettings,
+                ref renderStateBlock);
+            context.DrawRenderers(renderingData.cullResults, ref drawSettings, ref filterTransparentSettings,
+                ref renderStateBlock);
         }
     }
 

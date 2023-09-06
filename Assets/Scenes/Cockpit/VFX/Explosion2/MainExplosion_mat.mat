@@ -21,23 +21,27 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MainExplosion_mat
-  m_Shader: {fileID: -6465566751694194690, guid: 24b63a3d08b19c54aa4b2cfddf3e5e35, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 5b27a9e87ea944625bfdbd449440287f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 2999
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - SHADOWCASTER
+  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: adc9fd753933a412282b6c5040e1ca88, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -80,6 +84,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_e838d056d9bf40aea46f83039325659e_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 631eb3b7d12dd4df48cdd8db98a969e4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -108,41 +116,56 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaThreshold: 1
+    - _AlphaToMask: 0
     - _Blend: 0
     - _BumpScale: 1
+    - _CastShadows: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _Detail_Noise: 0
+    - _DstBlend: 10
     - _EmissiveThreshold: 0.087
     - _EnvironmentReflections: 1
+    - _FLIPBOOK_BLENDING: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
+    - _Noise_Bias: 0.4
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
-    - _QueueOffset: 0
+    - _QueueOffset: -1
     - _ReceiveShadows: 1
+    - _RimThickness: 0.4
+    - _RimWidth: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _Soft_Particle_blend: 0.25
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
+    - _SrcBlend: 5
+    - _Surface: 1
     - _WorkflowMode: 1
-    - _ZWrite: 1
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorA: {r: 0.056470238, g: 0.44339618, b: 0.10952086, a: 0}
+    - _ColorB: {r: 0.22877356, g: 0.5065686, b: 0.9150943, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emissive: {r: 0, g: 0, b: 0, a: 0}
     - _EmissiveA: {r: 4.0837693, g: 2.3246071, b: 0.52356017, a: 0}
     - _EmmisiveB: {r: 2.9832518, g: 0.44998768, b: 0.09999727, a: 0}
+    - _FlipBook_Count: {r: 7, g: 7, b: 0, a: 0}
+    - _Noise_Scale: {r: 8, g: 8, b: 0, a: 0}
+    - _RimColor: {r: 0, g: 0, b: 0, a: 0}
+    - _ShadowFilter: {r: 0.29245278, g: 0.03448736, b: 0.03448736, a: 0}
     - _SmokeColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
