@@ -77,6 +77,6 @@ public class WormSplineFollower : MonoBehaviour
 
     private float GetSplineTime(float distance)
     {
-        return Mathf.Repeat(distance / m_SplineLength, 1);
+        return SplineUtility.GetNormalizedInterpolation(Spline.Spline, distance, PathIndexUnit.Distance);
     }
 }

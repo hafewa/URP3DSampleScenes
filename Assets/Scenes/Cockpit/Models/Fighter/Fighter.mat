@@ -41,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: e506f5bfbcf557342bae9d1f66f3ff65, type: 3}
+        m_Texture: {fileID: 2800000, guid: 73758c224665dea42ad658acafdddfc5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -94,6 +94,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_ed5845bdef6b4ba39ae420b153b33345_Out_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 4a53678acb2214c7aa104d85906b0982, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:

@@ -226,7 +226,10 @@ public class Boids : MonoBehaviour
 
     public void DamageBoid(int id, float damage)
     {
-        DamageList[id] += damage;
+        if(DamageList.Length > id && id >= 0)
+        {
+            DamageList[id] += damage;
+        }
     }
 
     [BurstCompile]
