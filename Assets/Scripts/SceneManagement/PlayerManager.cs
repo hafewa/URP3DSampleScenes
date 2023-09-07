@@ -2,6 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using Benchmarking;
 
 /// <summary>
 /// This class will enable the touch input canvas on handheld devices and will trigger the camera flythrough if the player is idle
@@ -20,6 +21,12 @@ public class PlayerManager : MonoBehaviour
     
     void Start()
     {
+        if (PerformanceTest.RunningBenchmark)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         m_InFlythrough = false;
 
         if (SystemInfo.deviceType == DeviceType.Handheld)
@@ -42,7 +49,10 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (transform.parent == null)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public void EnableFlythrough()
