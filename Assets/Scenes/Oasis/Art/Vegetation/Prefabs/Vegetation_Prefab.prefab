@@ -135,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3629307801903617092}
   m_Layer: 0
-  m_Name: Vegetation
+  m_Name: Vegetation_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
