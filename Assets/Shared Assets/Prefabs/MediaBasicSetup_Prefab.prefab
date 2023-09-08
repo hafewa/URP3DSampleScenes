@@ -1069,7 +1069,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1557266162627951605}
   m_Layer: 0
-  m_Name: MediaBasicSetup
+  m_Name: MediaBasicSetup_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
