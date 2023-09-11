@@ -62,9 +62,27 @@ public class BoidsEditor : Editor
             new()
             {
                 headerContent = new GUIContent("Position"),
-                width = 150,
+                width = 50,
                 minWidth = 50,
                 maxWidth = 300,
+                autoResize = true,
+                headerTextAlignment = TextAlignment.Left
+            },
+            new()
+            {
+                headerContent = new GUIContent("Velocity"),
+                width = 50,
+                minWidth = 50,
+                maxWidth = 300,
+                autoResize = true,
+                headerTextAlignment = TextAlignment.Left
+            },
+new()
+            {
+                headerContent = new GUIContent("Age"),
+                width = 30,
+                minWidth = 30,
+                maxWidth = 50,
                 autoResize = true,
                 headerTextAlignment = TextAlignment.Left
             },
@@ -156,7 +174,13 @@ public class BoidsEditor : Editor
                         break;
                     case 4:// position
                         var pos = boid.position;
-                        label = $"X:{pos.x:F},Y:{pos.y:F},Z:{pos.z:F}";
+                        label = $"X:{pos.x:F2},Y:{pos.y:F2},Z:{pos.z:F2}";
+                        break;
+                    case 5:// velocity
+                        label = $"{boid.velocity:F1}";
+                        break;
+                    case 6:// age
+                        label = $"{boid.targetAge}";
                         break;
                 }
                 
