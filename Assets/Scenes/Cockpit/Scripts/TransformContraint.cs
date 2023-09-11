@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -35,23 +32,30 @@ public class TransformContraint : MonoBehaviour
     
     private void OnEnable()
     {
-        RenderPipelineManager.beginCameraRendering += BeginFrame;
-        RenderPipelineManager.endCameraRendering += EndFrame;
+        RenderPipelineManager.beginContextRendering += BeginFrame;
+        RenderPipelineManager.endContextRendering += EndFrame;
     }
 
     private void OnDisable()
     {
-        RenderPipelineManager.beginCameraRendering -= BeginFrame;
-        RenderPipelineManager.endCameraRendering -= EndFrame;
+        RenderPipelineManager.beginContextRendering -= BeginFrame;
+        RenderPipelineManager.endContextRendering -= EndFrame;
     }
-
-    private void LateUpdate()
+    
+    private void Update()
     {
-        if(Application.isPlaying)
-            UpdateConstraint();
+        // If we are in playmode we want to update the constraint every frame
+        //if(Application.isPlaying)
+            //UpdateConstraint();
     }
 
-    private void BeginFrame(ScriptableRenderContext arg1, Camera arg2)
+    /// <summary>
+    /// When out of playmode we want ot still update the position of the Transform but not commit to it since
+    /// it will dirty the scene with changes to the transforms position.
+    /// </summary>
+    /// <param name="context">Rendering Context, this is unused in this context</param>
+    /// <param name="cameras">List of cameras, this is unused in this context</param>
+    private void BeginFrame(ScriptableRenderContext context, List<Camera> cameras)
     {
         if (!Application.isPlaying)
         {
@@ -59,12 +63,17 @@ public class TransformContraint : MonoBehaviour
             positionWS = transform1.position;
             rotation = transform1.rotation;
             scale = transform1.localScale;
-
-            UpdateConstraint();
         }
+        UpdateConstraint();
     }
     
-    private void EndFrame(ScriptableRenderContext arg1, Camera arg2)
+    /// <summary>
+    /// At the end of the frame, when not in Playmode we want to revert the transform back to its original state,
+    /// doing this will not dirty the scene with changes to the transforms position.
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="cameras"></param>
+    private void EndFrame(ScriptableRenderContext context, List<Camera> cameras)
     {
         if (!Application.isPlaying)
         {
@@ -73,6 +82,9 @@ public class TransformContraint : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the constraint transform based on the blend values between the two constraints.
+    /// </summary>
     private void UpdateConstraint()
     {
         if (!constraintA || !constraintB) return;
@@ -82,7 +94,6 @@ public class TransformContraint : MonoBehaviour
         var targetScale = Vector3.Lerp(constraintA.lossyScale, constraintB.lossyScale, blendContraints);
 
         var pos = Vector3.Lerp(transform.position, targetPosition, blendTotal * blendPosition);
-        //pos = Vector3.SmoothDamp(pivot.position, pos, ref posVel, dampening);
         var rot = Quaternion.Lerp(transform.rotation, targetRotation, blendTotal * blendRotation);
         
         pivot.SetPositionAndRotation(

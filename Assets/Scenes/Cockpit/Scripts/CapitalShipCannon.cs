@@ -78,6 +78,9 @@ public class CapitalShipCannon : MonoBehaviour
                 targetBoid = Boids.Instance.GetBoid(targetBoid.id);
             }
         }
+        
+        if(targetBoid.id == -1)
+            return;
 
         targetPosition = targetBoid.position + targetBoid.velocity * targetBoid.speed;
         

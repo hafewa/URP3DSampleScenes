@@ -4163,8 +4163,8 @@ ParticleSystem:
     shadowBias: 0.5
     worldSpace: 1
     dieWithParticles: 1
-    sizeAffectsWidth: 0
-    sizeAffectsLifetime: 0
+    sizeAffectsWidth: 1
+    sizeAffectsLifetime: 1
     inheritParticleColor: 1
     generateLightingData: 0
     splitSubEmitterRibbons: 0
