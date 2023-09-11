@@ -332,8 +332,6 @@ public class SceneTransitionManager : MonoBehaviour
         //Setup terminal loader so player can get back and reset the timeline director
         instance.SetTerminalLoaderAndDirector(instance.screenScene, false);
         instance.SetTerminalLoaderAndDirector(instance.currentScene, true);
-        
-        
     }
 
     private void UpdateCullingMasks()
@@ -366,7 +364,6 @@ public class SceneTransitionManager : MonoBehaviour
         {
             scene.TerminalLoader.SetActive(isActive);
         }
-
         if (scene.Director != null)
         {
             scene.Director.time = 0;
@@ -425,6 +422,7 @@ public class SceneTransitionManager : MonoBehaviour
         instance.m_Loader = sceneLoader;
         instance.m_InitialSceneLoad = false;
         instance.screenScene = sceneMetaData;
+        instance.currentScene.TerminalLoader = sceneLoader.ControllPanel;
 
         LightProbes.TetrahedralizeAsync();
 

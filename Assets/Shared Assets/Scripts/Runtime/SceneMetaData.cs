@@ -23,7 +23,7 @@ public class SceneMetaData : MonoBehaviour
     public float DirectorStartTime = 0;
     public GameObject Root;
     public Scene Scene;
-    public GameObject TerminalLoader;
+    public GameObject TerminalLoader; //TODO: Rename and make private with setter
     public bool FogEnabled;
     public bool PostProcessingEnabled;
     public bool StartActive;

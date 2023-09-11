@@ -210,7 +210,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &12149344
 Transform:
@@ -235,7 +235,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12149343}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -1170,6 +1170,7 @@ MonoBehaviour:
   m_CurrentVolume: {fileID: 0}
   m_DestinationVolume: {fileID: 0}
   m_SkipLoading: 0
+  ControllPanel: {fileID: 437836040}
   screen: {fileID: 1243478511}
   ReferencePoint: {fileID: 1988248024}
 --- !u!1001 &104634064
@@ -2515,7 +2516,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1117396213, guid: 7313909bb567bec4684fdffe69460335, type: 3}
   m_PrefabInstance: {fileID: 192946324}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1487997530}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b6e8c43aaa108e449f1e8ffd5e8f941, type: 3}
@@ -5117,6 +5118,11 @@ Light:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7048526022681675114, guid: a19b99df922571649a1da524e3bdc86d, type: 3}
   m_PrefabInstance: {fileID: 166933154}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &437836040 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1328794821902915481, guid: 7313909bb567bec4684fdffe69460335, type: 3}
+  m_PrefabInstance: {fileID: 948343643}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &438666419
 GameObject:
@@ -11302,7 +11308,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1117396213, guid: 7313909bb567bec4684fdffe69460335, type: 3}
   m_PrefabInstance: {fileID: 948343643}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 437836040}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b6e8c43aaa108e449f1e8ffd5e8f941, type: 3}
@@ -12364,6 +12370,7 @@ MonoBehaviour:
   m_CurrentVolume: {fileID: 1911712333}
   m_DestinationVolume: {fileID: 715014084}
   m_SkipLoading: 0
+  ControllPanel: {fileID: 1487997530}
   screen: {fileID: 1792553109335747704}
   ReferencePoint: {fileID: 543450653471357041}
 --- !u!1 &1043328176
@@ -15770,7 +15777,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1117396213, guid: 7313909bb567bec4684fdffe69460335, type: 3}
   m_PrefabInstance: {fileID: 1351157403}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1649972010}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b6e8c43aaa108e449f1e8ffd5e8f941, type: 3}
@@ -16556,6 +16563,7 @@ MonoBehaviour:
   m_CurrentVolume: {fileID: 650108522}
   m_DestinationVolume: {fileID: 1050891275}
   m_SkipLoading: 0
+  ControllPanel: {fileID: 1649972010}
   screen: {fileID: 166933156}
   ReferencePoint: {fileID: 1399957440}
 --- !u!4 &1425990503 stripped
@@ -16951,6 +16959,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1487997530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1328794821902915481, guid: 7313909bb567bec4684fdffe69460335, type: 3}
+  m_PrefabInstance: {fileID: 192946324}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1492267861
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19328,6 +19341,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 1
   m_ShadowAngle: 0
+--- !u!1 &1649972010 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1328794821902915481, guid: 7313909bb567bec4684fdffe69460335, type: 3}
+  m_PrefabInstance: {fileID: 1351157403}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1650985056
 GameObject:
   m_ObjectHideFlags: 3
@@ -23848,7 +23866,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014770767}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -23860,7 +23878,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 51b8e10f0270d064bba44f17e1f0d78a, type: 2}
+  - {fileID: 2100000, guid: 725a070d0d3a84543b62d9387002f061, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -28076,6 +28094,7 @@ MonoBehaviour:
   m_CurrentVolume: {fileID: 0}
   m_DestinationVolume: {fileID: 650108522}
   m_SkipLoading: 1
+  ControllPanel: {fileID: 0}
   screen: {fileID: 0}
   ReferencePoint: {fileID: 0}
 --- !u!4 &3547149925420434176

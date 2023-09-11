@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1928567686329856043}
   - component: {fileID: 8797942381224035288}
   - component: {fileID: 893751013688835052}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Water_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

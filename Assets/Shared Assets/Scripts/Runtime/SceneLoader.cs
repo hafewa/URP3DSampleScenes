@@ -18,7 +18,9 @@ public class SceneLoader : MonoBehaviour
 
     //Used for cinemachine transition
     [SerializeField] private bool m_SkipLoading;
-    
+
+    [SerializeField] public GameObject ControllPanel;
+
     public ScreenController screen;
     public Transform ReferencePoint;
 
@@ -42,6 +44,8 @@ public class SceneLoader : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
+        Debug.Log("Entered trigger");
         if (other.CompareTag("Player"))
         {
             EnableScene();

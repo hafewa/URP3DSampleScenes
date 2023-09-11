@@ -42,7 +42,7 @@ MonoBehaviour:
     AfterOpaque: 0
     Source: 1
     NormalSamples: 1
-    Intensity: 0.7
+    Intensity: 0.4
     DirectLightingStrength: 0.25
     Radius: 0.3
     Samples: 1
@@ -119,7 +119,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_DefaultStencilState:
-    overrideStencilState: 1
+    overrideStencilState: 0
     stencilReference: 1
     stencilCompareFunction: 3
     passOperation: 2
