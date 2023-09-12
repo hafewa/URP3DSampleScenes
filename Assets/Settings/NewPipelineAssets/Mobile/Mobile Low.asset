@@ -30,7 +30,7 @@ MonoBehaviour:
   m_UpscalingFilter: 3
   m_FsrOverrideSharpness: 0
   m_FsrSharpness: 0.92
-  m_EnableLODCrossFade: 1
+  m_EnableLODCrossFade: 0
   m_LODCrossFadeDitheringType: 1
   m_ShEvalMode: 0
   m_MainLightRenderingMode: 1
@@ -105,6 +105,6 @@ MonoBehaviour:
   m_PrefilterDBufferMRT2: 1
   m_PrefilterDBufferMRT3: 1
   m_PrefilterScreenCoord: 1
-  m_PrefilterNativeRenderPass: 0
+  m_PrefilterNativeRenderPass: 1
   m_ShaderVariantLogLevel: 0
   m_ShadowCascades: 0
