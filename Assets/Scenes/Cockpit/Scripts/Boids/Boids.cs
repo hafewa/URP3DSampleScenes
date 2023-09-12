@@ -58,7 +58,9 @@ public class Boids : MonoBehaviour
 
     private float[] DamageList;
 
+    // TODO replace with basic state machine
     private bool startFrame = true;
+    private bool resetNextFrame = false;
 
     private float spawnTicker = 1.0f;
     
@@ -96,15 +98,14 @@ public class Boids : MonoBehaviour
                 
                 // setup boids
                 var boid = _boids[index];
-                boid.id = index;
-                boid.team = index % teams.Length;
+                boid.Init(index % teams.Length, index);
                 
-                SetupNewBoid(ref boid, UnityEngine.Random.insideUnitSphere * 100f, Vector3.forward, false);
+                boid.ResetBoid();
                 _boids[index] = boid;
                 
                 // setup particles
                 var p = _particles[index];
-                p.SetMeshIndex(boid.team);
+                p.SetMeshIndex((int)boid.team);
                 p.startLifetime = 6f;
                 p.startColor = teams[boid.team].laserColor;
                 _particles[index] = p;
@@ -135,8 +136,25 @@ public class Boids : MonoBehaviour
 
         if (startFrame)
             return;
-        
+
         _boidCopyHandle.Complete();
+
+        if (resetNextFrame)
+        {
+            for (var index = 0; index < _boids.Length; index++)
+            {
+                var boid = _boids[index];
+                boid.ResetBoid();
+                _boids[index] = boid;
+            }
+            boidSpawnIndex = 0;
+            // reset damage list
+            for (int i = 0; i < DamageList.Length; i++)
+            {
+                DamageList[i] = 0;
+            }
+            resetNextFrame = false;
+        }
         
         SpawnNewShips();
         SpawnExplosions();
@@ -207,7 +225,7 @@ public class Boids : MonoBehaviour
         for (var index = 0; index < _boidsAlt.Length; index++)
         {
             var boid = _boidsAlt[index];
-            if(!boid.active || team == boid.team) continue;
+            if(!boid.active || boid.health <= 0 || team == boid.team) continue;
             var boidDist = Vector3.Distance(boid.position, positionWS);
             if (!(boidDist < dist)) continue;
             dist = boidDist;
@@ -222,6 +240,11 @@ public class Boids : MonoBehaviour
         {
             return nullBoid;
         }
+    }
+
+    public void ResetBoids()
+    {
+        resetNextFrame = true;
     }
 
     public void DamageBoid(int id, float damage)
@@ -517,28 +540,12 @@ public class Boids : MonoBehaviour
 
         if (point.gameObject.activeInHierarchy)
         {
-            SetupNewBoid(ref boid, point.position, point.forward);
+            boid.Spawn(point.position, point.forward);
             _boids[boidSpawnIndex] = boid;
             boidSpawnIndex = 0;
         }
 
         ResetTicker();
-    }
-    
-    private void SetupNewBoid(ref Boid boid, Vector3 position, Vector3 direction, bool active = true)
-    {
-        boid.position = position + UnityEngine.Random.insideUnitSphere;
-        var dir = direction;// Vector3.Slerp(direction, UnityEngine.Random.onUnitSphere, 0.1f);
-        boid.velocity = dir * boid.speed;
-
-        boid.targetID = -1; // no target
-        boid.destination = Vector3.zero;
-
-        boid.health = 100f;
-        boid.damage = 22f;
-        boid.speed = UnityEngine.Random.Range(boidSpeed - boidSpeedVariation, boidSpeed + boidSpeedVariation);
-        boid.turningSpeed = UnityEngine.Random.Range(boidTurnSpeed - boidTurnSpeedVariation, boidTurnSpeed + boidTurnSpeedVariation);
-        boid.active = active;
     }
 
     private void SpawnTicker()
@@ -578,6 +585,38 @@ public class Boids : MonoBehaviour
 
         public int team;
         public int id;
+        
+        public void Init(int team, int id)
+        {
+            position = float3.zero;
+            velocity = float3.zero;
+            smoothVel = float3.zero;
+            destination = float3.zero;
+            active = false;
+            shooting = false;
+            health = 100f;
+            damage = 22f;
+            rateOfFire = 0.5f;
+            speed = 10f;
+            turningSpeed = 0.5f;
+            targetID = -1;
+            targetAge = 1;
+            this.team = team;
+            this.id = id;
+        }
+
+        public void ResetBoid()
+        {
+            Init(team, id);
+        }
+        
+        public void Spawn(Vector3 position, Vector3 direction)
+        {
+            this.position = position + UnityEngine.Random.insideUnitSphere;
+            var dir = direction;
+            velocity = dir * speed;
+            active = true;
+        }
     }
 
     [Serializable]

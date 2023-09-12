@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 3851004633215466800}
   - component: {fileID: 6323734890215842066}
   - component: {fileID: 5155135363967747734}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Figher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
