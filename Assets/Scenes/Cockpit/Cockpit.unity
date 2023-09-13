@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &30804670
 Transform:
   m_ObjectHideFlags: 0
@@ -3766,8 +3766,8 @@ MonoBehaviour:
   reflection: {fileID: 0}
   CameraLockTransform: {fileID: 523536576}
   SpawnTransform: {fileID: 1535771559}
-  Director: {fileID: 499102966}
-  DirectorStartTime: 20
+  FlythroughDirector: {fileID: 0}
+  SequenceDirector: {fileID: 499102966}
   Root: {fileID: 867975947}
   Scene:
     m_Handle: 0
@@ -3775,6 +3775,7 @@ MonoBehaviour:
   FogEnabled: 0
   PostProcessingEnabled: 0
   StartActive: 0
+  RendererIndex: 2
 --- !u!4 &745492264
 Transform:
   m_ObjectHideFlags: 0

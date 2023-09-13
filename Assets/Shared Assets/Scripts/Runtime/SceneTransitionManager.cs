@@ -275,7 +275,9 @@ public class SceneTransitionManager : MonoBehaviour
             
             //Set position, parent and rotation to new locked location
             Transform cameraLockTransform = instance.screenScene.CameraLockTransform;
-            playerTransform.parent = cameraLockTransform;
+            
+            
+            playerTransform.parent.parent = cameraLockTransform;
             playerTransform.position = cameraLockTransform.position;
             playerTransform.rotation = cameraLockTransform.rotation;
             
@@ -305,18 +307,17 @@ public class SceneTransitionManager : MonoBehaviour
                 playerTransform.GetChild(0).localRotation = Quaternion.identity;
                 instance.m_Player.enabled = true;
             }
-            
-            //Set the correct director to make the cinematic flythrough run on the new scene
-            if (instance.screenScene.Director != null)
-            {
-                instance.m_CameraManager.FlythroughDirector = instance.screenScene.Director;
-            }
-            
+
             instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true; //see same line in the locked transform case
         }
         
+        instance.m_CameraManager.FlythroughDirector = instance.screenScene.FlythroughDirector;
+        
         //Enable or disable post based on what the new scene needs
-        instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = instance.screenScene.PostProcessingEnabled;
+        UniversalAdditionalCameraData mainCameraData = instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>();
+        
+        mainCameraData.renderPostProcessing = instance.screenScene.PostProcessingEnabled;
+        mainCameraData.SetRenderer(instance.screenScene.RendererIndex);
 
         //Reenable controller after teleporting
         controller.enabled = true;
@@ -325,6 +326,8 @@ public class SceneTransitionManager : MonoBehaviour
         
         //This is weird
         RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
+        
+        
 
         //Swap references to screen and current scene
         (instance.screenScene, instance.currentScene) = (instance.currentScene, instance.screenScene);
@@ -364,13 +367,13 @@ public class SceneTransitionManager : MonoBehaviour
         {
             scene.TerminalLoader.SetActive(isActive);
         }
-        if (scene.Director != null)
+        if (scene.SequenceDirector != null)
         {
-            scene.Director.time = 0;
-            scene.Director.enabled = isActive;
+            scene.SequenceDirector.time = 0;
+            scene.SequenceDirector.enabled = isActive;
             if (isActive)
             {
-                scene.Director.Play();
+                scene.SequenceDirector.Play();
             }
             
         }
@@ -430,10 +433,10 @@ public class SceneTransitionManager : MonoBehaviour
         sceneMetaData.Root.SetActive(true);
 
         //Reset any director that needs to play
-        if (sceneMetaData.Director != null)
+        if (sceneMetaData.SequenceDirector != null)
         {
-            sceneMetaData.Director.time = sceneMetaData.DirectorStartTime;
-            sceneMetaData.Director.Play();
+            sceneMetaData.SequenceDirector.time = 0;
+            sceneMetaData.SequenceDirector.Play();
         }
 
         //Set the offset of the screen camera 
@@ -536,6 +539,11 @@ public class SceneTransitionManager : MonoBehaviour
     public static GameObject GetMainCamera()
     {
         return instance.m_MainCamera.gameObject;
+    }
+
+    public static SceneMetaData GetCurrentSceneData()
+    {
+        return instance.currentScene;
     }
 
     #endregion

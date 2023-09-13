@@ -15286,8 +15286,8 @@ MonoBehaviour:
   reflection: {fileID: 8900000, guid: 5fe53bd15341ff2498c71c99bc6c8ef8, type: 3}
   CameraLockTransform: {fileID: 0}
   SpawnTransform: {fileID: 0}
-  Director: {fileID: 3547149924374491353}
-  DirectorStartTime: 0
+  FlythroughDirector: {fileID: 3547149924374491353}
+  SequenceDirector: {fileID: 0}
   Root: {fileID: 2023108638}
   Scene:
     m_Handle: 0
@@ -15295,6 +15295,7 @@ MonoBehaviour:
   FogEnabled: 1
   PostProcessingEnabled: 1
   StartActive: 1
+  RendererIndex: 0
 --- !u!4 &1317243099
 Transform:
   m_ObjectHideFlags: 0
@@ -17057,7 +17058,7 @@ MonoBehaviour:
   m_TransitionTime: 3
   locationLayer:
     serializedVersion: 2
-    m_Bits: 7340033
+    m_Bits: 133169153
   m_TerminalLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -26903,7 +26904,11 @@ PrefabInstance:
       objectReference: {fileID: 3547149924374491353}
     - target: {fileID: 2760477044286518991, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_FlythroughWhenIdle
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2760477044286518991, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
+      propertyPath: m_IdleTransitionTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2760477044887562765, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_Antialiasing
@@ -27008,14 +27013,6 @@ PrefabInstance:
     - target: {fileID: 6645380163368094409, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6968620290940108330, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
-      propertyPath: m_UpdateMethod
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6968620290940108330, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
-      propertyPath: m_DefaultBlend.m_Style
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7019485897165914674, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_LocalPosition.x

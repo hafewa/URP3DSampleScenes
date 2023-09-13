@@ -19,14 +19,15 @@ public class SceneMetaData : MonoBehaviour
     [Tooltip("This is used if the scene loaded needs the player to be locked in place")]
     public Transform CameraLockTransform = null;
     public Transform SpawnTransform;
-    public PlayableDirector Director;
-    public float DirectorStartTime = 0;
+    public PlayableDirector FlythroughDirector;
+    public PlayableDirector SequenceDirector;
     public GameObject Root;
     public Scene Scene;
     public GameObject TerminalLoader; //TODO: Rename and make private with setter
     public bool FogEnabled;
     public bool PostProcessingEnabled;
     public bool StartActive;
+    public int RendererIndex = 0;
     
     void Start()
     {

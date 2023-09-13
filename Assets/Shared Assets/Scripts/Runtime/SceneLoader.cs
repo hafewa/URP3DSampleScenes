@@ -44,8 +44,6 @@ public class SceneLoader : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        Debug.Log("Entered trigger");
         if (other.CompareTag("Player"))
         {
             EnableScene();
