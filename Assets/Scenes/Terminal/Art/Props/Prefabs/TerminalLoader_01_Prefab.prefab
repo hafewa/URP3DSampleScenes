@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6692523532005034146}
   m_Layer: 0
-  m_Name: TerminalLoader_01_Prefab (verify)
+  m_Name: TerminalLoader_01_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,8 +82,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SceneName: TerminalScene
   m_CurrentVolume: {fileID: 0}
-  m_DestinationVolume: {fileID: 0}
+  m_DestinationVolume: {fileID: 6692523533159023510}
   m_SkipLoading: 0
+  ControllPanel: {fileID: 6692523532005034147}
   screen: {fileID: 1471090792624785153}
   ReferencePoint: {fileID: 0}
 --- !u!65 &6692523533159023511

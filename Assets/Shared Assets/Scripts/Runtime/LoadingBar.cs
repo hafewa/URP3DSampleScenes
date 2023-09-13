@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -9,6 +10,7 @@ public class LoadingBar : MonoBehaviour
     [SerializeField] private Transform m_LookAtTransform;
     [SerializeField] private float m_ActivationDistance = 3;
     [SerializeField] private float m_LookSize;
+    [SerializeField] private bool m_AlwaysOn;
 
     private bool m_Loading;
     private GameObject m_BaseCam;
@@ -26,6 +28,13 @@ public class LoadingBar : MonoBehaviour
         {
             Destroy(this);
         }
+        
+        
+    }
+
+    private void OnEnable()
+    {
+        if(m_AlwaysOn) TurnOn();
     }
 
     void Update()

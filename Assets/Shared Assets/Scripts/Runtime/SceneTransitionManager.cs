@@ -271,7 +271,7 @@ public class SceneTransitionManager : MonoBehaviour
         {
             //Cache transform player before moving
             instance.m_PositionAtLock = playerTransform.position;
-            instance.m_ParentAtLock = playerTransform.parent;
+            instance.m_ParentAtLock = playerTransform.parent.parent;
             
             //Set position, parent and rotation to new locked location
             Transform cameraLockTransform = instance.screenScene.CameraLockTransform;
@@ -302,7 +302,7 @@ public class SceneTransitionManager : MonoBehaviour
             if (comingFromLockedPosition)
             {
                 playerTransform.position = instance.m_PositionAtLock;
-                playerTransform.parent = instance.m_ParentAtLock;
+                playerTransform.parent.parent = instance.m_ParentAtLock;
                 playerTransform.localRotation = Quaternion.identity;
                 playerTransform.GetChild(0).localRotation = Quaternion.identity;
                 instance.m_Player.enabled = true;
