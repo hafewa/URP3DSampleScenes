@@ -285,6 +285,8 @@ public class SceneTransitionManager : MonoBehaviour
             instance.m_Player.enabled = false;
             
             instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = false; //TODO: this is hardcoded for the cockpit. Should probably be in the metadata
+            
+            DisableScene(instance.currentScene);
         }
         else
         {
@@ -310,6 +312,8 @@ public class SceneTransitionManager : MonoBehaviour
                 playerTransform.rotation = instance.m_RotationAtLock;
                 playerTransform.position = instance.m_PositionAtLock;
                 instance.m_Player.enabled = true;
+                
+                EnableScene(instance.screenScene);
             }
 
             instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true; //see same line in the locked transform case
@@ -460,6 +464,12 @@ public class SceneTransitionManager : MonoBehaviour
         instance.m_ScreenOff = false;
     }
 
+    public static void EnableScene(SceneMetaData sceneMetaData)
+    {
+        sceneMetaData.Root.SetActive(true);
+        instance.m_ScreenCamera.GetComponent<Camera>().enabled = true;
+    }
+
 
     public static void DisableScene(SceneLoader sceneLoader)
     {
@@ -489,6 +499,12 @@ public class SceneTransitionManager : MonoBehaviour
         }
 
         instance.m_ScreenOff = true;
+    }
+
+    public static void DisableScene(SceneMetaData sceneMetaData)
+    {
+        sceneMetaData.Root.SetActive(false);
+        instance.m_ScreenCamera.GetComponent<Camera>().enabled = false;
     }
 
     public static void StartTransition()
