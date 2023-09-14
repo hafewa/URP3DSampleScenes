@@ -36,7 +36,7 @@ public class SceneTransitionManager : MonoBehaviour
     private Transform spawnTransform;
     
     private Vector3 m_PositionAtLock;
-    private Transform m_ParentAtLock;
+    private Quaternion m_RotationAtLock;
 
     private bool InTransition = false;
     private bool CoolingOff = false; //After teleporting
@@ -271,13 +271,13 @@ public class SceneTransitionManager : MonoBehaviour
         {
             //Cache transform player before moving
             instance.m_PositionAtLock = playerTransform.position;
-            instance.m_ParentAtLock = playerTransform.parent.parent;
+            instance.m_RotationAtLock = playerTransform.rotation;
             
             //Set position, parent and rotation to new locked location
             Transform cameraLockTransform = instance.screenScene.CameraLockTransform;
             
-            
             playerTransform.parent.parent = cameraLockTransform;
+            
             playerTransform.position = cameraLockTransform.position;
             playerTransform.rotation = cameraLockTransform.rotation;
             
@@ -301,10 +301,14 @@ public class SceneTransitionManager : MonoBehaviour
             //Reset transform if teleporting from a locked position
             if (comingFromLockedPosition)
             {
+                
+                Transform playerParent = playerTransform.parent;
+                
+                playerParent.rotation = Quaternion.identity;
+                playerParent.parent = null;
+                DontDestroyOnLoad(playerParent);
+                playerTransform.rotation = instance.m_RotationAtLock;
                 playerTransform.position = instance.m_PositionAtLock;
-                playerTransform.parent.parent = instance.m_ParentAtLock;
-                playerTransform.localRotation = Quaternion.identity;
-                playerTransform.GetChild(0).localRotation = Quaternion.identity;
                 instance.m_Player.enabled = true;
             }
 

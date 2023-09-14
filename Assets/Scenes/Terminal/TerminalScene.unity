@@ -26904,7 +26904,7 @@ PrefabInstance:
       objectReference: {fileID: 3547149924374491353}
     - target: {fileID: 2760477044286518991, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_FlythroughWhenIdle
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2760477044286518991, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_IdleTransitionTime
@@ -27100,15 +27100,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8985668357940108381, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.18373927
+      value: -0.3583678
       objectReference: {fileID: 0}
     - target: {fileID: 8985668357940108381, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8985668357940108381, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.982975
+      value: 0.9335805
       objectReference: {fileID: 0}
     - target: {fileID: 8985668357940108381, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_LocalRotation.z
@@ -27120,7 +27120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8985668357940108381, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 201.175
+      value: 222
       objectReference: {fileID: 0}
     - target: {fileID: 8985668357940108381, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
