@@ -3773,7 +3773,7 @@ MonoBehaviour:
   Scene:
     m_Handle: 0
   TerminalLoader: {fileID: 0}
-  FogEnabled: 0
+  FogEnabled: 1
   PostProcessingEnabled: 0
   StartActive: 0
   RendererIndex: 2
