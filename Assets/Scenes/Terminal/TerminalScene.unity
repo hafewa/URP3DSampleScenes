@@ -15285,6 +15285,7 @@ MonoBehaviour:
   skybox: {fileID: 2100000, guid: 4e094c1b3935c48498317958bcb3eee0, type: 2}
   reflection: {fileID: 8900000, guid: 5fe53bd15341ff2498c71c99bc6c8ef8, type: 3}
   CameraLockTransform: {fileID: 0}
+  WorldUpTransform: {fileID: 0}
   SpawnTransform: {fileID: 0}
   FlythroughDirector: {fileID: 3547149924374491353}
   SequenceDirector: {fileID: 0}
@@ -26904,7 +26905,7 @@ PrefabInstance:
       objectReference: {fileID: 3547149924374491353}
     - target: {fileID: 2760477044286518991, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_FlythroughWhenIdle
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2760477044286518991, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_IdleTransitionTime
@@ -26956,7 +26957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2760477045267651027, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_RendererIndex
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2760477045267651028, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_MainCamera
@@ -26964,7 +26965,7 @@ PrefabInstance:
       objectReference: {fileID: 1528411196}
     - target: {fileID: 2760477045267651029, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_RenderTextureScale
-      value: 0.7
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2760477045267651030, guid: 8e5bed6b8dcfed240a38affefd9c58f6, type: 3}
       propertyPath: m_LocalPosition.x

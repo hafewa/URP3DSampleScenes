@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 3
+  m_CurrentQuality: 0
   m_QualitySettings:
   - serializedVersion: 3
     name: Switch
@@ -31,7 +31,7 @@ QualitySettings:
     vSyncCount: 2
     realtimeGICPUUsage: 25
     lodBias: 0.25
-    maximumLODLevel: 2
+    maximumLODLevel: 1
     enableLODCrossFade: 1
     streamingMipmapsActive: 0
     streamingMipmapsAddAllCameras: 1
@@ -212,9 +212,9 @@ QualitySettings:
     terrainFadeLength: 5
     terrainMaxTrees: 50
     excludedTargetPlatforms:
-    - Nintendo Switch
     - iPhone
     - Android
+    - Nintendo Switch
   m_TextureMipmapLimitGroupNames: []
   m_PerPlatformDefaultQuality:
     Android: 2
