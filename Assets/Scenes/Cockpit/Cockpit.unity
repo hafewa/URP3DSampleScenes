@@ -3766,6 +3766,7 @@ MonoBehaviour:
   skybox: {fileID: 0}
   reflection: {fileID: 0}
   CameraLockTransform: {fileID: 523536576}
+  WorldUpTransform: {fileID: 1871492690}
   SpawnTransform: {fileID: 1535771559}
   FlythroughDirector: {fileID: 0}
   SequenceDirector: {fileID: 499102966}
@@ -12952,6 +12953,10 @@ PrefabInstance:
     - target: {fileID: 8080731620692943674, guid: d94ecb9bff5444e9d8378afa9de20948, type: 3}
       propertyPath: m_Priority
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080731620692943674, guid: d94ecb9bff5444e9d8378afa9de20948, type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8080731620692943674, guid: d94ecb9bff5444e9d8378afa9de20948, type: 3}
       propertyPath: m_Lens.FarClipPlane

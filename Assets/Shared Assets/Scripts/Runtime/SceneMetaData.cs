@@ -18,6 +18,8 @@ public class SceneMetaData : MonoBehaviour
     public Cubemap reflection = null;
     [Tooltip("This is used if the scene loaded needs the player to be locked in place")]
     public Transform CameraLockTransform = null;
+    public Transform WorldUpTransform = null;
+    //public float FieldOfView = ;
     public Transform SpawnTransform;
     public PlayableDirector FlythroughDirector;
     public PlayableDirector SequenceDirector;
@@ -28,7 +30,7 @@ public class SceneMetaData : MonoBehaviour
     public bool PostProcessingEnabled;
     public bool StartActive;
     public int RendererIndex = 0;
-    
+
     void Start()
     {
         if(SceneTransitionManager.IsAvailable() && !PerformanceTest.RunningBenchmark)

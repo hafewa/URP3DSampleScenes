@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using Benchmarking;
+using Cinemachine;
 
 public class SceneTransitionManager : MonoBehaviour
 {
@@ -320,6 +321,9 @@ public class SceneTransitionManager : MonoBehaviour
         }
         
         instance.m_CameraManager.FlythroughDirector = instance.screenScene.FlythroughDirector;
+
+        instance.m_MainCamera.GetComponent<CinemachineBrain>().m_WorldUpOverride =
+            instance.screenScene.WorldUpTransform;
         
         //Enable or disable post based on what the new scene needs
         UniversalAdditionalCameraData mainCameraData = instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>();
@@ -564,6 +568,11 @@ public class SceneTransitionManager : MonoBehaviour
     public static SceneMetaData GetCurrentSceneData()
     {
         return instance.currentScene;
+    }
+
+    public static bool IsInTerminal()
+    {
+        return instance.InTerminal;
     }
 
     #endregion
