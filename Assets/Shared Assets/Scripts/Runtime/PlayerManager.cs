@@ -76,6 +76,11 @@ public class PlayerManager : MonoBehaviour
             FlythroughDirector.Play();
             m_InFlythrough = true;
             m_CrosshairCanvas.SetActive(false);
+
+            if (SystemInfo.deviceType == DeviceType.Handheld)
+            {
+                m_TouchInputCanvas.SetActive(false);
+            }
         }
     }
 
@@ -97,6 +102,10 @@ public class PlayerManager : MonoBehaviour
         if (m_InFlythrough)
         {
             EnableFirstPersonController();
+            if (SystemInfo.deviceType == DeviceType.Handheld)
+            {
+                m_TouchInputCanvas.SetActive(true);
+            }
         }
     }
 }

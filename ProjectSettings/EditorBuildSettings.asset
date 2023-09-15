@@ -5,19 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Terminal/TerminalScene.unity
     guid: 4496a3dbb8d263043a4460bac5382ac5
   - enabled: 1
     path: Assets/Scenes/Oasis/OasisScene.unity
     guid: 9fa2ba603a3424f9bafa4119f837f2bc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Garden/Garden.unity
     guid: 81e71078978223e4c8ffbf973484c9c5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Cockpit/Cockpit.unity
     guid: b78a0ca5d851e4ddf993dcc6feab56d0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Shared Assets/Benchmark/BenchmarkScene.unity
     guid: d1335b3b949d2e646b481776723757a2
   m_configObjects:
