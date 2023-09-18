@@ -181,10 +181,10 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: Oasis Screenshot04
   - m_Version: 1
-    m_Start: 4.000000000000002
+    m_Start: 4.000000000000001
     m_ClipIn: 0
     m_Asset: {fileID: -7362262662382607933}
-    m_Duration: 1
+    m_Duration: 1.0000000000000009
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7095049487993840704}
     m_EaseInDuration: 0
@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 8
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -721,7 +721,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis10
+    m_FileName: OasisScreenshot10
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -912,7 +912,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 8
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -920,7 +920,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis08
+    m_FileName: OasisScreenshot08
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 10
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -1071,7 +1071,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis04
+    m_FileName: OasisScreenshot04
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 10
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -1206,7 +1206,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis05
+    m_FileName: OasisScreenshot05
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -1333,7 +1333,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 8
+  take: 9
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -1341,7 +1341,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis09
+    m_FileName: OasisScreenshot09
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -2168,7 +2168,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 11
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -2176,7 +2176,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis02
+    m_FileName: OasisScreenshot02
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -2290,7 +2290,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 10
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -2298,7 +2298,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis07
+    m_FileName: OasisScreenshot07
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -2444,7 +2444,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 10
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -2452,7 +2452,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis06
+    m_FileName: Oasis0OasisScreenshot06
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -2566,7 +2566,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 11
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -2574,7 +2574,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis03
+    m_FileName: OasisScreenshot03
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
@@ -2688,7 +2688,7 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 7
+  take: 12
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -2696,7 +2696,7 @@ MonoBehaviour:
       m_Leaf: Recordings\Screenshots
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: Oasis01
+    m_FileName: OasisScreenshot01
   m_Version: 1
   outputFormat: 0
   captureAlpha: 0
