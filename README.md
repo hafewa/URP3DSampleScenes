@@ -31,12 +31,13 @@ Enjoy the warm glow of the sun bathing this peaceful oasis. Walk down the sandy 
 ![Collage_Oasis_1080](https://media.github.cds.internal.unity3d.com/user/1194/files/469fdabf-4f30-43bb-a687-ef06b55e1a52)
 
 This environment targets higher-end devices (Nintendo Switch and above), with the use of more complex Shader Graphs for sand, water, fog, and vegetation. This level is an opportunity to demonstrate the ability for URP to reach a high level of photorealistic visual quality when the content is tailored for platforms with more performant GPUs.
-Cockpit
+
+## Cockpit
 Jump into this ultra-stylized rollercoaster where your fleet is under heavy attack from an unknown alien faction. You start your ride inside a hangar ship, and quickly realize your armada isn’t a match for the opposing force…
 
 ![Collage_Cockpit_1080](https://media.github.cds.internal.unity3d.com/user/1194/files/11d84d67-8464-47e2-bb75-acaa4f7e31bc)
 
-This environment is specifically tailored for VR use cases: it is designed to run at a high frame rates. Furthermore, we offer a custom lighting model to showcase the ease of customizability of URP, which gives you great insight into 
+This environment is specifically tailored for VR use cases: it is designed to run at a high frame rates. Furthermore, we offer a custom lighting model to showcase the ease of customizability of URP. 
 
 # Requirements
 The scenes are optimized for a wide range of platforms, with dedicated Quality Levels (see Project Settings > Quality) to enjoy an optimal quality and performance, from mobile devices to high-end PCs.
