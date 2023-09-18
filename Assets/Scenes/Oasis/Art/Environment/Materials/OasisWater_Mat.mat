@@ -105,7 +105,7 @@ Material:
     - _Color2: {r: 0.09545211, g: 0.31132078, b: 0.25649697, a: 0}
     - _ColorBright: {r: 0, g: 0, b: 0, a: 0}
     - _ColorDark: {r: 0.09545211, g: 0.31132078, b: 0.25649697, a: 0}
-    - _ColorDeep: {r: 0, g: 0.553, b: 0.41335347, a: 1}
+    - _ColorDeep: {r: 0.13053279, g: 0.3773585, b: 0.35569978, a: 1}
     - _EdgeColor: {r: 0.11372549, g: 0.47843137, b: 0.62352943, a: 0}
     - _RefractionFade: {r: 0, g: 10, b: 0, a: 0}
     - _WaterDepthRange: {r: 0, g: 10, b: 0, a: 0}
