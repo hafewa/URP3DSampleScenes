@@ -67,17 +67,17 @@ Regularly, we will post updates in this thread to let you know about our progres
 Currently, our focus is on the Unity 2022.3 LTS version. After the final release, our objective is to maintain the project, and integrate new features developed for Unity 2023 and beyond.
 
 # Known issues
-**- Build Times:** Some URP configurations can result in large numbers of shader variants which take a long time to compile. To reduce the build times, we recommend only building with one Quality Level only, and toggle VR on or off. Additionally, the compilation time of the individual variants is slow on Windows. We are currently working on improving the situation.
+**Build Times:** Some URP configurations can result in large numbers of shader variants which take a long time to compile. To reduce the build times, we recommend only building with one Quality Level only, and toggle VR on or off. Additionally, the compilation time of the individual variants is slow on Windows. We are currently working on improving the situation.
 
-**- General performance:** For this public beta, we focused on getting each scene running at the target frame rate on each target device. We hopefully succeeded at this, but it means that you might see significant slowdowns in areas where more scenes/cameras are active at the same time, for the teleportation mechanic. We’re looking into solving these performance hits at a later time. 
+**General performance:** For this public beta, we focused on getting each scene running at the target frame rate on each target device. We hopefully succeeded at this, but it means that you might see significant slowdowns in areas where more scenes/cameras are active at the same time, for the teleportation mechanic. We’re looking into solving these performance hits at a later time. 
 
-**- First editor run:** When opening the editor for the first time and entering game mode, many (blocking) shader compilations will happen.
+**First editor run:** When opening the editor for the first time and entering game mode, many (blocking) shader compilations will happen.
 
-**- Temporal Anti-Aliasing (TAA):** TAA is a set on the camera and is currently not set per quality level.
+**Temporal Anti-Aliasing (TAA):** TAA is a set on the camera and is currently not set per quality level.
 
-**- Oasis:** The wind is currently turned off in the Oasis. It will be re-added in the upcoming months.
+**Oasis:** The wind is currently turned off in the Oasis. It will be re-added in the upcoming months.
 
-**- Misc:** Changing the resolution at runtime (like scaling the game view) will cause the screen textures to have incorrect resolution.
+**Misc:** Changing the resolution at runtime (like scaling the game view) will cause the screen textures to have incorrect resolution.
 
 # How to give feedback?
 Please take a look at the “Known Issues” section above, before reporting issues.
