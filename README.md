@@ -66,7 +66,7 @@ Regularly, we will post updates in this thread to let you know about our progres
 Currently, our focus is on the Unity 2022.3 LTS version. After the final release, our objective is to maintain the project, and integrate new features developed for Unity 2023 and beyond.
 
 # Known issues
-- Build Times: Some URP configurations can result in large numbers of shader variants which take a long time to compile. To reduce the build times, we recommend only building with one Quality Level only, and toggle VR on or off. Additionally, the compilation time of the individual variants is unexpectedly slow on Windows. We are currently working on improving the situation, and we’ll provide a similar solution to HDRP in the upcoming weeks.
+- Build Times: Some URP configurations can result in large numbers of shader variants which take a long time to compile. To reduce the build times, we recommend only building with one Quality Level only, and toggle VR on or off. Additionally, the compilation time of the individual variants is slow on Windows. We are currently working on improving the situation.
 
 - General performance: For this public beta, we focused on getting each scene running at the target frame rate on each target device. We hopefully succeeded at this, but it means that you might see significant slowdowns in areas where more scenes/cameras are active at the same time, for the teleportation mechanic. We’re looking into solving these performance hits at a later time. 
 
