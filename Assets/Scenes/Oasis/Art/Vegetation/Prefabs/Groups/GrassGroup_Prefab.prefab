@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5192223426805075453}
-  - component: {fileID: 4963300795805967926}
   m_Layer: 0
   m_Name: GrassGroup_Prefab
   m_TagString: Untagged
@@ -24,6 +23,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6093326337068376641}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,35 +40,7 @@ Transform:
   - {fileID: 7269675645879807798}
   - {fileID: 6941468107745783680}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4963300795805967926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093326337068376641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bec74c187ce38841bc49562a14c28a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FoliageElements:
-  - prefab: {fileID: 8537491385337325590, guid: 940b4accc5adbb24191a65e81e8dc3bd, type: 3}
-    weight: 1
-    minMaxScale: {x: 1, y: 1.8}
-    angleVariance: 0
-  - prefab: {fileID: 6183833653318256, guid: 954bacc0cef80b642bba013b4312c220, type: 3}
-    weight: 0.2
-    minMaxScale: {x: 1, y: 1.3}
-    angleVariance: 20
-  - prefab: {fileID: 4606582285959553429, guid: 11814dcd19497ae47a7f7b7c4661b685, type: 3}
-    weight: 0.2
-    minMaxScale: {x: 1, y: 1.3}
-    angleVariance: 20
-  m_Radius: 2
-  m_Count: 10
 --- !u!1001 &2105580575208154759
 PrefabInstance:
   m_ObjectHideFlags: 0

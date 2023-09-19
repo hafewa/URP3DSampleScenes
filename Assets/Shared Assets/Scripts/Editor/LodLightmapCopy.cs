@@ -69,7 +69,7 @@ class LodLightmapCopy : IProcessSceneWithReport
         var lods = lodGroup.GetLODs();
         var lod0 = lods[0].renderers;
             
-        if(lod0[0] == null || lod0[0].lightmapIndex == -1) return;
+        if(lod0.Length == 0 || lod0[0] == null || lod0[0].lightmapIndex == -1) return;
         
         //copy settings to other lods
         for (var i = 1; i < lods.Length; i++)

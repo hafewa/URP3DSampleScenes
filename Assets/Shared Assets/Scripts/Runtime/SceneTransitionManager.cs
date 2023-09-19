@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using Benchmarking;
+using Cinemachine;
 
 public class SceneTransitionManager : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class SceneTransitionManager : MonoBehaviour
     private Transform spawnTransform;
     
     private Vector3 m_PositionAtLock;
-    private Transform m_ParentAtLock;
+    private Quaternion m_RotationAtLock;
 
     private bool InTransition = false;
     private bool CoolingOff = false; //After teleporting
@@ -271,11 +272,13 @@ public class SceneTransitionManager : MonoBehaviour
         {
             //Cache transform player before moving
             instance.m_PositionAtLock = playerTransform.position;
-            instance.m_ParentAtLock = playerTransform.parent;
+            instance.m_RotationAtLock = playerTransform.rotation;
             
             //Set position, parent and rotation to new locked location
             Transform cameraLockTransform = instance.screenScene.CameraLockTransform;
-            playerTransform.parent = cameraLockTransform;
+            
+            playerTransform.parent.parent = cameraLockTransform;
+            
             playerTransform.position = cameraLockTransform.position;
             playerTransform.rotation = cameraLockTransform.rotation;
             
@@ -283,6 +286,8 @@ public class SceneTransitionManager : MonoBehaviour
             instance.m_Player.enabled = false;
             
             instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = false; //TODO: this is hardcoded for the cockpit. Should probably be in the metadata
+            
+            DisableScene(instance.currentScene);
         }
         else
         {
@@ -299,24 +304,32 @@ public class SceneTransitionManager : MonoBehaviour
             //Reset transform if teleporting from a locked position
             if (comingFromLockedPosition)
             {
+                
+                Transform playerParent = playerTransform.parent;
+                
+                playerParent.rotation = Quaternion.identity;
+                playerParent.parent = null;
+                DontDestroyOnLoad(playerParent);
+                playerTransform.rotation = instance.m_RotationAtLock;
                 playerTransform.position = instance.m_PositionAtLock;
-                playerTransform.parent = instance.m_ParentAtLock;
-                playerTransform.localRotation = Quaternion.identity;
-                playerTransform.GetChild(0).localRotation = Quaternion.identity;
                 instance.m_Player.enabled = true;
+                
+                EnableScene(instance.screenScene);
             }
-            
-            //Set the correct director to make the cinematic flythrough run on the new scene
-            if (instance.screenScene.Director != null)
-            {
-                instance.m_CameraManager.FlythroughDirector = instance.screenScene.Director;
-            }
-            
+
             instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true; //see same line in the locked transform case
         }
         
+        instance.m_CameraManager.FlythroughDirector = instance.screenScene.FlythroughDirector;
+
+        instance.m_MainCamera.GetComponent<CinemachineBrain>().m_WorldUpOverride =
+            instance.screenScene.WorldUpTransform;
+        
         //Enable or disable post based on what the new scene needs
-        instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = instance.screenScene.PostProcessingEnabled;
+        UniversalAdditionalCameraData mainCameraData = instance.m_MainCamera.GetComponent<UniversalAdditionalCameraData>();
+        
+        mainCameraData.renderPostProcessing = instance.screenScene.PostProcessingEnabled;
+        mainCameraData.SetRenderer(instance.screenScene.RendererIndex);
 
         //Reenable controller after teleporting
         controller.enabled = true;
@@ -325,6 +338,8 @@ public class SceneTransitionManager : MonoBehaviour
         
         //This is weird
         RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
+        
+        
 
         //Swap references to screen and current scene
         (instance.screenScene, instance.currentScene) = (instance.currentScene, instance.screenScene);
@@ -332,8 +347,6 @@ public class SceneTransitionManager : MonoBehaviour
         //Setup terminal loader so player can get back and reset the timeline director
         instance.SetTerminalLoaderAndDirector(instance.screenScene, false);
         instance.SetTerminalLoaderAndDirector(instance.currentScene, true);
-        
-        
     }
 
     private void UpdateCullingMasks()
@@ -366,14 +379,13 @@ public class SceneTransitionManager : MonoBehaviour
         {
             scene.TerminalLoader.SetActive(isActive);
         }
-
-        if (scene.Director != null)
+        if (scene.SequenceDirector != null)
         {
-            scene.Director.time = 0;
-            scene.Director.enabled = isActive;
+            scene.SequenceDirector.time = 0;
+            scene.SequenceDirector.enabled = isActive;
             if (isActive)
             {
-                scene.Director.Play();
+                scene.SequenceDirector.Play();
             }
             
         }
@@ -425,6 +437,7 @@ public class SceneTransitionManager : MonoBehaviour
         instance.m_Loader = sceneLoader;
         instance.m_InitialSceneLoad = false;
         instance.screenScene = sceneMetaData;
+        instance.currentScene.TerminalLoader = sceneLoader.ControllPanel;
 
         LightProbes.TetrahedralizeAsync();
 
@@ -432,10 +445,10 @@ public class SceneTransitionManager : MonoBehaviour
         sceneMetaData.Root.SetActive(true);
 
         //Reset any director that needs to play
-        if (sceneMetaData.Director != null)
+        if (sceneMetaData.SequenceDirector != null)
         {
-            sceneMetaData.Director.time = sceneMetaData.DirectorStartTime;
-            sceneMetaData.Director.Play();
+            sceneMetaData.SequenceDirector.time = 0;
+            sceneMetaData.SequenceDirector.Play();
         }
 
         //Set the offset of the screen camera 
@@ -453,6 +466,12 @@ public class SceneTransitionManager : MonoBehaviour
         
         instance.m_ScreenCamera.GetComponent<Camera>().enabled = true;
         instance.m_ScreenOff = false;
+    }
+
+    public static void EnableScene(SceneMetaData sceneMetaData)
+    {
+        sceneMetaData.Root.SetActive(true);
+        instance.m_ScreenCamera.GetComponent<Camera>().enabled = true;
     }
 
 
@@ -484,6 +503,12 @@ public class SceneTransitionManager : MonoBehaviour
         }
 
         instance.m_ScreenOff = true;
+    }
+
+    public static void DisableScene(SceneMetaData sceneMetaData)
+    {
+        sceneMetaData.Root.SetActive(false);
+        instance.m_ScreenCamera.GetComponent<Camera>().enabled = false;
     }
 
     public static void StartTransition()
@@ -538,6 +563,16 @@ public class SceneTransitionManager : MonoBehaviour
     public static GameObject GetMainCamera()
     {
         return instance.m_MainCamera.gameObject;
+    }
+
+    public static SceneMetaData GetCurrentSceneData()
+    {
+        return instance.currentScene;
+    }
+
+    public static bool IsInTerminal()
+    {
+        return instance.InTerminal;
     }
 
     #endregion

@@ -18,7 +18,9 @@ public class SceneLoader : MonoBehaviour
 
     //Used for cinemachine transition
     [SerializeField] private bool m_SkipLoading;
-    
+
+    [SerializeField] public GameObject ControllPanel;
+
     public ScreenController screen;
     public Transform ReferencePoint;
 

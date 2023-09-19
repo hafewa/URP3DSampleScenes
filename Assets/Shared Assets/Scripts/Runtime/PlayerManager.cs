@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     
     private bool m_InFlythrough;
     private float m_TimeIdle;
+    private CinemachineVirtualCamera m_VirtualCamera;
     
     void Start()
     {
@@ -33,6 +34,8 @@ public class PlayerManager : MonoBehaviour
         {
             m_TouchInputCanvas.SetActive(true);
         }
+        
+        m_VirtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
     }
 
     void Update()
@@ -57,21 +60,39 @@ public class PlayerManager : MonoBehaviour
 
     public void EnableFlythrough()
     {
-        FlythroughDirector.gameObject.SetActive(true);
+        if (FlythroughDirector == null)
+        {
+            m_VirtualCamera.gameObject.SetActive(false);
+            m_InFlythrough = true;
+        }
+        else
+        {
+            FlythroughDirector.gameObject.SetActive(true);
         
-        TimelineAsset timeline = FlythroughDirector.playableAsset as TimelineAsset;
-        FlythroughDirector.SetGenericBinding(timeline.GetOutputTrack(0), GetComponentInChildren<CinemachineBrain>());
+            TimelineAsset timeline = FlythroughDirector.playableAsset as TimelineAsset;
+            FlythroughDirector.SetGenericBinding(timeline.GetOutputTrack(0), GetComponentInChildren<CinemachineBrain>());
         
-        FlythroughDirector.time = 0;
-        FlythroughDirector.Play();
-        m_InFlythrough = true;
-        m_CrosshairCanvas.SetActive(false);
+            FlythroughDirector.time = 0;
+            FlythroughDirector.Play();
+            m_InFlythrough = true;
+            m_CrosshairCanvas.SetActive(false);
+
+            if (SystemInfo.deviceType == DeviceType.Handheld)
+            {
+                m_TouchInputCanvas.SetActive(false);
+            }
+        }
     }
 
     public void EnableFirstPersonController()
     {
+        m_VirtualCamera.gameObject.SetActive(true);
         m_CrosshairCanvas.SetActive(true);
-        FlythroughDirector.gameObject.SetActive(false);
+        
+        if (FlythroughDirector != null)
+        {
+            FlythroughDirector.gameObject.SetActive(false);
+        }
         m_InFlythrough = false;
     }
 
@@ -81,6 +102,10 @@ public class PlayerManager : MonoBehaviour
         if (m_InFlythrough)
         {
             EnableFirstPersonController();
+            if (SystemInfo.deviceType == DeviceType.Handheld)
+            {
+                m_TouchInputCanvas.SetActive(true);
+            }
         }
     }
 }

@@ -63,7 +63,11 @@ public class _3DSkybox : MonoBehaviour
 
     private void OnBeginCamera(ScriptableRenderContext context, Camera cam)
     {
-        Application.targetFrameRate = 120;
+        //Avoid rendering while in terminal
+        if (SceneTransitionManager.IsAvailable() && SceneTransitionManager.IsInTerminal() && cam.CompareTag("MainCamera"))
+        {
+            return;
+        }
         
         if (pass == null) return;
 
