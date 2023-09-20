@@ -12,7 +12,7 @@ Shader "UI/CirkleShader"
     {
         // SubShader Tags define when and under which conditions a SubShader block or
         // a pass is executed.
-        Tags { "RenderType" = "Transparent" "RenderPipeline" = "UniversalRenderPipeline" }
+        Tags { "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
         
         ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha

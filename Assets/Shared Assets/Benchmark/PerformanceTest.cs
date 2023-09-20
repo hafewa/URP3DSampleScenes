@@ -58,11 +58,16 @@ namespace Benchmarking
 
         [SerializeField]
         private bool _liveRefreshGraph = true;
+
+        [SerializeField] private GameObject _cameraPrefab;
+        
         public bool liveRefreshGraph => _liveRefreshGraph;
 
         private int _currentStageIndex;
         private PerformanceTestStage _currentStage => _stages[_currentStageIndex];
 
+        
+        
         private Camera _testCamera;
         public Camera testCamera
         {
@@ -249,13 +254,19 @@ namespace Benchmarking
 
         private void CreateCamera()
         {
-            GameObject go = new GameObject("TestCamera");
-            _testCamera = go.AddComponent<Camera>();
-            var additionalData = go.AddComponent<UniversalAdditionalCameraData>();
-            additionalData.renderPostProcessing = true;
+            GameObject go = Instantiate(_cameraPrefab);
+            _testCamera = go.GetComponent<Camera>();
+            //GameObject go = new GameObject("TestCamera");
+            //_testCamera = go.AddComponent<Camera>();
+            //var additionalData = go.AddComponent<UniversalAdditionalCameraData>();
+            //additionalData.renderPostProcessing = true;
+
+            //additionalData.antialiasing = AntialiasingMode.TemporalAntiAliasing;
+            //additionalData.sett
+
             DontDestroyOnLoad(go);
 
-            go.AddComponent<CinemachineBrain>();
+            //go.AddComponent<CinemachineBrain>();
         }
 
         private void FinalizeTests()

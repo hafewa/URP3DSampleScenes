@@ -29,7 +29,7 @@ public class FullscreenDissolve : MonoBehaviour
 
         if (cam.cameraType != CameraType.Game && cam.cameraType != CameraType.SceneView) return;
 
-        if (!SceneTransitionManager.DissolveNeeded())
+        if (!SceneTransitionManager.DissolveNeeded() || cam.CompareTag("ScreenCamera"))
         {
             return;
         }
@@ -37,7 +37,6 @@ public class FullscreenDissolve : MonoBehaviour
         // injection point
         pass.renderPassEvent = injectionPoint;
         pass.passMaterial = material;
-        //pass.inputReq = inputRequirements;
         
         // inject pass
         cam.GetUniversalAdditionalCameraData().scriptableRenderer.EnqueuePass(pass);
