@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579f019eb5d26450982c6ae506c6c3ff, type: 3}
   m_Name: TutorialProjectSettings
   m_EditorClassIdentifier: 
-  m_WelcomePage: {fileID: 11400000, guid: a28273cd7f7c0514b881b00b32150290, type: 2}
+  m_WelcomePage: {fileID: 11400000, guid: 505167085880528489ebfb8881bfbfc7, type: 2}
   m_InitialScene: {fileID: 102900000, guid: 4496a3dbb8d263043a4460bac5382ac5, type: 3}
   m_InitialCameraSettings:
     m_CameraMode: 1
