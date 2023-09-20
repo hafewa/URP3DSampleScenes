@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff771ccdf4150419d9ff4d342b069aae, type: 3}
-  m_Name: GardenPage1
+  m_Name: CockpitPage2
   m_EditorClassIdentifier: 
   Title:
-    m_Untranslated: Introduction
+    m_Untranslated: Play!
   m_Paragraphs:
     m_Items:
     - m_Type: 6
@@ -22,7 +22,7 @@ MonoBehaviour:
       Text:
         m_Untranslated: 
       m_Tutorial: {fileID: 0}
-      m_Image: {fileID: 2800000, guid: e63258e32b7e28e42a705f350c019fd6, type: 3}
+      m_Image: {fileID: 2800000, guid: 6afd012e8b3dfc44fa91b1b4fe17e263, type: 3}
       m_Video: {fileID: 0}
       m_CriteriaCompletion: 0
       m_Criteria:
@@ -39,8 +39,14 @@ MonoBehaviour:
       Title:
         m_Untranslated: 
       Text:
-        m_Untranslated: This environment offers a more stylized rendering, with painterly
-          materials and more organic geometries.
+        m_Untranslated: 'This environment is specifically tailored for VR headsets
+          and lower end mobile devices: it is designed to run at high frame rates,
+          while still featuring beautifully stylized visuals. Furthermore, we offer
+          a custom lighting model to showcase the ease of customizability of URP.
+
+
+          To
+          enter Play Mode, press the <b>Play</b> button at the top of the editor.'
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
@@ -60,8 +66,8 @@ MonoBehaviour:
     m_FocusMode: 0
     m_Orthographic: 0
     m_Size: 10
-    m_Pivot: {x: 9.25332, y: 1.5187335, z: 73.14456}
-    m_Rotation: {x: 0.0056638583, y: 0.7936301, z: -0.0073891035, w: 0.60832936}
+    m_Pivot: {x: 29.255856, y: -24.023708, z: -4.792144}
+    m_Rotation: {x: 0.32435992, y: 0.39600635, z: -0.15191813, w: 0.8455119}
     m_FrameObject:
       m_SceneGuid: 
       m_GameObjectGuid: 

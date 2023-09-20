@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff771ccdf4150419d9ff4d342b069aae, type: 3}
-  m_Name: GardenPage1
+  m_Name: CockpitPage1
   m_EditorClassIdentifier: 
   Title:
     m_Untranslated: Introduction
@@ -22,7 +22,7 @@ MonoBehaviour:
       Text:
         m_Untranslated: 
       m_Tutorial: {fileID: 0}
-      m_Image: {fileID: 2800000, guid: e63258e32b7e28e42a705f350c019fd6, type: 3}
+      m_Image: {fileID: 2800000, guid: 6afd012e8b3dfc44fa91b1b4fe17e263, type: 3}
       m_Video: {fileID: 0}
       m_CriteriaCompletion: 0
       m_Criteria:
@@ -39,8 +39,10 @@ MonoBehaviour:
       Title:
         m_Untranslated: 
       Text:
-        m_Untranslated: This environment offers a more stylized rendering, with painterly
-          materials and more organic geometries.
+        m_Untranslated: "Jump into this ultra-stylized rollercoaster where your fleet
+          is under heavy attack from an unknown alien faction. You start your ride
+          inside a hangar ship, and quickly realize your armada isn\u2019t a match
+          for the opposing force."
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
@@ -60,8 +62,8 @@ MonoBehaviour:
     m_FocusMode: 0
     m_Orthographic: 0
     m_Size: 10
-    m_Pivot: {x: 9.25332, y: 1.5187335, z: 73.14456}
-    m_Rotation: {x: 0.0056638583, y: 0.7936301, z: -0.0073891035, w: 0.60832936}
+    m_Pivot: {x: -77.044205, y: 150.70848, z: -731.5129}
+    m_Rotation: {x: 0.24490455, y: 0.27489722, z: -0.0726316, w: 0.92691857}
     m_FrameObject:
       m_SceneGuid: 
       m_GameObjectGuid: 

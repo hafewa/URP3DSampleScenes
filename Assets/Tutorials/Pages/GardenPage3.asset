@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GardenPage3
   m_EditorClassIdentifier: 
   Title:
-    m_Untranslated: Exploration
+    m_Untranslated: Scalability
   m_Paragraphs:
     m_Items:
     - m_Type: 6
@@ -39,9 +39,12 @@ MonoBehaviour:
       Title:
         m_Untranslated: 
       Text:
-        m_Untranslated: 'Once you climbed the ramp, you can enter 3 rooms which will
-          teleport you into universes with radically different art styles and platform
-          reach: the Garden, the Oasis, and the Cockpit.'
+        m_Untranslated: This environment scales effortlessly on mobile devices and
+          higher end platforms. It features a modular architectural set relying on
+          the default Lit shader, beautifully crafted vegetation (SpeedTree), interconnected
+          interiors, a gentle water stream meandering across the garden, stylized
+          visual effects, as well as numerous decorative dynamic lights to take advantage
+          of URP's Forward+ (or Deferred) rendering path.
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
@@ -61,8 +64,8 @@ MonoBehaviour:
     m_FocusMode: 0
     m_Orthographic: 0
     m_Size: 10
-    m_Pivot: {x: -0.3707498, y: 3.479392, z: -1.0788251}
-    m_Rotation: {x: -0.007207778, y: 0.9708953, z: -0.029436186, w: -0.23760845}
+    m_Pivot: {x: -7.4590836, y: 1.0994499, z: 59.61686}
+    m_Rotation: {x: -0.007280085, y: 0.90122247, z: -0.015151295, w: -0.4330307}
     m_FrameObject:
       m_SceneGuid: 
       m_GameObjectGuid: 

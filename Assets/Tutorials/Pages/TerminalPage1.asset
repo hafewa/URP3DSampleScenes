@@ -22,7 +22,7 @@ MonoBehaviour:
       Text:
         m_Untranslated: 
       m_Tutorial: {fileID: 0}
-      m_Image: {fileID: 2800000, guid: 6afd012e8b3dfc44fa91b1b4fe17e263, type: 3}
+      m_Image: {fileID: 2800000, guid: ef0a7879b3dce8f4aaf8ed025b4685f7, type: 3}
       m_Video: {fileID: 0}
       m_CriteriaCompletion: 0
       m_Criteria:
@@ -39,10 +39,11 @@ MonoBehaviour:
       Title:
         m_Untranslated: 
       Text:
-        m_Untranslated: "Jump into this ultra-stylized rollercoaster where your fleet
-          is under heavy attack from an unknown alien faction. You start your ride
-          inside a hangar ship, and quickly realize your armada isn\u2019t a match
-          for the opposing force."
+        m_Untranslated: This environment offers a radical bump in visual quality
+          compared to the current URP Sample (i.e., the mini construction site).
+          We took inspiration from various modern museums, airports, and sci-fi architecture
+          designs. In particular, this scene takes advantage of physically-based
+          materials and the GPU Lightmapper to offer a realistic rendering.
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
@@ -62,8 +63,8 @@ MonoBehaviour:
     m_FocusMode: 0
     m_Orthographic: 0
     m_Size: 10
-    m_Pivot: {x: -77.044205, y: 150.70848, z: -731.5129}
-    m_Rotation: {x: 0.24490568, y: 0.2749007, z: -0.072635956, w: 0.92692673}
+    m_Pivot: {x: 0.09795538, y: 3.0427697, z: 0.7158468}
+    m_Rotation: {x: -0.009986052, y: 0.9755955, z: -0.045397934, w: -0.21459891}
     m_FrameObject:
       m_SceneGuid: 
       m_GameObjectGuid: 

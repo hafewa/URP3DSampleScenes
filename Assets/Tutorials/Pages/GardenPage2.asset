@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GardenPage2
   m_EditorClassIdentifier: 
   Title:
-    m_Untranslated: Interior
+    m_Untranslated: Exploration
   m_Paragraphs:
     m_Items:
     - m_Type: 6
@@ -39,12 +39,9 @@ MonoBehaviour:
       Title:
         m_Untranslated: 
       Text:
-        m_Untranslated: This environment scales effortlessly on mobile devices and
-          higher end platforms. It features a modular architectural set relying on
-          the default Lit shader, beautifully crafted vegetation (SpeedTree), interconnected
-          interiors, a gentle water stream meandering across the garden, stylized
-          visual effects, as well as numerous decorative dynamic lights to take advantage
-          of URP's Forward+ (or Deferred) rendering path.
+        m_Untranslated: 'Have a stroll in the courtyard of this quiet and nocturnal
+          Japanese building (inspired by Shoin-zukuri style), or visit one of its
+          interiors for a cup of jasmine tea. '
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
@@ -64,8 +61,8 @@ MonoBehaviour:
     m_FocusMode: 0
     m_Orthographic: 0
     m_Size: 10
-    m_Pivot: {x: 8.90078, y: 1.6325408, z: 73.46928}
-    m_Rotation: {x: 0.0011031195, y: 0.7918416, z: -0.0014353137, w: 0.61073744}
+    m_Pivot: {x: 8.186822, y: -7.8460016, z: 96.80291}
+    m_Rotation: {x: 0.2554618, y: 0.34981745, z: -0.09976268, w: 0.8957759}
     m_FrameObject:
       m_SceneGuid: 
       m_GameObjectGuid: 

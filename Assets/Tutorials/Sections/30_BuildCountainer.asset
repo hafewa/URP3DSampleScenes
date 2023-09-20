@@ -10,28 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89305aa391d1c5141bbe1628d930a2c5, type: 3}
-  m_Name: 00_RootCountainer
+  m_Name: 30_BuildCountainer
   m_EditorClassIdentifier: 
   Modified:
     m_PersistentCalls:
       m_Calls: []
-  ParentContainer: {fileID: 0}
+  ParentContainer: {fileID: 11400000, guid: 34f2d71d8dc38a74ca20b735364f9231, type: 2}
   OrderInView: 0
-  BackgroundImage: {fileID: 0}
+  BackgroundImage: {fileID: 2800000, guid: f1ba0ebadc33b77489d240107ab97322, type: 3}
   Title:
-    m_Untranslated: Tutorials
+    m_Untranslated: Build (Coming soon)
   Subtitle:
-    m_Untranslated: Universal Render Pipeline
+    m_Untranslated: Learn how to build the scenes for different platforms
   Description:
-    m_Untranslated: This series of tutorials will teach you about the URP 3D Sample.
+    m_Untranslated: This series of tutorials will teach you how to build the project
+      on different platforms.
   ProjectLayout: {fileID: 102900000, guid: 5e081507e2933e14d9dcaec83a20d2f9, type: 3}
   Sections:
   - OrderInView: 0
     Heading:
-      m_Untranslated: Support
+      m_Untranslated: Coming soon
     Text:
-      m_Untranslated: Get help, share your feedback, and report issues
+      m_Untranslated: Learn how to build for different platforms
     Metadata: 
     Url: 
-    Image: {fileID: 2800000, guid: 947f3220a048a3d4083d266123e9f65d, type: 3}
-    Tutorial: {fileID: 11400000, guid: a643e1c6778f53c41afaf9d647d46a89, type: 2}
+    Image: {fileID: 2800000, guid: 79088f035ec32514bb2f78efa840070c, type: 3}
+    Tutorial: {fileID: 0}

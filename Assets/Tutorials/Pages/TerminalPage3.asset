@@ -39,9 +39,9 @@ MonoBehaviour:
       Title:
         m_Untranslated: 
       Text:
-        m_Untranslated: 'Once you climbed the ramp, you can enter 3 rooms which will
-          teleport you into universes with radically different art styles and platform
-          reach: the Garden, the Oasis, and the Cockpit.'
+        m_Untranslated: 'Once on the ramp, you can enter 3 rooms which will teleport
+          you into universes with radically different art styles and platform reach:
+          the Garden, the Oasis, and the Cockpit.'
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_Orthographic: 0
     m_Size: 10
     m_Pivot: {x: 3.8856032, y: -0.93940175, z: -23.099255}
-    m_Rotation: {x: 0.037510023, y: 0.9624258, z: -0.19609554, w: 0.18409583}
+    m_Rotation: {x: 0.03750947, y: 0.96241856, z: -0.19609411, w: 0.18409431}
     m_FrameObject:
       m_SceneGuid: 
       m_GameObjectGuid: 
