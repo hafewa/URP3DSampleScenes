@@ -39,8 +39,13 @@ MonoBehaviour:
       Title:
         m_Untranslated: 
       Text:
-        m_Untranslated: This environment offers a more stylized rendering, with painterly
-          materials and more organic geometries.
+        m_Untranslated: 'This environment offers a more stylized rendering, with
+          painterly materials and more organic geometries.
+
+
+          <b>Note:</b>
+          When loading this scene for the very first time, you may need to wait several
+          seconds for shader compilation.'
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}

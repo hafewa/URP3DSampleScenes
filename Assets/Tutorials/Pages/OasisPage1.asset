@@ -41,7 +41,8 @@ MonoBehaviour:
       Text:
         m_Untranslated: "Enjoy the warm glow of the sun bathing this peaceful oasis.
           Walk down the sandy hill, and you\u2019ll find a traditional Bedouin tent
-          set up for the night."
+          set up for the night.\n\n<b>Note:</b> When loading this scene for the very
+          first time, you may need to wait several seconds for shader compilation."
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}

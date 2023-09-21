@@ -41,11 +41,12 @@ MonoBehaviour:
       Text:
         m_Untranslated: "We invite you to share your general sentiment, ask questions
           and request help directly on the <a href=\"https://forum.unity.com/forums/universal-render-pipeline.383/\">official
-          forum.</a> We also encourage you to play with the content, modify it, etc.
-          and share your findings or experiments.\n\nFurthermore, we are also interested
-          in the level of performance you are getting on your devices. This may help
-          us to identify performance issues hitting very specific types of hardware
-          that we haven\u2019t been able to identify.\n\n"
+          forum.</a> \n\nWe invite you to share your general sentiment, ask questions
+          and request help directly on the forum. We also encourage you to experiment
+          with the content of this project and share your findings.\n\nFurthermore,
+          we are also interested in the level of performance you are getting on your
+          devices. This may help us to identify performance issues hitting very specific
+          types of hardware that we haven\u2019t been able to identify.\n\n"
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}

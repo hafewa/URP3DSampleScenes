@@ -42,12 +42,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Density: 0.005
+    - _Density: 0.002
     - _Final_Mip_Distance: 0
     - _Rotation: 11.73
     - _StartDistance: 20
-    - _SunScatteringIntensity: 2
+    - _SunScatteringIntensity: 0
     m_Colors:
-    - _Height_Range: {r: 0, g: 20, b: 0, a: 0}
-    - _Tint: {r: 1, g: 0.5215277, b: 0.3254717, a: 1}
+    - _Height_Range: {r: 0, g: 35, b: 0, a: 0}
+    - _Tint: {r: 1, g: 0.35708064, b: 0.23018867, a: 1}
   m_BuildTextureStacks: []

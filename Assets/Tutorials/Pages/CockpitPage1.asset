@@ -42,7 +42,8 @@ MonoBehaviour:
         m_Untranslated: "Jump into this ultra-stylized rollercoaster where your fleet
           is under heavy attack from an unknown alien faction. You start your ride
           inside a hangar ship, and quickly realize your armada isn\u2019t a match
-          for the opposing force."
+          for the opposing force.\n\n<b>Note:</b> When loading this scene for the
+          very first time, you may need to wait several seconds for shader compilation."
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
       m_Video: {fileID: 0}
