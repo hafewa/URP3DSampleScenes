@@ -1,15 +1,17 @@
 ![URPSampleBanner](https://media.github.cds.internal.unity3d.com/user/1194/files/f1307f60-0ccf-4be8-ac03-e03f00050418)
 
-# Introducing a new 3D Sample for URP
-We are excited to announce the public Beta for our brand-new 3D Sample for the Universal Render Pipeline! 
+# Introducing the new URP 3D Sample
+We are excited to share with you the public Beta for our brand-new 3D Sample for the Universal Render Pipeline! 
 
-We have created 4 vignette environments with different art styles, rendering paths, and scene complexity, to represent common types of projects made with URP. This sample targets a wide range of platforms, from mobile devices, to consoles and PCs, as well as VR headsets. 
+We have created 4 vignette environments with different art styles, rendering paths, and scene complexity, to represent the great variety of 3D projects built with URP. This sample targets a wide range of platforms, from mobile devices, to consoles and PCs, as well as VR headsets. 
 
 We wanted to make a visually engaging experience to showcase the customizability and scalability of URP, while taking into account the many hardware limitations that impact cross-platform development.
 
-You can download the project right away from GitHub (see [Getting Started](#getting-started) section below). By the end of the year, we will release the project via the Unity Hub.
+We have ironed out most obvious bugs, however because this project is still in Beta phase, we expect you will encounter issues we haven't run into. Therefore, we are looking forward to hearing your inputs, so we can make this sample, and URP as a whole, better. Please see the [How to give feedback?](#how-to-give-feedback) section below.
 
-Let’s take a look at the different environments we created.
+You can download the project right away from GitHub (please check the [Getting Started](#getting-started) section below). By the end of the year, we will release the project directly via the Unity Hub.
+
+Now, let’s take a look at the different environments we created!
 
 ## Terminal
 
@@ -84,7 +86,7 @@ Currently, our focus is on the Unity 2022.3 LTS version. After the final release
 
 # How to give feedback?
 
-Please take a look at the “Known Issues” section above, before reporting issues.
+Please take a look at the [Known Issues](#known-issues) above, before reporting issues.
 
 We invite you to share your general sentiment, ask questions and request help directly in the forum. We also encourage you to experiment with the content of this project and share your findings.
 
