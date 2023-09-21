@@ -86,7 +86,7 @@ Currently, our focus is on the Unity 2022.3 LTS version. After the final release
 
 # How to give feedback?
 
-Please take a look at the [Known Issues](#known-issues) above, before reporting issues.
+Please take a look at the [Known issues](#known-issues) above, before reporting issues.
 
 We invite you to share your general sentiment, ask questions and request help directly in the forum. We also encourage you to experiment with the content of this project and share your findings.
 
