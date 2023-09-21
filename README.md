@@ -67,8 +67,6 @@ We are aiming for a final release at the time of Unite 2023 (mid-November), when
 
 Before this final release, we will also provide an in-depth In-Editor tutorial, with step-by-step instructions and documentation, similarly to the one available for the HDRP 3D Sample already available in the Unity Hub. You can also get some insights watching our GDC talks: [Cross-platform game development with the new URP sample scene](https://www.youtube.com/watch?v=zPTNrSgoJow), and [How to Build for PS VR2 with URP](https://www.youtube.com/watch?v=5z55_k0MgGA).
 
-Regularly, we will post updates in this thread to let you know about our progress as we approach the final release, and whenever we update the repository with major changes.
-
 Currently, our focus is on the Unity 2022.3 LTS version. After the final release, our objective is to maintain the project, and integrate new features developed for Unity 2023 and beyond.
 
 # Known issues
