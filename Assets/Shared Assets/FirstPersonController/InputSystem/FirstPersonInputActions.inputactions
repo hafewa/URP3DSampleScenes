@@ -114,7 +114,7 @@
                     "id": "3e010a0e-8dde-4544-bb73-f3040ca11869",
                     "path": "<Mouse>/delta",
                     "interactions": "",
-                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=2,y=2)",
+                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=9,y=9)",
                     "groups": "",
                     "action": "Look",
                     "isComposite": false,
