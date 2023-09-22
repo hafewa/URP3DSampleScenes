@@ -57,9 +57,10 @@ Jump into this ultra-stylized rollercoaster where your fleet is under heavy atta
 This environment is specifically tailored for VR headsets and lower end mobile devices: it is designed to run at high frame rates, while still featuring beautifully stylized visuals. Furthermore, we offer a custom lighting model to showcase the ease of customizability of URP. 
 
 # Getting started
-- Download Unity 2022.3.7f1 through the [Unity Hub](https://unity3d.com/get-unity/download) or the dedicated [download page](https://beta.unity3d.com/download/b16b3b16c7a0/download.html)
-- Download a GitHub client, such as [GitHub Desktop](https://desktop.github.com/) (free and open source)
+- Install Unity 2022.3.7f1 via the [Unity Hub](https://unity3d.com/get-unity/download) or the dedicated [download page](https://beta.unity3d.com/download/b16b3b16c7a0/download.html)
+- Install a GitHub client, such as [GitHub Desktop](https://desktop.github.com/) (free and open source)
 - Clone the project locally with your GitHub client: https://github.com/Unity-Technologies/URP3DSampleScenes
+- Add this project to the Unity Hub
 
 ![image](https://media.github.cds.internal.unity3d.com/user/1194/files/878859dc-4a68-4ec2-9724-19b29bb520eb)
 
