@@ -9,7 +9,7 @@ We wanted to make a visually engaging experience to showcase the customizability
 
 We have ironed out most obvious bugs, however because this project is still in Beta phase, we expect you will encounter issues we haven't run into. Therefore, we are looking forward to hearing your inputs, so we can make this sample, and URP as a whole, better. Please see the [How to give feedback?](#how-to-give-feedback) section below.
 
-You can download the project right away from GitHub (please check the [Getting Started](#getting-started) section below). By the end of the year, we will release the project directly via the Unity Hub. Regularly, we will post updates on the forum to let you know about our progress as we approach the final release, and whenever we update the repository with major changes.
+You can download the project right away from GitHub, please check the [Getting Started](#getting-started) section below. By the end of the year, we will release the project directly via the Unity Hub. Regularly, we will post updates on the forum to let you know about our progress as we approach the final release, and whenever we update the repository with major changes.
 
 Now, let’s take a look at the different environments we created!
 
