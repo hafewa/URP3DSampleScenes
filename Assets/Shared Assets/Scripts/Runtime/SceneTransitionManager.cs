@@ -199,11 +199,19 @@ public class SceneTransitionManager : MonoBehaviour
         }
         
         //Toggle main light
-        ToggleMainLight(currentScene, isMainCamera);
-        ToggleMainLight(screenScene, !isMainCamera);
-        
+        if (camera.cameraType == CameraType.SceneView)
+        {
+            ToggleMainLight(currentScene, true);
+            ToggleMainLight(screenScene, false);
+        }
+        else
+        {
+            ToggleMainLight(currentScene, isMainCamera);
+            ToggleMainLight(screenScene, !isMainCamera);
+        }
+
         //Setup render settings
-        SceneMetaData sceneToRender = isMainCamera ? currentScene : screenScene;
+        SceneMetaData sceneToRender = isMainCamera || camera.cameraType == CameraType.SceneView ? currentScene : screenScene;
         RenderSettings.fog = sceneToRender.FogEnabled;
         RenderSettings.skybox = sceneToRender.skybox;
         if (sceneToRender.reflection != null)
