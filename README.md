@@ -40,7 +40,7 @@ This environment scales effortlessly on mobile devices and higher end platforms.
 
 **Recommended minimum configurations:** iPhone 8 or similar
 
-Enjoy the warm glow of the sun bathing this peaceful oasis. Walk down the sandy hill, and you’ll find a traditional Bedouin tent set up for the night.
+Enjoy the warm glow of the sun setting on this peaceful oasis. Walk down the sandy hill, and you’ll find a traditional Bedouin tent set up for the night.
 
 ![Collage_Oasis_1080](https://media.github.cds.internal.unity3d.com/user/1194/files/469fdabf-4f30-43bb-a687-ef06b55e1a52)
 
