@@ -78,7 +78,7 @@ Currently, our focus is on the Unity 2022.3 LTS version. After the final release
 # Known issues
 **Build Times:** Due to the wide variety of use cases, target platforms, renderers, and features presented in these samples, some URP configurations can result in large numbers of shader variants, which take a long time to compile. To reduce build times, we recommend only building with one Quality Level, a subset of scenes, and toggling VR on or off. We are currently working on optimizing the shader compilation times.
 
-**General performance:** For this public beta, we focused on getting each scene running at the target frame rate for the recommended minimum configurations. However, you may see significant slowdowns in areas where multiple scenes/cameras are active at the same time, for the teleportation mechanic. We’re looking into solving it at a later time. 
+**General performance:** For this public beta, we focused on getting each scene running at the target frame rate for the recommended minimum configurations. However, you may see significant slowdowns in areas where multiple scenes/cameras are active at the same time, for the teleportation mechanic. 
 
 **First editor run:** When opening the editor, navigating the scenes and entering game mode for the first time, many shader compilations will happen.
 
