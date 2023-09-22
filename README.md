@@ -94,7 +94,7 @@ Please take a look at the [Known issues](#known-issues) above, before reporting 
 
 We invite you to share your general sentiment, ask questions and request help directly in the forum. We also encourage you to experiment with the content of this project and share your findings.
 
-Furthermore, we are also interested in the level of performance you are getting on your devices. This may help us to identify performance issues hitting very specific types of hardware that we haven’t been able to identify.
+Furthermore, we are also interested in the level of performance you are getting on your devices. This may help us to identify performance issues on certain hardware configurations.
 
 For bug reports and crashes, we invite you to discuss them in the forum as well. However, we may ask you to also formally [report bugs](https://unity3d.com/unity/qa/bug-reporting) that aren’t trivial for us to reproduce.
 
