@@ -1,15 +1,17 @@
 ![URPSampleBanner](https://media.github.cds.internal.unity3d.com/user/1194/files/f1307f60-0ccf-4be8-ac03-e03f00050418)
 
-# Introducing a new 3D Sample for URP
-We are excited to announce the public Beta for our brand-new 3D Sample for the Universal Render Pipeline! 
+# Introducing the new URP 3D Sample
+We are excited to share with you the public Beta for our brand-new 3D Sample for the Universal Render Pipeline! 
 
-We have created 4 vignette environments with different art styles, rendering paths, and scene complexity, to represent common types of projects made with URP. This sample targets a wide range of platforms, from mobile devices, to consoles and PCs, as well as VR headsets. 
+We have created 4 vignette environments with different art styles, rendering paths, and scene complexity, to represent the great variety of 3D projects built with URP. This sample targets a wide range of platforms, from mobile devices, to consoles and PCs, as well as VR headsets. 
 
 We wanted to make a visually engaging experience to showcase the customizability and scalability of URP, while taking into account the many hardware limitations that impact cross-platform development.
 
-You can download the project right away from GitHub (see [Getting Started](#getting-started) section below). By the end of the year, we will release the project via the Unity Hub.
+We have ironed out most obvious bugs, however because this project is still in Beta phase, we expect you will encounter issues we haven't run into. Therefore, we are looking forward to hearing your inputs, so we can make this sample, and URP as a whole, better. Please see the [How to give feedback?](#how-to-give-feedback) section below.
 
-Let’s take a look at the different environments we created.
+You can download the project right away from GitHub, please check the [Getting Started](#getting-started) section below. By the end of the year, we will release the project directly via the Unity Hub. Regularly, we will post updates on the forum to let you know about our progress as we approach the final release, and whenever we update the repository with major changes.
+
+Now, let’s take a look at the different environments we created!
 
 ## Terminal
 
@@ -20,7 +22,9 @@ This environment offers a radical bump in visual quality compared to the current
 ![Collage_Terminal_1080](https://media.github.cds.internal.unity3d.com/user/1194/files/37d35286-c036-484e-9c77-6d506ff910fc)
 
 In the main outdoor area, a large platform surrounded by water lets you review your assets in a neutral environment with calibrated lighting conditions. Once on the ramp, you can enter 3 rooms which will teleport you into universes with radically different art styles and platform reach: the Garden, the Oasis, and the Cockpit. To initiate the teleportation, focus on the Unity logo above the teleporting device for a few seconds (requires Play Mode).
- 
+
+![TerminalTeleportation](https://media.github.cds.internal.unity3d.com/user/1194/files/523d673b-5e2c-4b1d-8008-59fe3d474eb5)
+
 ## Garden
 
 **Recommended minimum configurations:** iPhone 6S or similar
@@ -56,7 +60,8 @@ This environment is specifically tailored for VR headsets and lower end mobile d
 - Download Unity 2022.3.7f1 through the [Unity Hub](https://unity3d.com/get-unity/download) or the dedicated [download page](https://beta.unity3d.com/download/b16b3b16c7a0/download.html)
 - Download a GitHub client, such as [GitHub Desktop](https://desktop.github.com/) (free and open source)
 - Clone the project locally with your GitHub client: https://github.com/Unity-Technologies/URP3DSampleScenes
-![image](https://media.github.cds.internal.unity3d.com/user/1194/files/56f94627-8da0-427a-9031-35c47e6d2744)
+
+![image](https://media.github.cds.internal.unity3d.com/user/1194/files/878859dc-4a68-4ec2-9724-19b29bb520eb)
 
 **Note 1:** Do not use the “Download ZIP” functionality on GitHub, as the ZIP won’t contain all assets needed for the project
 
@@ -66,8 +71,6 @@ This environment is specifically tailored for VR headsets and lower end mobile d
 We are aiming for a final release at the time of Unite 2023 (mid-November), when the project will be directly available inside the Unity Hub. Until then, we will keep on polishing the project on the GitHub repository, based on your feedback and our internal plans.
 
 Before this final release, we will also provide an in-depth In-Editor tutorial, with step-by-step instructions and documentation, similarly to the one available for the HDRP 3D Sample already available in the Unity Hub. You can also get some insights watching our GDC talks: [Cross-platform game development with the new URP sample scene](https://www.youtube.com/watch?v=zPTNrSgoJow), and [How to Build for PS VR2 with URP](https://www.youtube.com/watch?v=5z55_k0MgGA).
-
-Regularly, we will post updates in this thread to let you know about our progress as we approach the final release, and whenever we update the repository with major changes.
 
 Currently, our focus is on the Unity 2022.3 LTS version. After the final release, our objective is to maintain the project, and integrate new features developed for Unity 2023 and beyond.
 
@@ -86,7 +89,7 @@ Currently, our focus is on the Unity 2022.3 LTS version. After the final release
 
 # How to give feedback?
 
-Please take a look at the “Known Issues” section above, before reporting issues.
+Please take a look at the [Known issues](#known-issues) above, before reporting issues.
 
 We invite you to share your general sentiment, ask questions and request help directly in the forum. We also encourage you to experiment with the content of this project and share your findings.
 
