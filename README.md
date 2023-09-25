@@ -61,6 +61,7 @@ This environment is specifically tailored for VR headsets and lower end mobile d
 - Install a GitHub client, such as [GitHub Desktop](https://desktop.github.com/) (free and open source)
 - Clone the project locally with your GitHub client: https://github.com/Unity-Technologies/URP3DSampleScenes
 - Add this project to the Unity Hub
+- To display the tutorial, in the Editor toolbar, go to Tutorials > Show tutorials
 
 ![image](https://media.github.cds.internal.unity3d.com/user/1194/files/878859dc-4a68-4ec2-9724-19b29bb520eb)
 
