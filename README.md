@@ -40,7 +40,7 @@ This environment scales effortlessly on mobile devices and higher end platforms.
 
 **Recommended minimum configurations:** iPhone 8 or similar
 
-Enjoy the warm glow of the sun bathing this peaceful oasis. Walk down the sandy hill, and you’ll find a traditional Bedouin tent set up for the night.
+Enjoy the warm glow of the sun setting on this peaceful oasis. Walk down the sandy hill, and you’ll find a traditional Bedouin tent set up for the night.
 
 ![Collage_Oasis_1080](https://media.github.cds.internal.unity3d.com/user/1194/files/469fdabf-4f30-43bb-a687-ef06b55e1a52)
 
@@ -57,9 +57,10 @@ Jump into this ultra-stylized rollercoaster where your fleet is under heavy atta
 This environment is specifically tailored for VR headsets and lower end mobile devices: it is designed to run at high frame rates, while still featuring beautifully stylized visuals. Furthermore, we offer a custom lighting model to showcase the ease of customizability of URP. 
 
 # Getting started
-- Download Unity 2022.3.7f1 through the [Unity Hub](https://unity3d.com/get-unity/download) or the dedicated [download page](https://beta.unity3d.com/download/b16b3b16c7a0/download.html)
-- Download a GitHub client, such as [GitHub Desktop](https://desktop.github.com/) (free and open source)
+- Install Unity 2022.3.7f1 via the [Unity Hub](https://unity3d.com/get-unity/download) or the dedicated [download page](https://beta.unity3d.com/download/b16b3b16c7a0/download.html)
+- Install a GitHub client, such as [GitHub Desktop](https://desktop.github.com/) (free and open source)
 - Clone the project locally with your GitHub client: https://github.com/Unity-Technologies/URP3DSampleScenes
+- Add this project to the Unity Hub
 
 ![image](https://media.github.cds.internal.unity3d.com/user/1194/files/878859dc-4a68-4ec2-9724-19b29bb520eb)
 
@@ -77,7 +78,11 @@ Currently, our focus is on the Unity 2022.3 LTS version. After the final release
 # Known issues
 **Build Times:** Due to the wide variety of use cases, target platforms, renderers, and features presented in these samples, some URP configurations can result in large numbers of shader variants, which take a long time to compile. To reduce build times, we recommend only building with one Quality Level, a subset of scenes, and toggling VR on or off. We are currently working on optimizing the shader compilation times.
 
-**General performance:** For this public beta, we focused on getting each scene running at the target frame rate for the recommended minimum configurations. However, you may see significant slowdowns in areas where multiple scenes/cameras are active at the same time, for the teleportation mechanic. We’re looking into solving it at a later time. 
+**General performance:** For this public beta, we focused on getting each scene running at the target frame rate for the recommended minimum configurations. However, you may see significant slowdowns in areas where multiple scenes/cameras are active at the same time, for the teleportation mechanic. Profiling and improving performance will be the main focus for us over the coming months so you can expect improvements there.
+
+**Forward+ on mobile devices:** We are investigating a bug in Forward+ that causes light flickering on mobile devices.
+
+**In editor warnings:** We are still in the process of cleaning up all out system integrations so you can expect the occasional warning in the console. All them should be safe to ignore. 
 
 **First editor run:** When opening the editor, navigating the scenes and entering game mode for the first time, many shader compilations will happen.
 
@@ -85,7 +90,7 @@ Currently, our focus is on the Unity 2022.3 LTS version. After the final release
 
 **Oasis:** The wind is currently turned off in the Oasis. It will be re-added in the upcoming months.
 
-**Misc:** Changing the resolution at runtime (such as scaling the game view) will cause the screen textures to have incorrect resolution.
+**Misc:** Changing the resolution at runtime (such as scaling the game view) will cause the screen textures to have incorrect resolution. This might break the teleportatoin effect.
 
 # How to give feedback?
 
@@ -93,7 +98,7 @@ Please take a look at the [Known issues](#known-issues) above, before reporting 
 
 We invite you to share your general sentiment, ask questions and request help directly in the forum. We also encourage you to experiment with the content of this project and share your findings.
 
-Furthermore, we are also interested in the level of performance you are getting on your devices. This may help us to identify performance issues hitting very specific types of hardware that we haven’t been able to identify.
+Furthermore, we are also interested in the level of performance you are getting on your devices. This may help us to identify performance issues on certain hardware configurations.
 
 For bug reports and crashes, we invite you to discuss them in the forum as well. However, we may ask you to also formally [report bugs](https://unity3d.com/unity/qa/bug-reporting) that aren’t trivial for us to reproduce.
 

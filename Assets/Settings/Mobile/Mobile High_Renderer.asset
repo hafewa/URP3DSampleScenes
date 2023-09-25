@@ -19,9 +19,9 @@ MonoBehaviour:
     AfterOpaque: 1
     Source: 0
     NormalSamples: 1
-    Intensity: 0.5
+    Intensity: 1
     DirectLightingStrength: 0.25
-    Radius: 0.22
+    Radius: 0.2
     Samples: 1
     BlurQuality: 0
     Falloff: 100
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: FullscreenMask
-    Event: 300
+    Event: 500
     filterSettings:
       RenderQueueType: 0
       LayerMask:

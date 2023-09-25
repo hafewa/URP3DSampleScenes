@@ -199,11 +199,19 @@ public class SceneTransitionManager : MonoBehaviour
         }
         
         //Toggle main light
-        ToggleMainLight(currentScene, isMainCamera);
-        ToggleMainLight(screenScene, !isMainCamera);
-        
+        if (camera.cameraType == CameraType.SceneView)
+        {
+            ToggleMainLight(currentScene, true);
+            ToggleMainLight(screenScene, false);
+        }
+        else
+        {
+            ToggleMainLight(currentScene, isMainCamera);
+            ToggleMainLight(screenScene, !isMainCamera);
+        }
+
         //Setup render settings
-        SceneMetaData sceneToRender = isMainCamera ? currentScene : screenScene;
+        SceneMetaData sceneToRender = isMainCamera || camera.cameraType == CameraType.SceneView ? currentScene : screenScene;
         RenderSettings.fog = sceneToRender.FogEnabled;
         RenderSettings.skybox = sceneToRender.skybox;
         if (sceneToRender.reflection != null)
@@ -463,6 +471,10 @@ public class SceneTransitionManager : MonoBehaviour
         {
             sceneLoader.screen.TurnScreenOn();
         }
+        
+        //Set the renderer index
+        int index = sceneMetaData.RendererIndex > 1 ? sceneMetaData.RendererIndex : 1;
+        instance.m_ScreenCamera.GetComponent<UniversalAdditionalCameraData>().SetRenderer(index);
         
         instance.m_ScreenCamera.GetComponent<Camera>().enabled = true;
         instance.m_ScreenOff = false;

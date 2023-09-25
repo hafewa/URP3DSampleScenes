@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
+using UnityEditor.Callbacks;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Android;
@@ -14,16 +15,22 @@ class LodLightmapCopy : IProcessSceneWithReport
     
     private static bool m_enabled = true;
     
-    //TODO: Figure out if this is called on build?
     public void OnProcessScene(Scene scene, BuildReport report)
+    {
+        Execute();
+    }
+    
+    [PostProcessBuild(1)]
+    public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
     {
         Execute();
     }
     
     static LodLightmapCopy()
     {
+        Execute();
         Lightmapping.bakeCompleted += Execute;
-        EditorApplication.playModeStateChanged += LodLightmapEdit; 
+        EditorApplication.playModeStateChanged += AssignLightmapOnEdit; 
         SceneManager.sceneLoaded += AssignLightmapsOnLoad;
         EditorSceneManager.sceneOpened += AssignLightmapsOnOpen;
     }
@@ -38,7 +45,7 @@ class LodLightmapCopy : IProcessSceneWithReport
         Execute(scene);
     }
 
-    static void LodLightmapEdit(PlayModeStateChange state)
+    static void AssignLightmapOnEdit(PlayModeStateChange state)
     {
         if(state == PlayModeStateChange.EnteredEditMode) Execute();
     }
