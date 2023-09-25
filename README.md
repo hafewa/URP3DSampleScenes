@@ -78,7 +78,11 @@ Currently, our focus is on the Unity 2022.3 LTS version. After the final release
 # Known issues
 **Build Times:** Due to the wide variety of use cases, target platforms, renderers, and features presented in these samples, some URP configurations can result in large numbers of shader variants, which take a long time to compile. To reduce build times, we recommend only building with one Quality Level, a subset of scenes, and toggling VR on or off. We are currently working on optimizing the shader compilation times.
 
-**General performance:** For this public beta, we focused on getting each scene running at the target frame rate for the recommended minimum configurations. However, you may see significant slowdowns in areas where multiple scenes/cameras are active at the same time, for the teleportation mechanic. 
+**General performance:** For this public beta, we focused on getting each scene running at the target frame rate for the recommended minimum configurations. However, you may see significant slowdowns in areas where multiple scenes/cameras are active at the same time, for the teleportation mechanic. Profiling and improving performance will be the main focus for us over the coming months so you can expect improvements there.
+
+**Forward+ on mobile devices:** We are investigating a bug in Forward+ that causes light flickering on mobile devices.
+
+**In editor warnings:** We are still in the process of cleaning up all out system integrations so you can expect the occasional warning in the console. All them should be safe to ignore. 
 
 **First editor run:** When opening the editor, navigating the scenes and entering game mode for the first time, many shader compilations will happen.
 
@@ -86,7 +90,7 @@ Currently, our focus is on the Unity 2022.3 LTS version. After the final release
 
 **Oasis:** The wind is currently turned off in the Oasis. It will be re-added in the upcoming months.
 
-**Misc:** Changing the resolution at runtime (such as scaling the game view) will cause the screen textures to have incorrect resolution.
+**Misc:** Changing the resolution at runtime (such as scaling the game view) will cause the screen textures to have incorrect resolution. This might break the teleportatoin effect.
 
 # How to give feedback?
 
