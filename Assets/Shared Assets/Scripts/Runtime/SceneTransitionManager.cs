@@ -472,6 +472,10 @@ public class SceneTransitionManager : MonoBehaviour
             sceneLoader.screen.TurnScreenOn();
         }
         
+        //Set the renderer index
+        int index = sceneMetaData.RendererIndex > 1 ? sceneMetaData.RendererIndex : 1;
+        instance.m_ScreenCamera.GetComponent<UniversalAdditionalCameraData>().SetRenderer(index);
+        
         instance.m_ScreenCamera.GetComponent<Camera>().enabled = true;
         instance.m_ScreenOff = false;
     }
